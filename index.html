@@ -1,90 +1,154 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AviGes — Iniciar sesión</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
 <style>
-:root {
-  --primary:#0B8B5E; --primary-l:#E6F4EF; --white:#fff; --bg:#F0F4F8;
-  --border:#DDE8E2; --text:#1A2E22; --text-2:#4A6358; --text-3:#8AA396;
-  --danger:#E53E3E; --font:'DM Sans',sans-serif;
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);font-family:var(--font);min-height:100vh;display:flex;}
+body { padding: 0; margin: 0; background: var(--surface); }
+.login-wrap { display: flex; min-height: 100vh; width: 100%; }
 
 .login-left {
-  width: 420px; background: var(--white); border-right: 1px solid var(--border);
-  display: flex; flex-direction: column; padding: 40px 48px; min-height: 100vh;
+  width: 480px; background: var(--surface);
+  display: flex; flex-direction: column; padding: 36px 56px;
+  flex-shrink: 0; position: relative; z-index: 2;
 }
+
 .login-right {
-  flex: 1; background: var(--primary);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 60px; position: relative; overflow: hidden;
+  flex: 1; background: linear-gradient(135deg, #143E2B 0%, #1F6B47 55%, #144B30 100%);
+  display: flex; flex-direction: column; padding: 60px;
+  position: relative; overflow: hidden; justify-content: space-between;
 }
 .login-right::before {
-  content: ''; position: absolute; inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(200,130,31,.22) 0%, transparent 45%),
+    radial-gradient(circle at 20% 80%, rgba(255,255,255,.08) 0%, transparent 50%);
+}
+.login-right::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.04'%3E%3Cpath d='M0 40 L80 40 M40 0 L40 80'/%3E%3C/g%3E%3C/svg%3E");
 }
 
-.logo-wrap { display: flex; align-items: center; gap: 12px; margin-bottom: 48px; }
-.logo-icon { width: 40px; height: 40px; background: var(--primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
-.logo-name { font-size: 20px; font-weight: 700; color: var(--text); }
-.logo-tag { font-size: 11px; color: var(--text-3); }
-
-.login-title { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 6px; letter-spacing: -.3px; }
-.login-sub { font-size: 13.5px; color: var(--text-3); margin-bottom: 32px; }
-
-.form-group { margin-bottom: 18px; }
-.form-label { display: block; font-size: 12.5px; font-weight: 600; color: var(--text-2); margin-bottom: 6px; }
-.form-input {
-  width: 100%; padding: 11px 14px; border: 1px solid var(--border); border-radius: 9px;
-  font-family: var(--font); font-size: 14px; color: var(--text); background: var(--white);
-  outline: none; transition: border-color .12s;
+.logo-wrap { display: flex; align-items: center; gap: 12px; margin-bottom: 56px; }
+.logo-mark {
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-d) 100%);
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  font-size: 22px; color: #fff; box-shadow: var(--shadow-primary);
+  position: relative; overflow: hidden;
 }
-.form-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(11,139,94,.1); }
-.form-input::placeholder { color: var(--text-3); }
+.logo-mark::after {
+  content:''; position:absolute; top:-30%; right:-20%; width:80%; height:80%;
+  background: radial-gradient(circle, rgba(200,130,31,.5) 0%, transparent 60%);
+}
+.logo-mark i { position: relative; z-index: 1; }
+.logo-name { font-family: var(--font-display); font-size: 22px; font-weight: 700; letter-spacing: -.7px; }
+.logo-name em { font-family: var(--font-serif); font-style: italic; color: var(--amber); font-weight: 400; }
+.logo-tag { font-size: 11px; color: var(--text-3); font-weight: 500; }
+
+.login-eyebrow {
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--amber-d); margin-bottom: 10px; display: inline-flex; align-items: center; gap: 7px;
+  padding: 5px 12px; background: var(--amber-l); border-radius: 20px; border: 1px solid #EAD6A8;
+}
+.login-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); animation: shimmer 2s ease infinite; }
+.login-title {
+  font-family: var(--font-display); font-size: 32px; font-weight: 700;
+  color: var(--text); margin-bottom: 8px; letter-spacing: -.9px; line-height: 1.1;
+}
+.login-title em { font-family: var(--font-serif); font-style: italic; color: var(--amber); font-weight: 400; }
+.login-sub { font-size: 14px; color: var(--text-3); margin-bottom: 32px; line-height: 1.55; }
 
 .btn-login {
   width: 100%; padding: 13px; background: var(--primary); color: #fff;
-  border: none; border-radius: 9px; font-family: var(--font); font-size: 15px;
-  font-weight: 600; cursor: pointer; transition: all .12s; margin-top: 8px;
+  border: none; border-radius: 11px; font-family: var(--font); font-size: 14px;
+  font-weight: 700; cursor: pointer; transition: all .15s; margin-top: 8px;
+  box-shadow: var(--shadow-primary); letter-spacing: -.15px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
 }
-.btn-login:hover { background: #096b49; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(11,139,94,.35); }
-.btn-login:active { transform: translateY(0); }
+.btn-login:hover { background: var(--primary-d); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(31,107,71,.4); }
 
-.forgot { text-align: center; margin-top: 16px; font-size: 12.5px; color: var(--text-3); }
-.forgot a { color: var(--primary); font-weight: 500; text-decoration: none; }
+.divider-or { display: flex; align-items: center; gap: 12px; margin: 22px 0; font-size: 11px; color: var(--text-3); font-weight: 700; letter-spacing: .12em; }
+.divider-or::before, .divider-or::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+.btn-google {
+  width: 100%; padding: 12px; background: var(--surface); color: var(--text);
+  border: 1px solid var(--border); border-radius: 11px; font-family: var(--font);
+  font-size: 14px; font-weight: 600; cursor: pointer; transition: all .15s;
+  display: flex; align-items: center; justify-content: center; gap: 10px; letter-spacing: -.1px;
+}
+.btn-google:hover { border-color: var(--text-3); background: var(--surface-2); }
 
 .demo-hint {
-  margin-top: 24px; padding: 12px 16px; background: var(--primary-l);
-  border-radius: 9px; font-size: 12px; color: var(--text-2); line-height: 1.6;
-  border: 1px solid #C3E8D8;
+  margin-top: 24px; padding: 14px 16px; background: var(--primary-ll);
+  border-radius: 11px; font-size: 12.5px; color: var(--text-2); line-height: 1.6;
+  border: 1px solid var(--primary-m); display: flex; align-items: center; gap: 10px;
 }
-.demo-hint strong { color: var(--primary); }
+.demo-hint i { font-size: 18px; color: var(--primary); }
+.demo-hint strong { color: var(--primary); font-weight: 700; }
 
-.login-footer { margin-top: auto; font-size: 11.5px; color: var(--text-3); }
+.login-footer { margin-top: auto; padding-top: 24px; font-size: 11.5px; color: var(--text-3); display: flex; justify-content: space-between; align-items: center; }
+.login-footer a { color: var(--text-3); text-decoration: none; font-weight: 500; }
 
-/* RIGHT SIDE */
-.right-badge {
-  position: relative; z-index: 1; text-align: center; color: #fff;
+/* RIGHT SIDE editorial */
+.right-content { position: relative; z-index: 1; max-width: 540px; margin: auto; width: 100%; }
+.right-eyebrow {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em;
+  color: #F2D8A0; padding: 6px 14px; background: rgba(200,130,31,.18);
+  border: 1px solid rgba(242,216,160,.3); border-radius: 20px; margin-bottom: 28px;
 }
-.right-badge-icon { font-size: 72px; margin-bottom: 24px; }
-.right-badge h2 { font-size: 28px; font-weight: 700; margin-bottom: 12px; line-height: 1.2; }
-.right-badge p { font-size: 15px; opacity: .85; line-height: 1.6; max-width: 380px; }
-
-.features { position: relative; z-index: 1; margin-top: 40px; display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 380px; }
-.feat-row {
-  display: flex; align-items: center; gap: 12px; padding: 14px 18px;
-  background: rgba(255,255,255,.12); border-radius: 10px; backdrop-filter: blur(4px);
-  border: 1px solid rgba(255,255,255,.15);
+.right-title {
+  font-family: var(--font-display); font-size: 44px; font-weight: 700;
+  color: #fff; line-height: 1.05; letter-spacing: -1.5px; margin-bottom: 20px;
 }
-.feat-row-icon { font-size: 22px; flex-shrink: 0; }
-.feat-row-text { font-size: 13px; color: rgba(255,255,255,.92); line-height: 1.4; }
-.feat-row-text strong { color: #fff; }
+.right-title em { font-family: var(--font-serif); font-style: italic; color: #F2D8A0; font-weight: 400; letter-spacing: -.5px; }
+.right-desc { font-size: 16px; color: rgba(255,255,255,.92); line-height: 1.6; max-width: 480px; margin-bottom: 36px; font-weight: 400; }
 
-@media(max-width:768px){
+/* Mock card */
+.feature-mock {
+  background: rgba(255,255,255,.10); backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,.15); border-radius: 18px;
+  padding: 24px; box-shadow: 0 16px 40px rgba(0,0,0,.18);
+  position: relative; overflow: hidden;
+}
+.feature-mock::before {
+  content:''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, #F2D8A0 0%, var(--amber) 100%);
+}
+.fm-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.fm-title { font-family: var(--font-display); font-size: 14.5px; font-weight: 700; color: #fff; letter-spacing: -.2px; }
+.fm-title-sub { font-size: 11.5px; color: rgba(255,255,255,.65); margin-top: 2px; font-weight: 500; }
+.fm-pill { font-size: 10.5px; font-weight: 700; padding: 4px 10px; border-radius: 20px; background: rgba(200,130,31,.25); color: #F2D8A0; border: 1px solid rgba(242,216,160,.3); display: inline-flex; align-items: center; gap: 5px; letter-spacing: .04em; }
+.fm-pill .live-dot { width: 6px; height: 6px; border-radius: 50%; background: #F2D8A0; animation: shimmer 2s ease infinite; }
+.fm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.fm-stat { background: rgba(0,0,0,.18); border-radius: 12px; padding: 14px; }
+.fm-stat-lbl { font-size: 10.5px; color: rgba(255,255,255,.7); text-transform: uppercase; letter-spacing: .07em; font-weight: 700; margin-bottom: 6px; }
+.fm-stat-num { font-family: var(--font-display); font-size: 24px; font-weight: 700; color: #fff; letter-spacing: -.6px; line-height: 1; font-feature-settings: 'tnum'; }
+.fm-stat-num span { font-size: 13px; opacity: .65; font-weight: 500; }
+.fm-stat-trend { font-size: 11px; color: #F2D8A0; font-weight: 600; margin-top: 6px; display: flex; align-items: center; gap: 3px; }
+
+.fm-bar { height: 6px; background: rgba(0,0,0,.2); border-radius: 3px; margin-top: 10px; overflow: hidden; }
+.fm-bar-fill { height: 100%; background: linear-gradient(90deg, var(--amber) 0%, #F2D8A0 100%); border-radius: 3px; }
+
+.feat-points { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.fp-item { display: flex; align-items: flex-start; gap: 11px; }
+.fp-check { width: 22px; height: 22px; background: rgba(200,130,31,.25); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; border: 1px solid rgba(242,216,160,.4); }
+.fp-check i { font-size: 12px; color: #F2D8A0; }
+.fp-text { font-size: 13px; color: rgba(255,255,255,.92); line-height: 1.5; font-weight: 500; letter-spacing: -.1px; }
+.fp-text strong { color: #fff; font-weight: 700; }
+
+.right-stats { display: flex; gap: 14px; margin-top: 36px; }
+.stat-pill { padding: 14px 18px; background: rgba(255,255,255,.10); border-radius: 14px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.18); flex: 1; }
+.stat-pill-num { font-family: var(--font-display); font-size: 22px; font-weight: 700; line-height: 1; letter-spacing: -.5px; color: #fff; font-feature-settings: 'tnum'; }
+.stat-pill-lbl { font-size: 11px; opacity: .85; margin-top: 5px; text-transform: uppercase; letter-spacing: .08em; font-weight: 600; color: #fff; }
+
+@media(max-width:1100px){
+  .login-right { padding: 48px 40px; }
+  .right-title { font-size: 36px; }
+}
+@media(max-width:900px){
   .login-right { display: none; }
   .login-left { width: 100%; padding: 32px 24px; }
 }
@@ -92,75 +156,133 @@ body{background:var(--bg);font-family:var(--font);min-height:100vh;display:flex;
 </head>
 <body>
 
-<div class="login-left">
-  <div class="logo-wrap">
-    <div class="logo-icon">🐔</div>
-    <div>
-      <div class="logo-name">AviGes</div>
-      <div class="logo-tag">Software Avícola Mexicano</div>
+<div class="login-wrap">
+  <div class="login-left">
+    <div class="logo-wrap">
+      <div class="logo-mark"><i class="ti ti-feather"></i></div>
+      <div>
+        <div class="logo-name">Avi<em>Ges</em></div>
+        <div class="logo-tag">Software Avícola Mexicano</div>
+      </div>
+    </div>
+
+    <div class="login-eyebrow"><span class="dot"></span> Acceso seguro</div>
+    <h1 class="login-title">Inicia sesión <em>en tu granja</em></h1>
+    <p class="login-sub">Gestiona tus lotes, sanidad y producción desde un solo lugar.</p>
+
+    <form onsubmit="login(event)">
+      <div class="form-group">
+        <label class="form-label">Correo electrónico</label>
+        <input type="email" class="form-input" placeholder="tu@granja.com" id="email" value="demo@aviges.mx" autofocus>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Contraseña</label>
+        <input type="password" class="form-input" placeholder="••••••••" id="pass" value="demo123">
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12.5px;">
+        <label style="display:flex;align-items:center;gap:7px;cursor:pointer;color:var(--text-2);font-weight:500;">
+          <input type="checkbox" checked style="accent-color:var(--primary);width:14px;height:14px;"> Mantener sesión
+        </label>
+        <a href="#" style="color:var(--primary);font-weight:600;text-decoration:none;">¿Olvidaste tu contraseña?</a>
+      </div>
+
+      <button type="submit" class="btn-login">Iniciar sesión <i class="ti ti-arrow-right"></i></button>
+    </form>
+
+    <div class="divider-or">O CONTINUAR CON</div>
+
+    <button class="btn-google" onclick="event.preventDefault();toast('Próximamente: Login con Google','info')">
+      <svg width="18" height="18" viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+      Continuar con Google
+    </button>
+
+    <div class="demo-hint">
+      <i class="ti ti-info-circle"></i>
+      <div><strong>Acceso demo:</strong> demo@aviges.mx · contraseña: demo123</div>
+    </div>
+
+    <div class="login-footer">
+      <span>© 2026 AviGes · TEC CAPITAL</span>
+      <a href="#">Términos · Privacidad</a>
     </div>
   </div>
 
-  <div class="login-title">Bienvenido de vuelta</div>
-  <div class="login-sub">Ingresa tus datos para acceder a tu granja</div>
+  <div class="login-right">
+    <div class="right-content">
+      <div class="right-eyebrow"><i class="ti ti-flag-3" style="font-size:11px;"></i> Hecho en México · Tehuacán, Puebla</div>
+      <h1 class="right-title">El primer software avícola con <em>IEP automático</em></h1>
+      <p class="right-desc">Olvídate de Excel y Google Sheets. AviGes calcula tus KPIs en tiempo real y te avisa cuando algo no anda bien.</p>
 
-  <form onsubmit="login(event)">
-    <div class="form-group">
-      <label class="form-label">Correo electrónico</label>
-      <input type="email" class="form-input" placeholder="tu@granja.com" id="email" value="demo@aviges.mx">
+      <div class="feature-mock">
+        <div class="fm-head">
+          <div>
+            <div class="fm-title">Lote 24-A · Galpón 1</div>
+            <div class="fm-title-sub">Broiler Ross 308 · 18,400 aves</div>
+          </div>
+          <div class="fm-pill"><span class="live-dot"></span> EN VIVO</div>
+        </div>
+        <div class="fm-grid">
+          <div class="fm-stat">
+            <div class="fm-stat-lbl">IEP</div>
+            <div class="fm-stat-num num-mono">324 <span>pts</span></div>
+            <div class="fm-stat-trend"><i class="ti ti-trending-up" style="font-size:13px;"></i> +18 vs anterior</div>
+          </div>
+          <div class="fm-stat">
+            <div class="fm-stat-lbl">Mortalidad</div>
+            <div class="fm-stat-num num-mono">1.8 <span>%</span></div>
+            <div class="fm-stat-trend"><i class="ti ti-check" style="font-size:13px;"></i> Bajo el umbral</div>
+          </div>
+          <div class="fm-stat">
+            <div class="fm-stat-lbl">Conv. Alim.</div>
+            <div class="fm-stat-num num-mono">1.76 <span>kg/kg</span></div>
+            <div class="fm-stat-trend"><i class="ti ti-trending-down" style="font-size:13px;"></i> Mejor que estándar</div>
+          </div>
+          <div class="fm-stat">
+            <div class="fm-stat-lbl">Día actual</div>
+            <div class="fm-stat-num num-mono">35 <span>de 42</span></div>
+            <div class="fm-bar"><div class="fm-bar-fill" style="width:83%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feat-points">
+        <div class="fp-item">
+          <div class="fp-check"><i class="ti ti-check"></i></div>
+          <div class="fp-text"><strong>Curvas Ross & Hy-Line</strong> integradas. Compara tu lote con el estándar.</div>
+        </div>
+        <div class="fp-item">
+          <div class="fp-check"><i class="ti ti-check"></i></div>
+          <div class="fp-text"><strong>Alertas WhatsApp</strong> automáticas para vacunas y mortalidad alta.</div>
+        </div>
+        <div class="fp-item">
+          <div class="fp-check"><i class="ti ti-check"></i></div>
+          <div class="fp-text"><strong>Formato SENASICA</strong> incluido para reportes oficiales.</div>
+        </div>
+        <div class="fp-item">
+          <div class="fp-check"><i class="ti ti-check"></i></div>
+          <div class="fp-text"><strong>Soporte en español</strong> con WhatsApp 24/7.</div>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <label class="form-label">Contraseña</label>
-      <input type="password" class="form-input" placeholder="••••••••" id="pass" value="demo123">
+
+    <div class="right-stats">
+      <div class="stat-pill"><div class="stat-pill-num">+150</div><div class="stat-pill-lbl">Granjas activas</div></div>
+      <div class="stat-pill"><div class="stat-pill-num">2.4M</div><div class="stat-pill-lbl">Aves gestionadas</div></div>
+      <div class="stat-pill"><div class="stat-pill-num">99.9%</div><div class="stat-pill-lbl">Uptime garantizado</div></div>
     </div>
-    <button type="submit" class="btn-login">Iniciar sesión</button>
-  </form>
-
-  <div class="forgot"><a href="#">¿Olvidaste tu contraseña?</a></div>
-
-  <div class="demo-hint">
-    <strong>Acceso demo:</strong><br>
-    Email: demo@aviges.mx · Contraseña: demo123
-  </div>
-
-  <div class="login-footer" style="margin-top:auto;padding-top:32px;">
-    © 2026 AviGes · Ingeniería Avícola · Todos los derechos reservados
   </div>
 </div>
 
-<div class="login-right">
-  <div class="right-badge">
-    <div class="right-badge-icon">🐔</div>
-    <h2>Gestiona tu granja<br>desde cualquier lugar</h2>
-    <p>El único software avícola hecho en México. IEP automático, curvas Ross/Cobb, alertas por WhatsApp y soporte local.</p>
-  </div>
-  <div class="features">
-    <div class="feat-row">
-      <div class="feat-row-icon">📊</div>
-      <div class="feat-row-text"><strong>IEP y CA automáticos</strong><br>Calcula los KPIs más importantes sin fórmulas.</div>
-    </div>
-    <div class="feat-row">
-      <div class="feat-row-icon">📱</div>
-      <div class="feat-row-text"><strong>Registro desde el gallinero</strong><br>Tu encargado registra desde el celular, sin PC.</div>
-    </div>
-    <div class="feat-row">
-      <div class="feat-row-icon">🔔</div>
-      <div class="feat-row-text"><strong>Alertas WhatsApp</strong><br>Vacunas, mortalidad alta, alimento bajo.</div>
-    </div>
-    <div class="feat-row">
-      <div class="feat-row-icon">🇲🇽</div>
-      <div class="feat-row-text"><strong>Formato SENASICA incluido</strong><br>Reportes oficiales con un clic.</div>
-    </div>
-  </div>
-</div>
-
+<script src="shared.js"></script>
 <script>
 function login(e) {
   e.preventDefault();
   const btn = e.target.querySelector('.btn-login');
-  btn.textContent = 'Ingresando...';
-  setTimeout(() => { window.location.href = 'dashboard.html'; }, 900);
+  btn.innerHTML = '<i class="ti ti-loader" style="animation:spin 1s linear infinite;"></i> Ingresando...';
+  setTimeout(() => { window.location.href = 'dashboard.html'; }, 700);
 }
 </script>
+<style>@keyframes spin { to { transform: rotate(360deg); } }</style>
 </body>
 </html>

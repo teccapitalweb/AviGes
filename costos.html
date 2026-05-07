@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AviGes — Costos</title>
+<title>AviGes — Costos & Finanzas</title>
 <link rel="stylesheet" href="shared.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 </head>
@@ -11,85 +11,79 @@
 <main class="main">
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:12px;">
-      <button class="hamburger" onclick="toggleSB()">☰</button>
+      <button class="hamburger" onclick="toggleSB()"><i class="ti ti-menu-2"></i></button>
       <div><div class="page-ttl">Costos & Finanzas</div><div class="page-sub">Mayo 2026 · Todos los lotes</div></div>
     </div>
     <div class="topbar-right">
-      <div class="icon-btn">🔔</div>
-      <button class="btn btn-secondary btn-sm" onclick="openModal('modal-gasto')">+ Gasto</button>
-      <button class="btn btn-primary" onclick="openModal('modal-venta')">+ Venta</button>
+      <div class="icon-btn"><i class="ti ti-bell"></i></div>
+      <button class="btn btn-secondary btn-sm" onclick="openModal('modal-gasto')"><i class="ti ti-minus"></i> Gasto</button>
+      <button class="btn btn-primary" onclick="openModal('modal-venta')"><i class="ti ti-plus"></i> Venta</button>
     </div>
   </div>
   <div class="content">
 
     <div class="g4">
-      <div class="kpi delay-1"><div class="kpi-top"><div class="kpi-label">Costo/kg producido</div><div class="kpi-chip g">⚖️</div></div><div class="kpi-num">$28.40 <span class="kpi-unit">MXN</span></div><div class="kpi-footer up">▲ $1.20 más barato que mes pasado</div></div>
-      <div class="kpi delay-2"><div class="kpi-top"><div class="kpi-label">Precio venta/kg</div><div class="kpi-chip b">💵</div></div><div class="kpi-num">$36.00 <span class="kpi-unit">MXN</span></div><div class="kpi-footer up">▲ Margen: $7.60/kg (21%)</div></div>
-      <div class="kpi delay-3"><div class="kpi-top"><div class="kpi-label">Gasto total mayo</div><div class="kpi-chip w">📉</div></div><div class="kpi-num">$227,000 <span class="kpi-unit" style="font-size:11px">MXN</span></div><div class="kpi-footer mid">▶ Alimento 81% del costo</div></div>
-      <div class="kpi delay-4"><div class="kpi-top"><div class="kpi-label">Utilidad estimada</div><div class="kpi-chip g">📈</div></div><div class="kpi-num">$98,400 <span class="kpi-unit" style="font-size:11px">MXN</span></div><div class="kpi-footer up">▲ +$12,000 vs mes anterior</div></div>
+      <div class="kpi green delay-1"><div class="kpi-top"><div class="kpi-label">Costo/kg</div><div class="kpi-chip g"><i class="ti ti-scale"></i></div></div><div class="kpi-num">$28.40<span class="kpi-unit"> MXN</span></div><div class="kpi-footer up"><i class="ti ti-trending-down trend-icon"></i> $1.20 menos vs abr</div></div>
+      <div class="kpi blue delay-2"><div class="kpi-top"><div class="kpi-label">Precio venta/kg</div><div class="kpi-chip b"><i class="ti ti-cash"></i></div></div><div class="kpi-num">$36.00<span class="kpi-unit"> MXN</span></div><div class="kpi-footer up"><i class="ti ti-trending-up trend-icon"></i> Margen $7.60 (21%)</div></div>
+      <div class="kpi warn delay-3"><div class="kpi-top"><div class="kpi-label">Gasto mayo</div><div class="kpi-chip w"><i class="ti ti-receipt"></i></div></div><div class="kpi-num">$227K<span class="kpi-unit"> MXN</span></div><div class="kpi-footer mid"><i class="ti ti-pie-chart trend-icon"></i> Alimento 81%</div></div>
+      <div class="kpi green delay-4"><div class="kpi-top"><div class="kpi-label">Utilidad estimada</div><div class="kpi-chip g"><i class="ti ti-trending-up"></i></div></div><div class="kpi-num">$98.4K<span class="kpi-unit"> MXN</span></div><div class="kpi-footer up"><i class="ti ti-trending-up trend-icon"></i> +$12K vs mes ant</div></div>
     </div>
 
     <div class="g2">
-      <!-- Gráfica costos -->
-      <div class="card">
-        <div class="card-head">
-          <div class="card-ttl">Costo por kg producido — Últimos 6 ciclos</div>
-          <div class="card-link">Ver historial</div>
-        </div>
+      <div class="card delay-5">
+        <div class="card-head"><div><div class="card-ttl">Costo por kg vs precio venta</div><div class="card-sub">Últimos 6 ciclos</div></div><a class="card-link"><i class="ti ti-history"></i> Historial</a></div>
         <div class="card-body"><div class="chart-wrap"><canvas id="chartCosto"></canvas></div></div>
       </div>
 
-      <!-- Desglose -->
-      <div class="card" style="animation-delay:.18s;">
-        <div class="card-head"><div class="card-ttl">Desglose de costos — Lote 24-A</div></div>
+      <div class="card delay-6">
+        <div class="card-head"><div><div class="card-ttl">Desglose costos</div><div class="card-sub">Lote 24-A · acumulado</div></div></div>
         <div class="card-body">
-          <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:18px;">
             <div>
-              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;"><span style="color:var(--text-2);">Alimento (81%)</span><span style="font-weight:600;">$184,200</span></div>
-              <div class="bar" style="height:8px;"><div class="bar-fill" style="width:81%;background:var(--primary);"></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span style="color:var(--text-2);font-weight:600;display:flex;align-items:center;gap:6px;"><i class="ti ti-grain" style="color:var(--primary)"></i> Alimento (81%)</span><span style="font-weight:700;">$184,200</span></div>
+              <div class="bar" style="height:8px;"><div class="bar-fill" style="width:81%"></div></div>
             </div>
             <div>
-              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;"><span style="color:var(--text-2);">Pollito (9%)</span><span style="font-weight:600;">$26,680</span></div>
-              <div class="bar" style="height:8px;"><div class="bar-fill" style="width:9%;background:var(--blue);"></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span style="color:var(--text-2);font-weight:600;display:flex;align-items:center;gap:6px;"><i class="ti ti-egg" style="color:var(--blue)"></i> Pollito (9%)</span><span style="font-weight:700;">$26,680</span></div>
+              <div class="bar" style="height:8px;"><div class="bar-fill b" style="width:9%"></div></div>
             </div>
             <div>
-              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;"><span style="color:var(--text-2);">Vacunas/Med. (5%)</span><span style="font-weight:600;">$9,800</span></div>
-              <div class="bar" style="height:8px;"><div class="bar-fill" style="width:5%;background:var(--warn);"></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span style="color:var(--text-2);font-weight:600;display:flex;align-items:center;gap:6px;"><i class="ti ti-vaccine" style="color:var(--warn)"></i> Sanidad (5%)</span><span style="font-weight:700;">$9,800</span></div>
+              <div class="bar" style="height:8px;"><div class="bar-fill w" style="width:5%"></div></div>
             </div>
             <div>
-              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;"><span style="color:var(--text-2);">Mano de obra (3%)</span><span style="font-weight:600;">$4,200</span></div>
-              <div class="bar" style="height:8px;"><div class="bar-fill" style="width:3%;background:var(--purple);"></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span style="color:var(--text-2);font-weight:600;display:flex;align-items:center;gap:6px;"><i class="ti ti-users" style="color:var(--purple)"></i> Mano obra (3%)</span><span style="font-weight:700;">$4,200</span></div>
+              <div class="bar" style="height:8px;"><div class="bar-fill" style="width:3%;background:linear-gradient(90deg,#9D6FF0,var(--purple))"></div></div>
             </div>
             <div>
-              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;"><span style="color:var(--text-2);">Otros (2%)</span><span style="font-weight:600;">$2,120</span></div>
-              <div class="bar" style="height:8px;"><div class="bar-fill" style="width:2%;background:#aaa;"></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span style="color:var(--text-2);font-weight:600;display:flex;align-items:center;gap:6px;"><i class="ti ti-dots" style="color:var(--text-3)"></i> Otros (2%)</span><span style="font-weight:700;">$2,120</span></div>
+              <div class="bar" style="height:8px;"><div class="bar-fill" style="width:2%;background:var(--text-3)"></div></div>
             </div>
           </div>
-          <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);">
-            <div class="mrow"><span class="mrow-l" style="font-weight:600;">Total costos</span><span class="mrow-r" style="font-size:15px;">$227,000</span></div>
-            <div class="mrow"><span class="mrow-l" style="font-weight:600;">Ingreso proyectado</span><span class="mrow-r g" style="font-size:15px;">+$325,400</span></div>
-            <div style="padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;margin-top:6px;">
+          <div style="padding-top:14px;border-top:1px dashed var(--border);">
+            <div class="mrow"><span class="mrow-l">Total costos</span><span class="mrow-r" style="font-size:14.5px;">$227,000</span></div>
+            <div class="mrow"><span class="mrow-l">Ingreso proyectado</span><span class="mrow-r g" style="font-size:14.5px;">+$325,400</span></div>
+            <div style="padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;margin-top:6px;">
               <span style="font-weight:700;font-size:14px;">Utilidad estimada</span>
-              <span style="font-size:18px;font-weight:800;color:var(--primary)">+$98,400</span>
+              <span style="font-family:var(--font-display);font-size:20px;font-weight:800;color:var(--primary);letter-spacing:-.4px;">+$98,400</span>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Tabla gastos recientes -->
-    <div class="card" style="animation-delay:.28s;">
-      <div class="card-head"><div class="card-ttl">Registro de gastos — Mayo 2026</div><div class="card-link" onclick="openModal('modal-gasto')">+ Agregar gasto</div></div>
+    <div class="card" style="animation-delay:.32s;">
+      <div class="card-head"><div><div class="card-ttl">Movimientos recientes</div><div class="card-sub">Mayo 2026</div></div><a class="card-link" onclick="openModal('modal-gasto')"><i class="ti ti-plus"></i> Gasto</a></div>
       <div style="overflow-x:auto;">
         <table class="tbl">
-          <thead><tr><th>Fecha</th><th>Concepto</th><th>Lote</th><th>Categoría</th><th>Proveedor</th><th>Monto (MXN)</th></tr></thead>
+          <thead><tr><th>Fecha</th><th>Concepto</th><th>Lote</th><th>Categoría</th><th>Proveedor</th><th>Monto</th></tr></thead>
           <tbody>
-            <tr><td style="color:var(--text-3)">06/05/2026</td><td style="font-weight:500">Alimento finalizador — 520 sacos</td><td><span class="badge badge-green">24-A</span></td><td><span class="pill pill-br">Alimento</span></td><td>Nutrimentos del Bajío</td><td style="font-weight:700;color:var(--danger)">−$83,200</td></tr>
-            <tr><td style="color:var(--text-3)">05/05/2026</td><td style="font-weight:500">Enrofloxacina 10% — 6 frascos</td><td><span class="badge badge-warn">24-B</span></td><td><span class="pill pill-po">Medicamento</span></td><td>PiSA Agropecuaria</td><td style="font-weight:700;color:var(--danger)">−$2,400</td></tr>
-            <tr><td style="color:var(--text-3)">04/05/2026</td><td style="font-weight:500">Alimento postura — 280 sacos</td><td><span class="badge badge-blue">24-C</span></td><td><span class="pill pill-br">Alimento</span></td><td>Nutrimentos del Bajío</td><td style="font-weight:700;color:var(--danger)">−$44,800</td></tr>
-            <tr><td style="color:var(--text-3)">03/05/2026</td><td style="font-weight:500">Vacuna Newcastle La Sota</td><td><span class="badge badge-blue">24-C</span></td><td><span class="pill pill-ok" style="background:var(--primary-l);color:var(--primary)">Vacuna</span></td><td>MSD Salud Animal</td><td style="font-weight:700;color:var(--danger)">−$1,800</td></tr>
-            <tr><td style="color:var(--text-3)">02/05/2026</td><td style="font-weight:500">Mano de obra — semana 18</td><td>Todos</td><td><span class="pill" style="background:var(--purple-l);color:var(--purple);">M. Obra</span></td><td>—</td><td style="font-weight:700;color:var(--danger)">−$8,400</td></tr>
-            <tr><td style="color:var(--text-3)">01/05/2026</td><td style="font-weight:500">Venta 800 cartones — Abarrotero</td><td><span class="badge badge-blue">24-C</span></td><td><span class="pill pill-ok">Venta</span></td><td>Distribuidora García</td><td style="font-weight:700;color:var(--primary)">+$54,400</td></tr>
+            <tr><td style="color:var(--text-3)">06 may</td><td style="font-weight:600">Alimento finalizador · 520 sacos</td><td><span class="badge badge-green">24-A</span></td><td><span class="pill pill-br"><i class="ti ti-grain"></i> Alimento</span></td><td>Nutrimentos del Bajío</td><td style="font-weight:700;color:var(--danger);font-family:var(--font-display);font-size:14px;">−$83,200</td></tr>
+            <tr><td style="color:var(--text-3)">05 may</td><td style="font-weight:600">Enrofloxacina 10% · 6 frascos</td><td><span class="badge badge-warn">24-B</span></td><td><span class="pill pill-purple"><i class="ti ti-pill"></i> Medicamento</span></td><td>PiSA Agropecuaria</td><td style="font-weight:700;color:var(--danger);font-family:var(--font-display);font-size:14px;">−$2,400</td></tr>
+            <tr><td style="color:var(--text-3)">04 may</td><td style="font-weight:600">Alimento postura · 280 sacos</td><td><span class="badge badge-blue">24-C</span></td><td><span class="pill pill-br"><i class="ti ti-grain"></i> Alimento</span></td><td>Nutrimentos del Bajío</td><td style="font-weight:700;color:var(--danger);font-family:var(--font-display);font-size:14px;">−$44,800</td></tr>
+            <tr><td style="color:var(--text-3)">03 may</td><td style="font-weight:600">Vacuna Newcastle La Sota</td><td><span class="badge badge-blue">24-C</span></td><td><span class="pill pill-purple"><i class="ti ti-vaccine"></i> Vacuna</span></td><td>MSD Salud Animal</td><td style="font-weight:700;color:var(--danger);font-family:var(--font-display);font-size:14px;">−$1,800</td></tr>
+            <tr><td style="color:var(--text-3)">02 may</td><td style="font-weight:600">Mano de obra · semana 18</td><td>Todos</td><td><span class="pill" style="background:var(--purple-l);color:var(--purple);"><i class="ti ti-users"></i> M. Obra</span></td><td>—</td><td style="font-weight:700;color:var(--danger);font-family:var(--font-display);font-size:14px;">−$8,400</td></tr>
+            <tr><td style="color:var(--text-3)">01 may</td><td style="font-weight:600">Venta 800 cartones</td><td><span class="badge badge-blue">24-C</span></td><td><span class="pill pill-ok"><i class="ti ti-cash"></i> Venta</span></td><td>Distribuidora García</td><td style="font-weight:700;color:var(--primary);font-family:var(--font-display);font-size:14px;">+$54,400</td></tr>
           </tbody>
         </table>
       </div>
@@ -98,67 +92,46 @@
   </div>
 </main>
 
-<!-- Modal gasto -->
 <div class="modal-overlay" id="modal-gasto">
   <div class="modal">
-    <div class="modal-head"><div class="modal-ttl">💸 Registrar gasto</div><button class="modal-close" onclick="closeModal('modal-gasto')">✕</button></div>
+    <div class="modal-head"><div><div class="modal-ttl">Registrar gasto</div></div><button class="modal-close" onclick="closeModal('modal-gasto')"><i class="ti ti-x"></i></button></div>
     <div class="modal-body">
-      <div class="form-row"><div class="form-group"><label class="form-label">Fecha</label><input type="date" class="form-input"></div><div class="form-group"><label class="form-label">Lote</label><select class="form-input"><option>Lote 24-A</option><option>Lote 24-B</option><option>Lote 24-C</option><option>Lote 24-D</option><option>Todos los lotes</option></select></div></div>
-      <div class="form-group"><label class="form-label">Concepto</label><input type="text" class="form-input" placeholder="Ej: Alimento finalizador 500 sacos"></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Categoría</label><select class="form-input"><option>Alimento</option><option>Pollito</option><option>Vacuna</option><option>Medicamento</option><option>Mano de obra</option><option>Servicios (luz, agua)</option><option>Mantenimiento</option><option>Otro</option></select></div><div class="form-group"><label class="form-label">Monto (MXN)</label><input type="number" class="form-input" placeholder="0.00" style="font-size:16px;font-weight:700;"></div></div>
-      <div class="form-group"><label class="form-label">Proveedor</label><input type="text" class="form-input" placeholder="Nombre del proveedor"></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Fecha</label><input type="date" class="form-input"></div><div class="form-group"><label class="form-label">Lote</label><select class="form-input"><option>Lote 24-A</option><option>Lote 24-B</option><option>Todos</option></select></div></div>
+      <div class="form-group"><label class="form-label">Concepto</label><input type="text" class="form-input" placeholder="Ej: Alimento 500 sacos"></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Categoría</label><select class="form-input"><option>Alimento</option><option>Pollito</option><option>Vacuna</option><option>Medicamento</option><option>Mano de obra</option><option>Servicios</option></select></div><div class="form-group"><label class="form-label">Monto MXN</label><input type="number" class="form-input" placeholder="0.00" style="font-size:16px;font-weight:700;"></div></div>
+      <div class="form-group"><label class="form-label">Proveedor</label><input type="text" class="form-input" placeholder="Nombre"></div>
     </div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-gasto')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-gasto');toast('Gasto registrado','success')">Guardar</button></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-gasto')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-gasto');toast('Gasto registrado','success')"><i class="ti ti-check"></i> Guardar</button></div>
   </div>
 </div>
-
-<!-- Modal venta -->
 <div class="modal-overlay" id="modal-venta">
   <div class="modal">
-    <div class="modal-head"><div class="modal-ttl">💰 Registrar venta</div><button class="modal-close" onclick="closeModal('modal-venta')">✕</button></div>
+    <div class="modal-head"><div><div class="modal-ttl">Registrar venta</div></div><button class="modal-close" onclick="closeModal('modal-venta')"><i class="ti ti-x"></i></button></div>
     <div class="modal-body">
-      <div class="form-row"><div class="form-group"><label class="form-label">Fecha</label><input type="date" class="form-input"></div><div class="form-group"><label class="form-label">Lote</label><select class="form-input"><option>Lote 24-A — Pollos</option><option>Lote 24-C — Huevo</option><option>Lote 24-D — Huevo</option></select></div></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Tipo de venta</label><select class="form-input" id="tipo-venta" onchange="cambiarVenta()"><option>Pollos en pie (kg)</option><option>Cartones de huevo</option><option>Aves de descarte</option></select></div><div class="form-group"><label class="form-label" id="lbl-cant">Cantidad (kg)</label><input type="number" class="form-input" id="cant-venta" placeholder="0" oninput="calcTotal()"></div></div>
-      <div class="form-row"><div class="form-group"><label class="form-label" id="lbl-precio">Precio/kg (MXN)</label><input type="number" class="form-input" id="precio-venta" placeholder="36.00" oninput="calcTotal()"></div><div class="form-group"><label class="form-label">Total calculado</label><input type="text" class="form-input" id="total-venta" readonly style="background:var(--bg);font-weight:700;font-size:16px;color:var(--primary);"></div></div>
-      <div class="form-group"><label class="form-label">Cliente / comprador</label><input type="text" class="form-input" placeholder="Nombre del cliente"></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Fecha</label><input type="date" class="form-input"></div><div class="form-group"><label class="form-label">Lote</label><select class="form-input"><option>Lote 24-A — Pollos</option><option>Lote 24-C — Huevo</option></select></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Tipo</label><select class="form-input"><option>Pollos en pie (kg)</option><option>Cartones de huevo</option></select></div><div class="form-group"><label class="form-label">Cantidad</label><input type="number" class="form-input" placeholder="0"></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Precio unitario MXN</label><input type="number" class="form-input" placeholder="36.00"></div><div class="form-group"><label class="form-label">Total</label><input type="text" class="form-input" readonly placeholder="$0" style="background:var(--surface-3);font-weight:700;font-size:16px;color:var(--primary);"></div></div>
+      <div class="form-group"><label class="form-label">Cliente</label><input type="text" class="form-input" placeholder="Nombre del cliente"></div>
     </div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-venta')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-venta');toast('Venta registrada','success')">Guardar</button></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-venta')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-venta');toast('Venta registrada','success')"><i class="ti ti-check"></i> Guardar</button></div>
   </div>
 </div>
 
 <script src="shared.js"></script>
 <script>
-const ciclos = ['24-T','24-U','24-V','24-W','24-X','24-A (actual)'];
-const costos = [31.2,30.8,29.5,30.1,29.8,28.4];
-const precioVta = [34,34.5,35,35.5,36,36];
+const ciclos=['24-T','24-U','24-V','24-W','24-X','24-A'];
+const costos=[31.2,30.8,29.5,30.1,29.8,28.4];
+const venta=[34,34.5,35,35.5,36,36];
 new Chart(document.getElementById('chartCosto').getContext('2d'),{
-  type:'bar',
-  data:{
-    labels: ciclos,
-    datasets:[
-      { label:'Costo/kg (MXN)', data:costos, backgroundColor:'rgba(59,125,216,.15)', borderColor:'#3B7DD8', borderWidth:2, borderRadius:6 },
-      { label:'Precio venta/kg', data:precioVta, backgroundColor:'rgba(11,139,94,.12)', borderColor:'#0B8B5E', borderWidth:2, borderRadius:6, type:'line', fill:false, tension:.3, pointBackgroundColor:'#0B8B5E', pointRadius:4 }
-    ]
-  },
-  options:{
-    responsive:true,maintainAspectRatio:false,
-    plugins:{ legend:{ labels:{ color:'#8AA396', font:{family:'DM Sans',size:11.5}, boxWidth:14 }}},
-    scales:{
-      x:{ ticks:{color:'#8AA396',font:{size:11}}, grid:{color:'#EDF2EF'}},
-      y:{ ticks:{color:'#8AA396',font:{size:11},callback:v=>'$'+v}, grid:{color:'#EDF2EF'}, min:25}
-    }
+  data:{ labels:ciclos, datasets:[
+    { type:'bar', label:'Costo/kg (MXN)', data:costos, backgroundColor:'rgba(45,111,232,.85)', borderRadius:8, barPercentage:.55 },
+    { type:'line', label:'Precio venta/kg', data:venta, borderColor:'#0B8B5E', borderWidth:3, backgroundColor:'rgba(11,139,94,.1)', tension:.35, pointBackgroundColor:'#0B8B5E', pointBorderColor:'#fff', pointBorderWidth:2, pointRadius:5 }
+  ]},
+  options:{ responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'top',align:'end',labels:{color:'#7B8F84',font:{family:'DM Sans',size:12,weight:'500'},boxWidth:14,boxHeight:8,usePointStyle:true,padding:14}},tooltip:{backgroundColor:'#0F1F19',padding:12,cornerRadius:8,callbacks:{label:c=>` ${c.dataset.label}: $${c.parsed.y}`}}},
+    scales:{x:{ticks:{color:'#7B8F84',font:{size:11}},grid:{display:false}},y:{ticks:{color:'#7B8F84',font:{size:11},callback:v=>'$'+v},grid:{color:'#E1EAE5'},min:25}}
   }
 });
-function calcTotal(){
-  const c=parseFloat(document.getElementById('cant-venta').value||0);
-  const p=parseFloat(document.getElementById('precio-venta').value||0);
-  document.getElementById('total-venta').value = c&&p ? '$'+((c*p).toLocaleString('es-MX',{minimumFractionDigits:2})) : '';
-}
-function cambiarVenta(){
-  const t=document.getElementById('tipo-venta').value;
-  if(t.includes('Cartones')){ document.getElementById('lbl-cant').textContent='Cartones'; document.getElementById('lbl-precio').textContent='Precio/cartón (MXN)'; document.getElementById('precio-venta').value='68'; }
-  else { document.getElementById('lbl-cant').textContent='Cantidad (kg)'; document.getElementById('lbl-precio').textContent='Precio/kg (MXN)'; document.getElementById('precio-venta').value='36'; }
-}
 </script>
 </body>
 </html>

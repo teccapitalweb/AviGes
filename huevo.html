@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AviGes — Huevo</title>
+<title>AviGes — Producción de Huevo</title>
 <link rel="stylesheet" href="shared.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 </head>
@@ -11,115 +11,92 @@
 <main class="main">
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:12px;">
-      <button class="hamburger" onclick="toggleSB()">☰</button>
+      <button class="hamburger" onclick="toggleSB()"><i class="ti ti-menu-2"></i></button>
       <div><div class="page-ttl">Producción de Huevo</div><div class="page-sub">2 lotes ponedoras · 1,830 cartones hoy</div></div>
     </div>
     <div class="topbar-right">
-      <div class="icon-btn">🔔</div>
-      <button class="btn btn-primary" onclick="openModal('modal-reg-huevo')">+ Registrar producción</button>
+      <div class="icon-btn"><i class="ti ti-bell"></i></div>
+      <button class="btn btn-primary" onclick="openModal('modal-reg')"><i class="ti ti-plus"></i> Registrar</button>
     </div>
   </div>
   <div class="content">
 
     <div class="g4">
-      <div class="kpi delay-1"><div class="kpi-top"><div class="kpi-label">Huevos hoy total</div><div class="kpi-chip g">🥚</div></div><div class="kpi-num">21,865 <span class="kpi-unit">pzas</span></div><div class="kpi-footer up">▲ +480 vs ayer</div></div>
-      <div class="kpi delay-2"><div class="kpi-top"><div class="kpi-label">% Postura prom.</div><div class="kpi-chip g">📈</div></div><div class="kpi-num">91.1 <span class="kpi-unit">%</span></div><div class="kpi-footer up">▲ Sobre curva Hy-Line (89.2%)</div></div>
-      <div class="kpi delay-3"><div class="kpi-top"><div class="kpi-label">Cartones hoy</div><div class="kpi-chip b">📦</div></div><div class="kpi-num">1,830 <span class="kpi-unit">cartones</span></div><div class="kpi-footer up">▲ 30 cartones ×12</div></div>
-      <div class="kpi delay-4"><div class="kpi-top"><div class="kpi-label">Rotos / 2ª</div><div class="kpi-chip w">⚠️</div></div><div class="kpi-num">312 <span class="kpi-unit">pzas</span></div><div class="kpi-footer mid">▶ 1.4% — dentro del rango</div></div>
+      <div class="kpi green delay-1"><div class="kpi-top"><div class="kpi-label">Huevos hoy</div><div class="kpi-chip g"><i class="ti ti-egg"></i></div></div><div class="kpi-num">21,865<span class="kpi-unit"> pzas</span></div><div class="kpi-footer up"><i class="ti ti-trending-up trend-icon"></i> +480 vs ayer</div></div>
+      <div class="kpi green delay-2"><div class="kpi-top"><div class="kpi-label">% Postura prom.</div><div class="kpi-chip g"><i class="ti ti-percentage"></i></div></div><div class="kpi-num">91.1<span class="kpi-unit"> %</span></div><div class="kpi-footer up"><i class="ti ti-trending-up trend-icon"></i> Sobre Hy-Line</div></div>
+      <div class="kpi blue delay-3"><div class="kpi-top"><div class="kpi-label">Cartones hoy</div><div class="kpi-chip b"><i class="ti ti-package"></i></div></div><div class="kpi-num">1,830<span class="kpi-unit"> ctn</span></div><div class="kpi-footer up"><i class="ti ti-trending-up trend-icon"></i> 30 ×12 cartones</div></div>
+      <div class="kpi warn delay-4"><div class="kpi-top"><div class="kpi-label">Rotos / 2ª</div><div class="kpi-chip w"><i class="ti ti-alert-triangle"></i></div></div><div class="kpi-num">312<span class="kpi-unit"> pzas</span></div><div class="kpi-footer mid"><i class="ti ti-activity trend-icon"></i> 1.4% en rango</div></div>
     </div>
 
     <div class="g2">
-      <!-- Gráfica postura -->
-      <div class="card">
+      <div class="card delay-5">
         <div class="card-head">
-          <div class="card-ttl">% Postura diario vs Curva Hy-Line W-36 — Últimas 4 semanas</div>
-          <div class="card-link">Exportar datos</div>
+          <div><div class="card-ttl">% Postura vs Curva Hy-Line W-36</div><div class="card-sub">Últimas 4 semanas</div></div>
+          <a class="card-link"><i class="ti ti-download"></i> Exportar</a>
         </div>
         <div class="card-body"><div class="chart-wrap"><canvas id="chartPostura"></canvas></div></div>
       </div>
 
-      <!-- Producción por galpón hoy -->
-      <div class="card" style="animation-delay:.18s;">
-        <div class="card-head"><div class="card-ttl">Producción por galpón — Hoy</div><div class="card-link" onclick="openModal('modal-reg-huevo')">Registrar</div></div>
+      <div class="card delay-6">
+        <div class="card-head"><div><div class="card-ttl">Producción por galpón</div><div class="card-sub">Hoy · 7 may</div></div><a class="card-link" onclick="openModal('modal-reg')">Registrar</a></div>
         <div class="card-body">
-          <div style="margin-bottom:16px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-              <div><div style="font-size:14px;font-weight:600;">Galpón 3 — Lote 24-C</div><div style="font-size:12px;color:var(--text-3);">Hy-Line W-36 · 12,800 aves · Semana 22</div></div>
+          <div style="margin-bottom:18px;padding-bottom:18px;border-bottom:1px dashed var(--border);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+              <div><div style="font-family:var(--font-display);font-size:14.5px;font-weight:700;display:flex;align-items:center;gap:6px;"><i class="ti ti-egg" style="color:var(--blue)"></i> Galpón 3 · Lote 24-C</div><div style="font-size:12px;color:var(--text-3);margin-top:2px;">Hy-Line W-36 · 12,800 aves · Sem 22</div></div>
               <span class="pill pill-ok"><span class="sdot g"></span> 91.2%</span>
             </div>
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
-              <div style="background:var(--bg);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:10px;color:var(--text-3);font-weight:600;text-transform:uppercase;">Total</div><div style="font-size:17px;font-weight:700;color:var(--text);">11,673</div></div>
-              <div style="background:var(--bg);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:10px;color:var(--text-3);font-weight:600;text-transform:uppercase;">Cartones</div><div style="font-size:17px;font-weight:700;color:var(--primary);">972</div></div>
-              <div style="background:var(--bg);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:10px;color:var(--text-3);font-weight:600;text-transform:uppercase;">Rotos</div><div style="font-size:17px;font-weight:700;color:var(--warn);">148</div></div>
+              <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;"><div style="font-size:10px;color:var(--text-3);font-weight:700;text-transform:uppercase;letter-spacing:.05em;">Total</div><div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:var(--text);margin-top:4px;letter-spacing:-.3px;">11,673</div></div>
+              <div style="background:var(--primary-l);border:1px solid var(--primary-m);border-radius:10px;padding:12px;text-align:center;"><div style="font-size:10px;color:var(--primary);font-weight:700;text-transform:uppercase;letter-spacing:.05em;">Cartones</div><div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:var(--primary);margin-top:4px;letter-spacing:-.3px;">972</div></div>
+              <div style="background:var(--warn-l);border:1px solid #FBDFA9;border-radius:10px;padding:12px;text-align:center;"><div style="font-size:10px;color:var(--warn);font-weight:700;text-transform:uppercase;letter-spacing:.05em;">Rotos</div><div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:var(--warn);margin-top:4px;letter-spacing:-.3px;">148</div></div>
             </div>
           </div>
-          <div style="border-top:1px solid var(--border);padding-top:16px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-              <div><div style="font-size:14px;font-weight:600;">Galpón 4 — Lote 24-D</div><div style="font-size:12px;color:var(--text-3);">Bovans White · 11,200 aves · Semana 13</div></div>
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+              <div><div style="font-family:var(--font-display);font-size:14.5px;font-weight:700;display:flex;align-items:center;gap:6px;"><i class="ti ti-egg" style="color:var(--blue)"></i> Galpón 4 · Lote 24-D</div><div style="font-size:12px;color:var(--text-3);margin-top:2px;">Bovans White · 11,200 aves · Sem 13</div></div>
               <span class="pill pill-ok"><span class="sdot g"></span> 90.9%</span>
             </div>
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
-              <div style="background:var(--bg);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:10px;color:var(--text-3);font-weight:600;text-transform:uppercase;">Total</div><div style="font-size:17px;font-weight:700;color:var(--text);">10,192</div></div>
-              <div style="background:var(--bg);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:10px;color:var(--text-3);font-weight:600;text-transform:uppercase;">Cartones</div><div style="font-size:17px;font-weight:700;color:var(--primary);">858</div></div>
-              <div style="background:var(--bg);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:10px;color:var(--text-3);font-weight:600;text-transform:uppercase;">Rotos</div><div style="font-size:17px;font-weight:700;color:var(--warn);">164</div></div>
+              <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;"><div style="font-size:10px;color:var(--text-3);font-weight:700;text-transform:uppercase;letter-spacing:.05em;">Total</div><div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:var(--text);margin-top:4px;letter-spacing:-.3px;">10,192</div></div>
+              <div style="background:var(--primary-l);border:1px solid var(--primary-m);border-radius:10px;padding:12px;text-align:center;"><div style="font-size:10px;color:var(--primary);font-weight:700;text-transform:uppercase;letter-spacing:.05em;">Cartones</div><div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:var(--primary);margin-top:4px;letter-spacing:-.3px;">858</div></div>
+              <div style="background:var(--warn-l);border:1px solid #FBDFA9;border-radius:10px;padding:12px;text-align:center;"><div style="font-size:10px;color:var(--warn);font-weight:700;text-transform:uppercase;letter-spacing:.05em;">Rotos</div><div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:var(--warn);margin-top:4px;letter-spacing:-.3px;">164</div></div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Clasificación + ventas -->
     <div class="g2">
-      <div class="card" style="animation-delay:.25s;">
-        <div class="card-head"><div class="card-ttl">Clasificación de huevo — Acumulado semana</div></div>
+      <div class="card" style="animation-delay:.3s;">
+        <div class="card-head"><div><div class="card-ttl">Clasificación por tamaño</div><div class="card-sub">Acumulado de la semana</div></div></div>
         <div class="card-body">
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
-            <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);">
-              <div style="font-size:11px;color:var(--text-3);font-weight:600;text-transform:uppercase;margin-bottom:4px;">Jumbo (+70g)</div>
-              <div style="font-size:22px;font-weight:700;color:var(--text);">18%</div>
-              <div style="font-size:12px;color:var(--text-3);">27,832 pzas</div>
-            </div>
-            <div style="background:var(--primary-l);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--primary-m);">
-              <div style="font-size:11px;color:var(--primary);font-weight:600;text-transform:uppercase;margin-bottom:4px;">Extra (60-69g)</div>
-              <div style="font-size:22px;font-weight:700;color:var(--primary);">42%</div>
-              <div style="font-size:12px;color:var(--primary);">64,941 pzas</div>
-            </div>
-            <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);">
-              <div style="font-size:11px;color:var(--text-3);font-weight:600;text-transform:uppercase;margin-bottom:4px;">Grande (50-59g)</div>
-              <div style="font-size:22px;font-weight:700;color:var(--text);">28%</div>
-              <div style="font-size:12px;color:var(--text-3);">43,294 pzas</div>
-            </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;">
+            <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;"><div style="font-size:10.5px;color:var(--text-3);font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Jumbo +70g</div><div style="font-family:var(--font-display);font-size:24px;font-weight:800;color:var(--text);margin:6px 0;letter-spacing:-.5px;">18%</div><div style="font-size:11px;color:var(--text-3);font-weight:500;">27,832 pzas</div></div>
+            <div style="background:linear-gradient(135deg,var(--primary-l) 0%, var(--primary-ll) 100%);border:1px solid var(--primary-m);border-radius:12px;padding:14px;text-align:center;"><div style="font-size:10.5px;color:var(--primary);font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Extra 60-69g</div><div style="font-family:var(--font-display);font-size:24px;font-weight:800;color:var(--primary);margin:6px 0;letter-spacing:-.5px;">42%</div><div style="font-size:11px;color:var(--primary);font-weight:600;">64,941 pzas</div></div>
+            <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;"><div style="font-size:10.5px;color:var(--text-3);font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Grande 50-59g</div><div style="font-family:var(--font-display);font-size:24px;font-weight:800;color:var(--text);margin:6px 0;letter-spacing:-.5px;">28%</div><div style="font-size:11px;color:var(--text-3);font-weight:500;">43,294 pzas</div></div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-            <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);">
-              <div style="font-size:11px;color:var(--text-3);font-weight:600;text-transform:uppercase;margin-bottom:4px;">Mediano (-50g)</div>
-              <div style="font-size:22px;font-weight:700;color:var(--text);">8%</div>
-              <div style="font-size:12px;color:var(--text-3);">12,369 pzas</div>
-            </div>
-            <div style="background:var(--warn-l);border-radius:10px;padding:14px;text-align:center;border:1px solid #FDE08D;">
-              <div style="font-size:11px;color:#B45309;font-weight:600;text-transform:uppercase;margin-bottom:4px;">Roto / 2ª</div>
-              <div style="font-size:22px;font-weight:700;color:var(--warn);">4%</div>
-              <div style="font-size:12px;color:#B45309;">6,184 pzas</div>
-            </div>
+            <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;"><div style="font-size:10.5px;color:var(--text-3);font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Mediano −50g</div><div style="font-family:var(--font-display);font-size:24px;font-weight:800;color:var(--text);margin:6px 0;letter-spacing:-.5px;">8%</div><div style="font-size:11px;color:var(--text-3);font-weight:500;">12,369 pzas</div></div>
+            <div style="background:var(--warn-l);border:1px solid #FBDFA9;border-radius:12px;padding:14px;text-align:center;"><div style="font-size:10.5px;color:var(--warn);font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Roto / 2ª</div><div style="font-family:var(--font-display);font-size:24px;font-weight:800;color:var(--warn);margin:6px 0;letter-spacing:-.5px;">4%</div><div style="font-size:11px;color:var(--warn);font-weight:600;">6,184 pzas</div></div>
           </div>
         </div>
       </div>
 
-      <div class="card" style="animation-delay:.30s;">
-        <div class="card-head"><div class="card-ttl">Inventario y ventas de huevo</div><div class="card-link">+ Registrar venta</div></div>
+      <div class="card" style="animation-delay:.34s;">
+        <div class="card-head"><div><div class="card-ttl">Inventario y ventas</div><div class="card-sub">Resumen de la semana</div></div><a class="card-link"><i class="ti ti-plus"></i> Venta</a></div>
         <div class="card-body">
-          <div style="background:var(--primary-l);border-radius:10px;padding:14px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;">
-            <div><div style="font-size:12px;color:var(--primary);font-weight:600;text-transform:uppercase;">Inventario en piso</div><div style="font-size:22px;font-weight:700;color:var(--text);">4,820 cartones</div></div>
-            <div style="font-size:32px;">📦</div>
+          <div style="background:linear-gradient(135deg,var(--primary) 0%, var(--primary-d) 100%);color:#fff;border-radius:14px;padding:16px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow-primary);">
+            <div><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;opacity:.85;">Inventario en piso</div><div style="font-family:var(--font-display);font-size:24px;font-weight:800;letter-spacing:-.5px;margin-top:4px;">4,820 cartones</div></div>
+            <i class="ti ti-package" style="font-size:36px;opacity:.85;"></i>
           </div>
-          <div class="mrow"><span class="mrow-l">Producción semana</span><span class="mrow-r">12,803 cartones</span></div>
-          <div class="mrow"><span class="mrow-l">Vendido semana</span><span class="mrow-r g">7,983 cartones</span></div>
-          <div class="mrow"><span class="mrow-l">Precio cartón (MXN)</span><span class="mrow-r g">$68.00</span></div>
+          <div class="mrow"><span class="mrow-l">Producción semana</span><span class="mrow-r">12,803 ctn</span></div>
+          <div class="mrow"><span class="mrow-l">Vendido semana</span><span class="mrow-r g">7,983 ctn</span></div>
+          <div class="mrow"><span class="mrow-l">Precio cartón</span><span class="mrow-r g">$68.00 MXN</span></div>
           <div class="mrow"><span class="mrow-l">Ingreso semana</span><span class="mrow-r g">$542,844</span></div>
           <div class="mrow"><span class="mrow-l">Costo por cartón</span><span class="mrow-r">$41.20</span></div>
-          <div style="margin-top:10px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-            <span style="font-weight:600;">Margen semana</span>
-            <span style="font-size:16px;font-weight:700;color:var(--primary)">+$213,436</span>
+          <div style="margin-top:12px;padding-top:14px;border-top:1px dashed var(--border);display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-weight:700;font-size:13.5px;">Margen semana</span>
+            <span style="font-family:var(--font-display);font-size:18px;font-weight:800;color:var(--primary);letter-spacing:-.3px;">+$213,436</span>
           </div>
         </div>
       </div>
@@ -128,38 +105,32 @@
   </div>
 </main>
 
-<!-- Modal registro huevo -->
-<div class="modal-overlay" id="modal-reg-huevo">
+<div class="modal-overlay" id="modal-reg">
   <div class="modal">
-    <div class="modal-head"><div class="modal-ttl">🥚 Registrar producción de huevo</div><button class="modal-close" onclick="closeModal('modal-reg-huevo')">✕</button></div>
+    <div class="modal-head"><div><div class="modal-ttl">Registrar producción de huevo</div><div class="card-sub">Datos del día</div></div><button class="modal-close" onclick="closeModal('modal-reg')"><i class="ti ti-x"></i></button></div>
     <div class="modal-body">
-      <div class="form-row"><div class="form-group"><label class="form-label">Galpón / Lote</label><select class="form-input"><option>Galpón 3 — Lote 24-C (Hy-Line)</option><option>Galpón 4 — Lote 24-D (Bovans)</option></select></div><div class="form-group"><label class="form-label">Fecha</label><input type="date" class="form-input"></div></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Total huevos recolectados</label><input type="number" class="form-input" placeholder="0" style="font-size:18px;font-weight:700;"></div><div class="form-group"><label class="form-label">Huevos rotos / sucios</label><input type="number" class="form-input" placeholder="0"></div></div>
-      <div style="margin-bottom:14px;"><div class="form-label" style="margin-bottom:8px;">Clasificación por tamaño</div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;"><div><label style="font-size:11px;color:var(--text-3);display:block;margin-bottom:4px;">Jumbo</label><input type="number" class="form-input" placeholder="0" style="text-align:center;"></div><div><label style="font-size:11px;color:var(--text-3);display:block;margin-bottom:4px;">Extra</label><input type="number" class="form-input" placeholder="0" style="text-align:center;"></div><div><label style="font-size:11px;color:var(--text-3);display:block;margin-bottom:4px;">Grande</label><input type="number" class="form-input" placeholder="0" style="text-align:center;"></div><div><label style="font-size:11px;color:var(--text-3);display:block;margin-bottom:4px;">Mediano</label><input type="number" class="form-input" placeholder="0" style="text-align:center;"></div></div></div>
-      <div class="form-group"><label class="form-label">Observaciones</label><textarea class="form-input" rows="2" placeholder="Calidad, color del cascarón, etc."></textarea></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Galpón / Lote</label><select class="form-input"><option>Galpón 3 — Lote 24-C</option><option>Galpón 4 — Lote 24-D</option></select></div><div class="form-group"><label class="form-label">Fecha</label><input type="date" class="form-input"></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Total recolectados</label><input type="number" class="form-input" placeholder="0" style="font-size:18px;font-weight:700;"></div><div class="form-group"><label class="form-label">Rotos / sucios</label><input type="number" class="form-input" placeholder="0"></div></div>
+      <div style="margin-bottom:14px;"><div class="form-label">Clasificación por tamaño</div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;"><div><label style="font-size:11px;color:var(--text-3);display:block;margin-bottom:5px;font-weight:600;">Jumbo</label><input type="number" class="form-input" placeholder="0" style="text-align:center;"></div><div><label style="font-size:11px;color:var(--text-3);display:block;margin-bottom:5px;font-weight:600;">Extra</label><input type="number" class="form-input" placeholder="0" style="text-align:center;"></div><div><label style="font-size:11px;color:var(--text-3);display:block;margin-bottom:5px;font-weight:600;">Grande</label><input type="number" class="form-input" placeholder="0" style="text-align:center;"></div><div><label style="font-size:11px;color:var(--text-3);display:block;margin-bottom:5px;font-weight:600;">Mediano</label><input type="number" class="form-input" placeholder="0" style="text-align:center;"></div></div></div>
     </div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-reg-huevo')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-reg-huevo');toast('Producción registrada','success')">Guardar</button></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-reg')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-reg');toast('Producción registrada','success')"><i class="ti ti-check"></i> Guardar</button></div>
   </div>
 </div>
 
 <script src="shared.js"></script>
 <script>
 const dias = Array.from({length:28},(_,i)=>'D'+(i+1));
-const posReal   = [88,89,90,90.5,91,91.2,91.5,91.8,92,91.9,91.7,91.5,91.3,91,90.8,90.5,90.3,90,90.2,90.5,90.8,91,91.1,91.2,91,90.8,91.1,91.3];
-const posHyline = [87,88,89,89.5,90,90.2,90.5,90.8,91,91,90.8,90.5,90.3,90,89.8,89.5,89.3,89,89.2,89.5,89.8,90,90.1,90.2,90,89.8,90.1,90.3];
+const posReal=[88,89,90,90.5,91,91.2,91.5,91.8,92,91.9,91.7,91.5,91.3,91,90.8,90.5,90.3,90,90.2,90.5,90.8,91,91.1,91.2,91,90.8,91.1,91.3];
+const posHy=[87,88,89,89.5,90,90.2,90.5,90.8,91,91,90.8,90.5,90.3,90,89.8,89.5,89.3,89,89.2,89.5,89.8,90,90.1,90.2,90,89.8,90.1,90.3];
 new Chart(document.getElementById('chartPostura').getContext('2d'),{
   type:'line',
   data:{ labels:dias, datasets:[
-    { label:'% Postura real', data:posReal, borderColor:'#0B8B5E', backgroundColor:'rgba(11,139,94,.08)', borderWidth:2.5, pointRadius:0, pointHoverRadius:4, tension:.4, fill:true },
-    { label:'Curva Hy-Line W-36', data:posHyline, borderColor:'#3B7DD8', backgroundColor:'transparent', borderWidth:2, borderDash:[6,4], pointRadius:0, tension:.4 }
+    { label:'% Postura real', data:posReal, borderColor:'#0B8B5E', backgroundColor:'rgba(11,139,94,.08)', borderWidth:3, pointRadius:0, pointHoverRadius:6, pointBackgroundColor:'#0B8B5E', pointBorderColor:'#fff', pointBorderWidth:2, tension:.4, fill:true },
+    { label:'Curva Hy-Line W-36', data:posHy, borderColor:'#2D6FE8', backgroundColor:'transparent', borderWidth:2, borderDash:[6,4], pointRadius:0, tension:.4 }
   ]},
-  options:{
-    responsive:true, maintainAspectRatio:false,
-    plugins:{ legend:{ labels:{ color:'#8AA396', font:{family:'DM Sans',size:11.5}, boxWidth:14 }}},
-    scales:{
-      x:{ ticks:{ color:'#8AA396', font:{size:10}, maxTicksLimit:8}, grid:{color:'#EDF2EF'}},
-      y:{ min:85, ticks:{ color:'#8AA396', font:{size:11}, callback:v=>v+'%'}, grid:{color:'#EDF2EF'}}
-    }
+  options:{ responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
+    plugins:{legend:{position:'top',align:'end',labels:{color:'#7B8F84',font:{family:'DM Sans',size:12,weight:'500'},boxWidth:14,boxHeight:8,usePointStyle:true,pointStyle:'circle',padding:14}},tooltip:{backgroundColor:'#0F1F19',padding:12,cornerRadius:8,callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y}%`}}},
+    scales:{x:{ticks:{color:'#7B8F84',font:{size:10},maxTicksLimit:8},grid:{color:'#E1EAE5'}},y:{min:85,ticks:{color:'#7B8F84',font:{size:11},callback:v=>v+'%'},grid:{color:'#E1EAE5'}}}
   }
 });
 </script>

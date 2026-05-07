@@ -5,85 +5,80 @@
 <title>AviGes — Registro Diario</title>
 <link rel="stylesheet" href="shared.css">
 <style>
-/* Optimizado para celular en el gallinero */
-.campo-mode {
-  max-width: 480px; margin: 0 auto;
-}
+.campo-mode { max-width: 540px; margin: 0 auto; }
 .lote-selector {
-  background: var(--white); border: 2px solid var(--primary); border-radius: 12px;
-  padding: 16px; margin-bottom: 20px; cursor: pointer;
-  display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-d) 100%);
+  border-radius: 14px; padding: 18px 20px; margin-bottom: 20px; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between; color: #fff;
+  box-shadow: var(--shadow-primary);
 }
-.lote-sel-name { font-size: 16px; font-weight: 700; color: var(--text); }
-.lote-sel-sub { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+.lote-sel-name { font-family: var(--font-display); font-size: 17px; font-weight: 800; letter-spacing: -.3px; display: flex; align-items: center; gap: 8px; }
+.lote-sel-sub { font-size: 12.5px; opacity: .9; margin-top: 4px; }
+.lote-sel-arrow { width: 32px; height: 32px; background: rgba(255,255,255,.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
 
 .reg-section {
-  background: var(--white); border: 1px solid var(--border); border-radius: var(--r);
-  margin-bottom: 14px; box-shadow: var(--shadow-sm); overflow: hidden;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg);
+  margin-bottom: 14px; box-shadow: var(--shadow-xs); overflow: hidden;
 }
 .reg-section-head {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 16px; background: var(--bg);
-  cursor: pointer; border-bottom: 1px solid var(--border);
+  padding: 16px 18px; background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
 }
-.reg-section-title { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-.reg-section-body { padding: 16px; }
+.reg-section-title { font-family: var(--font-display); font-size: 14.5px; font-weight: 700; display: flex; align-items: center; gap: 8px; letter-spacing: -.2px; }
+.reg-section-title i { font-size: 18px; color: var(--primary); }
+.reg-section-body { padding: 18px; }
 
-/* BIG INPUT para datos en campo */
-.big-input-wrap { position: relative; margin-bottom: 16px; }
-.big-label { font-size: 12px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing:.06em; margin-bottom: 6px; display: block; }
+.big-input-wrap { position: relative; margin-bottom: 14px; }
+.big-label { font-size: 11.5px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing:.06em; margin-bottom: 7px; display: block; }
 .big-input {
-  width: 100%; padding: 14px 16px; border: 2px solid var(--border); border-radius: 10px;
-  font-family: var(--font); font-size: 22px; font-weight: 700; color: var(--text);
-  text-align: center; outline: none; transition: border-color .12s;
-  -webkit-appearance: none;
+  width: 100%; padding: 14px 16px; border: 2px solid var(--border); border-radius: 11px;
+  font-family: var(--font-display); font-size: 24px; font-weight: 800; color: var(--text);
+  text-align: center; outline: none; transition: all .15s; -webkit-appearance: none;
+  letter-spacing: -.5px;
 }
 .big-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(11,139,94,.12); }
-.big-input.warn:focus { border-color: var(--warn); box-shadow: 0 0 0 4px rgba(245,158,11,.12); }
-.big-unit { position: absolute; right: 14px; top: 50%; transform: translateY(50%); font-size: 13px; color: var(--text-3); font-weight: 500; }
 .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .input-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
 
-/* QUICK BUTTONS mortalidad */
-.quick-btns { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.quick-btns { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
 .qbtn {
-  padding: 8px 14px; border-radius: 8px; border: 1.5px solid var(--border);
-  font-size: 13px; font-weight: 600; background: var(--white); cursor: pointer;
-  color: var(--text-2); transition: all .1s; font-family: var(--font);
+  padding: 9px 16px; border-radius: 10px; border: 1.5px solid var(--border);
+  font-size: 14px; font-weight: 700; background: var(--surface); cursor: pointer;
+  color: var(--text-2); transition: all .12s; font-family: var(--font); flex: 1; min-width: 60px;
 }
+.qbtn:hover { border-color: var(--primary); color: var(--primary); }
 .qbtn:active { transform: scale(.95); }
-.qbtn.selected { background: var(--primary-l); border-color: var(--primary); color: var(--primary); }
+.qbtn.selected { background: var(--primary); border-color: var(--primary); color: #fff; box-shadow: var(--shadow-primary); }
 
-/* RESUMEN CALCULADO */
 .calc-box {
-  background: var(--primary-l); border: 1px solid var(--primary-m);
-  border-radius: 10px; padding: 14px 16px; margin-top: 12px;
+  background: linear-gradient(135deg, var(--primary-l) 0%, var(--primary-ll) 100%);
+  border: 1px solid var(--primary-m); border-radius: 14px; padding: 16px 18px; margin-top: 14px;
 }
-.calc-row { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; }
-.calc-label { color: var(--text-2); }
-.calc-val { font-weight: 700; color: var(--primary); }
+.calc-header {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11.5px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing:.07em; margin-bottom: 10px;
+}
+.calc-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; padding: 5px 0; }
+.calc-label { color: var(--text-2); font-weight: 500; }
+.calc-val { font-family: var(--font-display); font-weight: 800; color: var(--primary); font-size: 14.5px; letter-spacing: -.2px; }
 .calc-val.warn { color: var(--warn); }
 .calc-val.danger { color: var(--danger); }
 
 .btn-guardar {
-  width: 100%; padding: 16px; background: var(--primary); color: #fff;
-  border: none; border-radius: 12px; font-family: var(--font); font-size: 16px;
-  font-weight: 700; cursor: pointer; margin-top: 8px; transition: all .12s;
-  letter-spacing: -.2px;
+  width: 100%; padding: 16px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-d) 100%);
+  color: #fff; border: none; border-radius: 14px; font-family: var(--font-display); font-size: 16px;
+  font-weight: 800; cursor: pointer; margin-top: 8px; transition: all .15s; letter-spacing: -.2px;
+  box-shadow: var(--shadow-primary); display: flex; align-items: center; justify-content: center; gap: 10px;
 }
-.btn-guardar:active { transform: scale(.97); }
+.btn-guardar:active { transform: scale(.98); }
 
 .alerta-campo {
-  display: flex; align-items: flex-start; gap: 10px;
-  background: var(--warn-l); border: 1px solid #FDE08D;
-  border-radius: 8px; padding: 11px 13px; margin-bottom: 12px; font-size: 12.5px;
+  display: flex; align-items: flex-start; gap: 11px;
+  background: var(--warn-l); border: 1px solid #FBDFA9; border-radius: 11px;
+  padding: 12px 14px; margin-bottom: 14px; font-size: 13px; line-height: 1.4; color: var(--text);
 }
-
-/* Desktop layout */
-@media(min-width:769px){
-  .campo-mode { max-width: 680px; }
-  .input-row-3 { grid-template-columns: repeat(3,1fr); }
-}
+.alerta-campo i { color: var(--warn); font-size: 18px; flex-shrink: 0; margin-top: 1px; }
 </style>
 </head>
 <body>
@@ -91,218 +86,200 @@
 <main class="main">
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:12px;">
-      <button class="hamburger" onclick="toggleSB()">☰</button>
+      <button class="hamburger" onclick="toggleSB()"><i class="ti ti-menu-2"></i></button>
       <div><div class="page-ttl">Registro diario</div><div class="page-sub" id="fecha-reg"></div></div>
     </div>
-    <div class="topbar-right">
-      <div class="icon-btn">🔔</div>
-    </div>
+    <div class="topbar-right"><div class="icon-btn"><i class="ti ti-bell"></i></div></div>
   </div>
 
   <div class="content">
     <div class="campo-mode">
 
-      <!-- Selector de lote -->
       <div class="lote-selector" onclick="openModal('modal-lotes')">
         <div>
-          <div class="lote-sel-name">🐣 Lote 24-A — Galpón 1</div>
+          <div class="lote-sel-name"><i class="ti ti-paw"></i> Lote 24-A · Galpón 1</div>
           <div class="lote-sel-sub">Broiler Ross 308 · 18,400 aves · Día 35 de 42</div>
         </div>
-        <span style="font-size:18px;color:var(--text-3);">⌄</span>
+        <div class="lote-sel-arrow"><i class="ti ti-chevron-down"></i></div>
       </div>
 
-      <!-- ALERTA ACTIVA -->
       <div class="alerta-campo">
-        <span>⚠️</span>
-        <div>CA de ayer (1.89) está por encima del estándar Ross. Verifica consumo de alimento y peso de hoy.</div>
+        <i class="ti ti-alert-triangle"></i>
+        <div>La CA de ayer (1.89) está por encima del estándar Ross. Verifica el consumo de alimento y peso de hoy.</div>
       </div>
 
-      <!-- SECCIÓN: Mortalidad -->
+      <!-- Mortalidad -->
       <div class="reg-section">
         <div class="reg-section-head">
-          <div class="reg-section-title">💀 Mortalidad del día</div>
-          <span style="font-size:12px;color:var(--text-3);">Toca para abrir</span>
+          <div class="reg-section-title"><i class="ti ti-heart-broken"></i> Mortalidad del día</div>
+          <span style="font-size:11.5px;color:var(--text-3);font-weight:600;">Obligatorio</span>
         </div>
         <div class="reg-section-body">
           <div class="quick-btns">
-            <button class="qbtn" onclick="setMort(0)">0</button>
-            <button class="qbtn" onclick="setMort(5)">5</button>
-            <button class="qbtn" onclick="setMort(10)">10</button>
-            <button class="qbtn" onclick="setMort(15)">15</button>
-            <button class="qbtn" onclick="setMort(20)">20</button>
-            <button class="qbtn">Otro</button>
+            <button class="qbtn" onclick="setMort(0,this)">0</button>
+            <button class="qbtn" onclick="setMort(5,this)">5</button>
+            <button class="qbtn" onclick="setMort(10,this)">10</button>
+            <button class="qbtn" onclick="setMort(15,this)">15</button>
+            <button class="qbtn" onclick="setMort(20,this)">20</button>
           </div>
           <div class="big-input-wrap">
             <span class="big-label">Aves muertas hoy</span>
             <input type="number" class="big-input" id="mort" value="0" oninput="calcular()">
-            <span class="big-unit" style="top:36%">aves</span>
           </div>
           <div class="input-row">
             <div>
               <span class="big-label">Causa principal</span>
               <select class="form-input">
-                <option>Seleccionar...</option>
-                <option>Newcastle</option><option>Gumboro</option><option>Marek</option>
-                <option>Coccidiosis</option><option>Calor</option><option>Aplastamiento</option>
-                <option>Sin causa aparente</option><option>Otra</option>
+                <option>Seleccionar...</option><option>Newcastle</option><option>Gumboro</option>
+                <option>Marek</option><option>Coccidiosis</option><option>Calor</option>
+                <option>Aplastamiento</option><option>Sin causa aparente</option>
               </select>
             </div>
             <div>
-              <span class="big-label">Bajas acumuladas</span>
-              <input type="text" class="form-input" value="331" readonly style="background:var(--bg);color:var(--text-2);">
+              <span class="big-label">Acumuladas</span>
+              <input type="text" class="form-input" value="331" readonly style="background:var(--surface-3);font-weight:700;">
             </div>
           </div>
         </div>
       </div>
 
-      <!-- SECCIÓN: Peso -->
+      <!-- Pesaje -->
       <div class="reg-section">
         <div class="reg-section-head">
-          <div class="reg-section-title">⚖️ Pesaje (opcional si es día de pesaje)</div>
+          <div class="reg-section-title"><i class="ti ti-scale"></i> Pesaje semanal</div>
+          <span class="pill pill-warn" style="font-size:10.5px;">Día de pesaje</span>
         </div>
         <div class="reg-section-body">
-          <div style="font-size:12px;color:var(--text-3);margin-bottom:10px;">Hoy es día de pesaje semanal (día 35). Registra el peso promedio de la muestra.</div>
           <div class="big-input-wrap">
-            <span class="big-label">Peso promedio de muestra (g)</span>
+            <span class="big-label">Peso promedio (gramos)</span>
             <input type="number" class="big-input" id="peso" placeholder="0" oninput="calcular()">
-            <span class="big-unit" style="top:36%">g</span>
           </div>
           <div class="input-row">
             <div>
-              <span class="big-label">Número de aves pesadas</span>
-              <input type="number" class="form-input" value="50" placeholder="50">
+              <span class="big-label">Aves pesadas</span>
+              <input type="number" class="form-input" value="50">
             </div>
             <div>
-              <span class="big-label">Estándar Ross hoy (g)</span>
-              <input type="text" class="form-input" value="2,180" readonly style="background:var(--bg);color:var(--text-2);">
+              <span class="big-label">Estándar Ross hoy</span>
+              <input type="text" class="form-input" value="2,180g" readonly style="background:var(--surface-3);font-weight:700;color:var(--blue);">
             </div>
           </div>
         </div>
       </div>
 
-      <!-- SECCIÓN: Consumo agua -->
+      <!-- Agua -->
       <div class="reg-section">
         <div class="reg-section-head">
-          <div class="reg-section-title">💧 Consumo de agua</div>
+          <div class="reg-section-title"><i class="ti ti-droplet"></i> Consumo de agua</div>
         </div>
         <div class="reg-section-body">
           <div class="big-input-wrap">
             <span class="big-label">Litros consumidos hoy</span>
             <input type="number" class="big-input" id="agua" placeholder="0" oninput="calcular()">
-            <span class="big-unit" style="top:36%">L</span>
           </div>
-          <div style="font-size:12px;color:var(--text-3);">Rango esperado para día 35: 3,200 – 3,800 L · Promedio ayer: 3,450 L</div>
+          <div style="font-size:12px;color:var(--text-3);font-weight:500;line-height:1.5;">📊 Rango esperado día 35: 3,200 – 3,800 L · Promedio ayer: 3,450 L</div>
         </div>
       </div>
 
-      <!-- SECCIÓN: Consumo alimento -->
+      <!-- Alimento -->
       <div class="reg-section">
         <div class="reg-section-head">
-          <div class="reg-section-title">🌽 Consumo de alimento</div>
+          <div class="reg-section-title"><i class="ti ti-grain"></i> Consumo de alimento</div>
         </div>
         <div class="reg-section-body">
           <div class="input-row">
             <div>
               <span class="big-label">Sacos de 40kg</span>
-              <input type="number" class="big-input" id="sacos" placeholder="0" style="font-size:20px;" oninput="calcular()">
+              <input type="number" class="big-input" id="sacos" placeholder="0" style="font-size:22px;" oninput="calcular()">
             </div>
             <div>
               <span class="big-label">Kg adicionales</span>
-              <input type="number" class="big-input" id="kg-extra" placeholder="0" style="font-size:20px;" oninput="calcular()">
+              <input type="number" class="big-input" id="kg-extra" placeholder="0" style="font-size:22px;" oninput="calcular()">
             </div>
           </div>
-          <div style="font-size:12px;color:var(--text-3);margin-top:8px;">Consumo esperado día 35: ~22,000 kg total (aprox. 1.20 kg/ave)</div>
-          <div class="big-input-wrap" style="margin-top:12px;">
+          <div style="font-size:12px;color:var(--text-3);font-weight:500;margin-top:10px;">📊 Esperado día 35: ~22 ton total (≈1.20 kg/ave)</div>
+          <div style="margin-top:12px;">
             <span class="big-label">Tipo de alimento</span>
-            <select class="form-input">
-              <option>Finalizador (Fase 3)</option>
-              <option>Iniciador (Fase 1)</option>
-              <option>Crecimiento (Fase 2)</option>
-            </select>
+            <select class="form-input"><option>Finalizador (Fase 3)</option><option>Iniciador (Fase 1)</option><option>Crecimiento (Fase 2)</option></select>
           </div>
         </div>
       </div>
 
-      <!-- SECCIÓN: Clima -->
+      <!-- Clima -->
       <div class="reg-section">
         <div class="reg-section-head">
-          <div class="reg-section-title">🌡️ Temperatura del galpón</div>
+          <div class="reg-section-title"><i class="ti ti-temperature"></i> Clima del galpón</div>
         </div>
         <div class="reg-section-body">
           <div class="input-row-3">
             <div>
-              <span class="big-label">Mínima</span>
+              <span class="big-label">Mín °C</span>
               <input type="number" class="big-input" placeholder="--" style="font-size:20px;">
-              <span style="font-size:11px;color:var(--text-3);display:block;text-align:center;margin-top:3px;">°C</span>
             </div>
             <div>
-              <span class="big-label">Máxima</span>
-              <input type="number" id="temp-max" class="big-input warn" placeholder="--" style="font-size:20px;" oninput="checkTemp()">
-              <span style="font-size:11px;color:var(--text-3);display:block;text-align:center;margin-top:3px;">°C</span>
+              <span class="big-label">Máx °C</span>
+              <input type="number" class="big-input" id="temp-max" placeholder="--" style="font-size:20px;" oninput="checkTemp()">
             </div>
             <div>
-              <span class="big-label">Humedad</span>
+              <span class="big-label">% HR</span>
               <input type="number" class="big-input" placeholder="--" style="font-size:20px;">
-              <span style="font-size:11px;color:var(--text-3);display:block;text-align:center;margin-top:3px;">%HR</span>
             </div>
           </div>
-          <div id="temp-alerta" style="display:none;" class="alerta-campo" style="margin-top:10px;">
-            ⚠️ Temperatura máxima sobre 30°C — posible estrés térmico. Aumenta ventilación.
+          <div id="temp-alerta" style="display:none;" class="alerta-campo" style="margin-top:14px;margin-bottom:0;">
+            <i class="ti ti-alert-triangle"></i>
+            <div>Temperatura sobre 30°C — riesgo de estrés térmico. Aumenta ventilación.</div>
           </div>
         </div>
       </div>
 
-      <!-- SECCIÓN: Observaciones -->
+      <!-- Observaciones -->
       <div class="reg-section">
         <div class="reg-section-head">
-          <div class="reg-section-title">📝 Observaciones del día</div>
+          <div class="reg-section-title"><i class="ti ti-notes"></i> Observaciones del día</div>
         </div>
         <div class="reg-section-body">
-          <textarea class="form-input" rows="3" placeholder="Escribe aquí cualquier novedad del día: visitas, problemas, acciones tomadas..."></textarea>
+          <textarea class="form-input" rows="3" placeholder="Cualquier novedad: visitas, problemas, acciones..."></textarea>
         </div>
       </div>
 
-      <!-- RESUMEN CALCULADO -->
-      <div class="calc-box" id="calc-box">
-        <div style="font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Cálculos automáticos del día</div>
+      <!-- Cálculos -->
+      <div class="calc-box">
+        <div class="calc-header"><i class="ti ti-calculator"></i> Cálculos automáticos</div>
         <div class="calc-row"><span class="calc-label">Mortalidad acumulada</span><span class="calc-val" id="c-mort">1.80%</span></div>
         <div class="calc-row"><span class="calc-label">Aves vivas al cierre</span><span class="calc-val" id="c-vivas">18,069</span></div>
         <div class="calc-row"><span class="calc-label">Relación agua/alimento</span><span class="calc-val" id="c-ratio">—</span></div>
-        <div class="calc-row"><span class="calc-label">IEP estimado hoy</span><span class="calc-val" id="c-iep">312 pts</span></div>
+        <div class="calc-row"><span class="calc-label">IEP estimado</span><span class="calc-val" id="c-iep">312 pts</span></div>
         <div class="calc-row"><span class="calc-label">CA acumulada</span><span class="calc-val" id="c-ca">1.78</span></div>
       </div>
 
       <button class="btn-guardar" onclick="guardar()">
-        ✅ Guardar registro del día
+        <i class="ti ti-check"></i> Guardar registro del día
       </button>
 
     </div>
   </div>
 </main>
 
-<!-- Modal selección lote -->
+<!-- Modal lotes -->
 <div class="modal-overlay" id="modal-lotes">
   <div class="modal">
-    <div class="modal-head">
-      <div class="modal-ttl">Seleccionar lote</div>
-      <button class="modal-close" onclick="closeModal('modal-lotes')">✕</button>
-    </div>
+    <div class="modal-head"><div class="modal-ttl">Seleccionar lote</div><button class="modal-close" onclick="closeModal('modal-lotes')"><i class="ti ti-x"></i></button></div>
     <div class="modal-body" style="padding:8px 16px;">
-      <div onclick="selLote('24-A','Galpón 1','Broiler Ross 308 · 18,400 aves · Día 35')" style="padding:14px;border:2px solid var(--primary);border-radius:10px;cursor:pointer;margin-bottom:8px;background:var(--primary-l)">
-        <div style="font-weight:700;color:var(--primary)">🐣 Lote 24-A — Galpón 1</div>
-        <div style="font-size:12px;color:var(--text-2);">Broiler Ross 308 · 18,400 aves · Día 35 de 42</div>
+      <div onclick="selLote('24-A','Galpón 1','Broiler Ross 308 · 18,400 aves · Día 35')" style="padding:14px;border:2px solid var(--primary);border-radius:11px;cursor:pointer;margin-bottom:8px;background:var(--primary-l);">
+        <div style="font-weight:700;color:var(--primary);font-family:var(--font-display);">🐣 Lote 24-A · Galpón 1</div>
+        <div style="font-size:12px;color:var(--text-2);margin-top:3px;">Broiler Ross 308 · 18,400 aves · Día 35</div>
       </div>
-      <div onclick="selLote('24-B','Galpón 2','Broiler Cobb 500 · 20,100 aves · Día 18')" style="padding:14px;border:1px solid var(--border);border-radius:10px;cursor:pointer;margin-bottom:8px;">
-        <div style="font-weight:600;">🐣 Lote 24-B — Galpón 2</div>
-        <div style="font-size:12px;color:var(--text-2);">Broiler Cobb 500 · 20,100 aves · Día 18 de 42</div>
+      <div onclick="selLote('24-B','Galpón 2','Broiler Cobb 500 · 20,100 aves · Día 18')" style="padding:14px;border:1px solid var(--border);border-radius:11px;cursor:pointer;margin-bottom:8px;">
+        <div style="font-weight:700;font-family:var(--font-display);">🐣 Lote 24-B · Galpón 2</div>
+        <div style="font-size:12px;color:var(--text-3);margin-top:3px;">Broiler Cobb 500 · 20,100 aves · Día 18</div>
       </div>
-      <div onclick="selLote('24-C','Galpón 3','Ponedora Hy-Line · 12,800 aves · Semana 22')" style="padding:14px;border:1px solid var(--border);border-radius:10px;cursor:pointer;margin-bottom:8px;">
-        <div style="font-weight:600;">🥚 Lote 24-C — Galpón 3</div>
-        <div style="font-size:12px;color:var(--text-2);">Ponedora Hy-Line W-36 · 12,800 aves · Semana 22</div>
+      <div onclick="selLote('24-C','Galpón 3','Ponedora Hy-Line · 12,800 aves · Sem 22')" style="padding:14px;border:1px solid var(--border);border-radius:11px;cursor:pointer;margin-bottom:8px;">
+        <div style="font-weight:700;font-family:var(--font-display);">🥚 Lote 24-C · Galpón 3</div>
+        <div style="font-size:12px;color:var(--text-3);margin-top:3px;">Hy-Line W-36 · 12,800 aves · Semana 22</div>
       </div>
-      <div onclick="selLote('24-D','Galpón 4','Ponedora Bovans White · 11,200 aves · Semana 13')" style="padding:14px;border:1px solid var(--border);border-radius:10px;cursor:pointer;">
-        <div style="font-weight:600;">🥚 Lote 24-D — Galpón 4</div>
-        <div style="font-size:12px;color:var(--text-2);">Ponedora Bovans White · 11,200 aves · Semana 13</div>
+      <div onclick="selLote('24-D','Galpón 4','Ponedora Bovans · 11,200 aves · Sem 13')" style="padding:14px;border:1px solid var(--border);border-radius:11px;cursor:pointer;">
+        <div style="font-weight:700;font-family:var(--font-display);">🥚 Lote 24-D · Galpón 4</div>
+        <div style="font-size:12px;color:var(--text-3);margin-top:3px;">Bovans White · 11,200 aves · Semana 13</div>
       </div>
     </div>
   </div>
@@ -312,10 +289,10 @@
 <script>
 document.getElementById('fecha-reg').textContent = new Date().toLocaleDateString('es-MX',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 
-function setMort(n) {
+function setMort(n, btn) {
   document.getElementById('mort').value = n;
   document.querySelectorAll('.qbtn').forEach(b => b.classList.remove('selected'));
-  event.target.classList.add('selected');
+  btn.classList.add('selected');
   calcular();
 }
 function calcular() {
@@ -337,20 +314,19 @@ function checkTemp() {
   document.getElementById('temp-alerta').style.display = t > 30 ? 'flex' : 'none';
 }
 function selLote(lote, galpon, desc) {
-  document.querySelector('.lote-sel-name').textContent = (lote.includes('C')||lote.includes('D')?'🥚':'🐣') + ' Lote ' + lote + ' — ' + galpon;
+  const isPo = lote.includes('C')||lote.includes('D');
+  document.querySelector('.lote-sel-name').innerHTML = (isPo?'<i class="ti ti-egg"></i>':'<i class="ti ti-paw"></i>') + ' Lote ' + lote + ' · ' + galpon;
   document.querySelector('.lote-sel-sub').textContent = desc;
   closeModal('modal-lotes');
 }
 function guardar() {
   const btn = document.querySelector('.btn-guardar');
-  btn.textContent = 'Guardando...';
-  btn.style.background = '#6b7280';
+  btn.innerHTML = '<i class="ti ti-loader"></i> Guardando...';
   setTimeout(()=>{
-    btn.textContent = '✅ ¡Guardado correctamente!';
-    btn.style.background = '#059669';
-    toast('Registro del día guardado. ¡Buen trabajo!', 'success');
-    setTimeout(()=>{ btn.textContent='✅ Guardar registro del día'; btn.style.background=''; }, 3000);
-  }, 1200);
+    btn.innerHTML = '<i class="ti ti-check"></i> ¡Guardado correctamente!';
+    toast('Registro del día guardado · ¡Buen trabajo!', 'success');
+    setTimeout(()=>{ btn.innerHTML='<i class="ti ti-check"></i> Guardar registro del día'; }, 2500);
+  }, 1100);
 }
 </script>
 </body>

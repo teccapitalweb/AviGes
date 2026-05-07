@@ -4,27 +4,28 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AviGes — Mis Lotes</title>
 <link rel="stylesheet" href="shared.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 .lote-card {
-  background: var(--white); border: 1px solid var(--border); border-radius: var(--r);
-  box-shadow: var(--shadow-sm); overflow: hidden; cursor: pointer; transition: all .15s;
-  animation: fadeUp .4s ease forwards; opacity: 0;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg);
+  box-shadow: var(--shadow-xs); overflow: hidden; cursor: pointer; transition: all .2s ease;
+  animation: fadeUp .45s cubic-bezier(.2,.8,.4,1) forwards; opacity: 0;
 }
-.lote-card:hover { border-color: var(--primary); box-shadow: 0 4px 16px rgba(11,139,94,.12); transform: translateY(-2px); }
-.lote-card-top { padding: 16px 18px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-start; }
-.lote-card-body { padding: 14px 18px; }
-.lote-card-footer { padding: 12px 18px; background: var(--bg); border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-.lote-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px,1fr)); gap: 16px; }
-.stat-mini { display: flex; flex-direction: column; gap: 2px; }
-.stat-mini-label { font-size: 10.5px; color: var(--text-3); font-weight: 600; text-transform: uppercase; letter-spacing:.05em; }
-.stat-mini-val { font-size: 17px; font-weight: 700; color: var(--text); }
+.lote-card:hover { border-color: var(--primary-m); box-shadow: var(--shadow); transform: translateY(-3px); }
+.lote-card-top { padding: 18px 20px 12px; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.lote-card-body { padding: 0 20px 14px; }
+.lote-card-footer { padding: 14px 20px; background: var(--surface-2); border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.lote-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px,1fr)); gap: 16px; }
+.stat-mini { display: flex; flex-direction: column; gap: 3px; }
+.stat-mini-label { font-size: 10.5px; color: var(--text-3); font-weight: 700; text-transform: uppercase; letter-spacing:.06em; }
+.stat-mini-val { font-family: var(--font-display); font-size: 19px; font-weight: 800; color: var(--text); letter-spacing: -.5px; line-height: 1; }
 .stat-mini-val.g { color: var(--primary); }
 .stat-mini-val.w { color: var(--warn); }
 .stat-mini-val.d { color: var(--danger); }
-.stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 12px; }
-.day-progress { margin-top: 4px; }
-.day-label { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--text-3); margin-bottom: 4px; }
+.stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 14px; }
+.day-progress { margin-top: 6px; }
+.day-label { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--text-3); margin-bottom: 5px; font-weight: 600; }
+.lote-name { font-family: var(--font-display); font-size: 16px; font-weight: 800; letter-spacing: -.3px; color: var(--text); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+.lote-meta { font-size: 12px; color: var(--text-3); font-weight: 500; }
 </style>
 </head>
 <body>
@@ -32,38 +33,32 @@
 <main class="main">
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:12px;">
-      <button class="hamburger" onclick="toggleSB()">☰</button>
-      <div><div class="page-ttl">Mis Lotes</div><div class="page-sub">4 lotes activos · 2 cerrados este mes</div></div>
+      <button class="hamburger" onclick="toggleSB()"><i class="ti ti-menu-2"></i></button>
+      <div><div class="page-ttl">Mis Lotes</div><div class="page-sub">4 activos · 2 cerrados este mes</div></div>
     </div>
     <div class="topbar-right">
-      <div class="icon-btn">🔔<div class="notif-dot"></div></div>
-      <button class="btn btn-secondary btn-sm" onclick="openModal('modal-filtro')">⚙️ Filtrar</button>
-      <button class="btn btn-primary" onclick="openModal('modal-nuevo')">＋ Nuevo lote</button>
+      <div class="icon-btn"><i class="ti ti-bell"></i><div class="notif-dot"></div></div>
+      <button class="btn btn-secondary btn-sm"><i class="ti ti-filter"></i> Filtrar</button>
+      <button class="btn btn-primary" onclick="openModal('modal-nuevo')"><i class="ti ti-plus"></i> Nuevo lote</button>
     </div>
   </div>
-
   <div class="content">
-    <!-- TABS -->
+
     <div class="tabs">
-      <div class="tab active" onclick="filtrar(this,'todos')">Todos (6)</div>
-      <div class="tab" onclick="filtrar(this,'activo')">Activos (4)</div>
-      <div class="tab" onclick="filtrar(this,'cerrado')">Cerrados (2)</div>
-      <div class="tab" onclick="filtrar(this,'broiler')">Broilers</div>
-      <div class="tab" onclick="filtrar(this,'ponedora')">Ponedoras</div>
+      <div class="tab active" onclick="filtrar(this)">Todos · 6</div>
+      <div class="tab" onclick="filtrar(this)">Activos · 4</div>
+      <div class="tab" onclick="filtrar(this)">Cerrados · 2</div>
+      <div class="tab" onclick="filtrar(this)">Broilers</div>
+      <div class="tab" onclick="filtrar(this)">Ponedoras</div>
     </div>
 
-    <!-- LOTE CARDS -->
-    <div class="lote-grid" id="lotes-grid">
+    <div class="lote-grid">
 
-      <!-- LOTE 24-A -->
-      <div class="lote-card delay-1" onclick="window.location='lote-detalle.html'">
+      <div class="lote-card delay-1" onclick="window.location='lotes.html'">
         <div class="lote-card-top">
           <div>
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-              <span class="badge badge-green">🐣 Lote 24-A</span>
-              <span class="pill pill-br">Broiler</span>
-            </div>
-            <div style="font-size:13px;color:var(--text-2);">Galpón 1 · Ross 308 · 18,400 aves</div>
+            <div class="lote-name"><i class="ti ti-paw" style="color:#C96A00"></i> Lote 24-A</div>
+            <div class="lote-meta">Galpón 1 · Ross 308 · 18,400 aves</div>
           </div>
           <span class="pill pill-ok"><span class="sdot g"></span> Activo</span>
         </div>
@@ -74,25 +69,21 @@
             <div class="stat-mini"><div class="stat-mini-label">Mortalidad</div><div class="stat-mini-val g">1.8%</div></div>
           </div>
           <div class="day-progress">
-            <div class="day-label"><span>Día 35 de 42</span><span style="color:var(--primary);font-weight:600;">83%</span></div>
+            <div class="day-label"><span>Día 35 de 42</span><span style="color:var(--primary);">83% del ciclo</span></div>
             <div class="bar"><div class="bar-fill" style="width:83%"></div></div>
           </div>
         </div>
         <div class="lote-card-footer">
-          <span style="font-size:12px;color:var(--text-3);">Entrada: 01/04/2026 · Salida est: 12/05/2026</span>
-          <span style="font-size:12.5px;font-weight:600;color:var(--primary);">Peso prom: 2,310g</span>
+          <span style="font-size:11.5px;color:var(--text-3);font-weight:500;">Salida: <strong style="color:var(--text-2);">12 may 2026</strong></span>
+          <span style="font-size:13px;font-weight:700;color:var(--primary);">2,310g promedio</span>
         </div>
       </div>
 
-      <!-- LOTE 24-B -->
-      <div class="lote-card delay-2" onclick="window.location='lote-detalle.html'">
+      <div class="lote-card delay-2" onclick="window.location='lotes.html'">
         <div class="lote-card-top">
           <div>
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-              <span class="badge badge-warn">🐣 Lote 24-B</span>
-              <span class="pill pill-br">Broiler</span>
-            </div>
-            <div style="font-size:13px;color:var(--text-2);">Galpón 2 · Cobb 500 · 20,100 aves</div>
+            <div class="lote-name"><i class="ti ti-paw" style="color:#C96A00"></i> Lote 24-B</div>
+            <div class="lote-meta">Galpón 2 · Cobb 500 · 20,100 aves</div>
           </div>
           <span class="pill pill-warn"><span class="sdot w"></span> Revisar</span>
         </div>
@@ -100,28 +91,24 @@
           <div class="stats-row">
             <div class="stat-mini"><div class="stat-mini-label">IEP</div><div class="stat-mini-val w">278</div></div>
             <div class="stat-mini"><div class="stat-mini-label">CA</div><div class="stat-mini-val w">1.89</div></div>
-            <div class="stat-mini"><div class="stat-mini-label">Mortalidad</div><div class="stat-mini-val d">3.1% ⚠️</div></div>
+            <div class="stat-mini"><div class="stat-mini-label">Mortalidad</div><div class="stat-mini-val d">3.1%</div></div>
           </div>
           <div class="day-progress">
-            <div class="day-label"><span>Día 18 de 42</span><span style="color:var(--warn);font-weight:600;">43%</span></div>
+            <div class="day-label"><span>Día 18 de 42</span><span style="color:var(--warn);">43% del ciclo</span></div>
             <div class="bar"><div class="bar-fill w" style="width:43%"></div></div>
           </div>
         </div>
         <div class="lote-card-footer">
-          <span style="font-size:12px;color:var(--text-3);">Entrada: 18/04/2026 · Salida est: 29/05/2026</span>
-          <span style="font-size:12.5px;font-weight:600;color:var(--warn);">Peso prom: 890g</span>
+          <span style="font-size:11.5px;color:var(--text-3);font-weight:500;">Salida est: <strong style="color:var(--text-2);">29 may 2026</strong></span>
+          <span style="font-size:13px;font-weight:700;color:var(--warn);">890g promedio</span>
         </div>
       </div>
 
-      <!-- LOTE 24-C -->
-      <div class="lote-card delay-3" onclick="window.location='lote-detalle.html'">
+      <div class="lote-card delay-3" onclick="window.location='lotes.html'">
         <div class="lote-card-top">
           <div>
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-              <span class="badge badge-blue">🥚 Lote 24-C</span>
-              <span class="pill pill-po">Ponedora</span>
-            </div>
-            <div style="font-size:13px;color:var(--text-2);">Galpón 3 · Hy-Line W-36 · 12,800 aves</div>
+            <div class="lote-name"><i class="ti ti-egg" style="color:var(--blue)"></i> Lote 24-C</div>
+            <div class="lote-meta">Galpón 3 · Hy-Line W-36 · 12,800 aves</div>
           </div>
           <span class="pill pill-ok"><span class="sdot g"></span> Activo</span>
         </div>
@@ -132,25 +119,21 @@
             <div class="stat-mini"><div class="stat-mini-label">Mortalidad</div><div class="stat-mini-val g">0.9%</div></div>
           </div>
           <div class="day-progress">
-            <div class="day-label"><span>Semana 22 de 52</span><span style="color:var(--blue);font-weight:600;">43%</span></div>
+            <div class="day-label"><span>Semana 22 de 52</span><span style="color:var(--blue);">43% del ciclo</span></div>
             <div class="bar"><div class="bar-fill b" style="width:43%"></div></div>
           </div>
         </div>
         <div class="lote-card-footer">
-          <span style="font-size:12px;color:var(--text-3);">Entrada: 02/12/2025 · Cierre est: Dic 2026</span>
-          <span style="font-size:12.5px;font-weight:600;color:var(--blue);">Cartones hoy: 972</span>
+          <span style="font-size:11.5px;color:var(--text-3);font-weight:500;">Cierre est: <strong style="color:var(--text-2);">Dic 2026</strong></span>
+          <span style="font-size:13px;font-weight:700;color:var(--blue);">972 cartones hoy</span>
         </div>
       </div>
 
-      <!-- LOTE 24-D -->
-      <div class="lote-card delay-4" onclick="window.location='lote-detalle.html'">
+      <div class="lote-card delay-4" onclick="window.location='lotes.html'">
         <div class="lote-card-top">
           <div>
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-              <span class="badge badge-blue">🥚 Lote 24-D</span>
-              <span class="pill pill-po">Ponedora</span>
-            </div>
-            <div style="font-size:13px;color:var(--text-2);">Galpón 4 · Bovans White · 11,200 aves</div>
+            <div class="lote-name"><i class="ti ti-egg" style="color:var(--blue)"></i> Lote 24-D</div>
+            <div class="lote-meta">Galpón 4 · Bovans White · 11,200 aves</div>
           </div>
           <span class="pill pill-ok"><span class="sdot g"></span> Activo</span>
         </div>
@@ -161,42 +144,38 @@
             <div class="stat-mini"><div class="stat-mini-label">Mortalidad</div><div class="stat-mini-val g">1.1%</div></div>
           </div>
           <div class="day-progress">
-            <div class="day-label"><span>Semana 13 de 52</span><span style="color:var(--blue);font-weight:600;">25%</span></div>
+            <div class="day-label"><span>Semana 13 de 52</span><span style="color:var(--blue);">25% del ciclo</span></div>
             <div class="bar"><div class="bar-fill b" style="width:25%"></div></div>
           </div>
         </div>
         <div class="lote-card-footer">
-          <span style="font-size:12px;color:var(--text-3);">Entrada: 04/02/2026 · Cierre est: Feb 2027</span>
-          <span style="font-size:12.5px;font-weight:600;color:var(--blue);">Cartones hoy: 858</span>
+          <span style="font-size:11.5px;color:var(--text-3);font-weight:500;">Cierre est: <strong style="color:var(--text-2);">Feb 2027</strong></span>
+          <span style="font-size:13px;font-weight:700;color:var(--blue);">858 cartones hoy</span>
         </div>
       </div>
 
-      <!-- LOTE CERRADO -->
-      <div class="lote-card delay-5" style="opacity:.6;">
+      <div class="lote-card delay-5" style="opacity:.65;">
         <div class="lote-card-top">
           <div>
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-              <span class="badge" style="background:#F5F5F5;color:#999;">🐣 Lote 24-X</span>
-              <span class="pill pill-br">Broiler</span>
-            </div>
-            <div style="font-size:13px;color:var(--text-3);">Galpón 1 · Ross 308 · 17,800 aves</div>
+            <div class="lote-name" style="color:var(--text-3)"><i class="ti ti-paw"></i> Lote 24-X</div>
+            <div class="lote-meta">Galpón 1 · Ross 308 · 17,800 aves</div>
           </div>
-          <span class="pill" style="background:#F5F5F5;color:#999;">Cerrado</span>
+          <span class="pill pill-gray"><i class="ti ti-circle-check"></i> Cerrado</span>
         </div>
         <div class="lote-card-body">
           <div class="stats-row">
-            <div class="stat-mini"><div class="stat-mini-label">IEP Final</div><div class="stat-mini-val g">308</div></div>
-            <div class="stat-mini"><div class="stat-mini-label">CA Final</div><div class="stat-mini-val">1.81</div></div>
+            <div class="stat-mini"><div class="stat-mini-label">IEP final</div><div class="stat-mini-val g">308</div></div>
+            <div class="stat-mini"><div class="stat-mini-label">CA final</div><div class="stat-mini-val">1.81</div></div>
             <div class="stat-mini"><div class="stat-mini-label">Mortalidad</div><div class="stat-mini-val">2.2%</div></div>
           </div>
           <div class="day-progress">
-            <div class="day-label"><span>42 días completados</span><span style="font-weight:600;">100% ✓</span></div>
-            <div class="bar"><div class="bar-fill" style="width:100%;background:#ccc;"></div></div>
+            <div class="day-label"><span>42 días completados</span><span style="font-weight:700;">100% ✓</span></div>
+            <div class="bar"><div class="bar-fill" style="width:100%;background:var(--text-4);"></div></div>
           </div>
         </div>
         <div class="lote-card-footer">
-          <span style="font-size:12px;color:var(--text-3);">Cerrado: 31/03/2026</span>
-          <span style="font-size:12.5px;font-weight:600;color:var(--primary);">Utilidad: +$42,800</span>
+          <span style="font-size:11.5px;color:var(--text-3);font-weight:500;">Cerrado: <strong style="color:var(--text-2);">31 mar 2026</strong></span>
+          <span style="font-size:13px;font-weight:700;color:var(--primary);">+$42,800 utilidad</span>
         </div>
       </div>
 
@@ -204,111 +183,55 @@
   </div>
 </main>
 
-<!-- MODAL NUEVO LOTE -->
+<!-- Modal nuevo lote -->
 <div class="modal-overlay" id="modal-nuevo">
   <div class="modal">
     <div class="modal-head">
-      <div class="modal-ttl">➕ Crear nuevo lote</div>
-      <button class="modal-close" onclick="closeModal('modal-nuevo')">✕</button>
+      <div><div class="modal-ttl">Crear nuevo lote</div><div class="card-sub">Ingresa los datos iniciales del lote</div></div>
+      <button class="modal-close" onclick="closeModal('modal-nuevo')"><i class="ti ti-x"></i></button>
     </div>
     <div class="modal-body">
       <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Nombre del lote *</label>
-          <input type="text" class="form-input" placeholder="Ej: Lote 24-E">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Galpón *</label>
-          <select class="form-input">
-            <option>Galpón 1</option><option>Galpón 2</option>
-            <option>Galpón 3</option><option>Galpón 4</option>
-          </select>
-        </div>
+        <div class="form-group"><label class="form-label">Nombre del lote</label><input type="text" class="form-input" placeholder="Ej: Lote 24-E"></div>
+        <div class="form-group"><label class="form-label">Galpón</label><select class="form-input"><option>Galpón 1</option><option>Galpón 2</option><option>Galpón 3</option><option>Galpón 4</option></select></div>
       </div>
       <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Tipo de producción *</label>
-          <select class="form-input" id="tipo-prod" onchange="cambiarTipo()">
-            <option value="broiler">Pollos de engorde (Broiler)</option>
-            <option value="ponedora">Gallinas ponedoras</option>
-            <option value="reproductora">Reproductoras</option>
-            <option value="codorniz">Codorniz</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Línea genética</label>
-          <select class="form-input" id="linea-gen">
-            <option>Ross 308</option><option>Cobb 500</option>
-            <option>Hubbard Flex</option><option>Otra</option>
-          </select>
-        </div>
+        <div class="form-group"><label class="form-label">Tipo de producción</label><select class="form-input" id="tipo-prod" onchange="cambiarTipo()"><option value="broiler">Pollos de engorde</option><option value="ponedora">Gallinas ponedoras</option><option value="reproductora">Reproductoras</option><option value="codorniz">Codorniz</option></select></div>
+        <div class="form-group"><label class="form-label">Línea genética</label><select class="form-input" id="linea-gen"><option>Ross 308</option><option>Cobb 500</option><option>Hubbard Flex</option></select></div>
       </div>
       <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Cantidad de aves *</label>
-          <input type="number" class="form-input" placeholder="Ej: 20000">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Fecha de entrada *</label>
-          <input type="date" class="form-input">
-        </div>
+        <div class="form-group"><label class="form-label">Cantidad de aves</label><input type="number" class="form-input" placeholder="20000"></div>
+        <div class="form-group"><label class="form-label">Fecha de entrada</label><input type="date" class="form-input"></div>
       </div>
       <div class="form-row" id="campo-ciclo">
-        <div class="form-group">
-          <label class="form-label">Duración del ciclo (días)</label>
-          <input type="number" class="form-input" value="42" placeholder="42">
-          <div class="form-hint">Para pollos de engorde el estándar es 42 días</div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Peso inicial promedio (g)</label>
-          <input type="number" class="form-input" value="42" placeholder="42">
-        </div>
+        <div class="form-group"><label class="form-label">Duración ciclo (días)</label><input type="number" class="form-input" value="42"><div class="form-hint">Estándar broiler: 42 días</div></div>
+        <div class="form-group"><label class="form-label">Peso inicial (g)</label><input type="number" class="form-input" value="42"></div>
       </div>
       <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Precio pollito (MXN)</label>
-          <input type="number" class="form-input" placeholder="Ej: 14.50">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Proveedor</label>
-          <input type="text" class="form-input" placeholder="Ej: Tyson, Pilgrim's, Local">
-        </div>
+        <div class="form-group"><label class="form-label">Precio pollito (MXN)</label><input type="number" class="form-input" placeholder="14.50"></div>
+        <div class="form-group"><label class="form-label">Proveedor</label><input type="text" class="form-input" placeholder="Tyson, Pilgrim's..."></div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Notas del lote</label>
-        <textarea class="form-input" rows="2" placeholder="Observaciones iniciales del lote..."></textarea>
-      </div>
+      <div class="form-group"><label class="form-label">Notas</label><textarea class="form-input" rows="2" placeholder="Observaciones iniciales..."></textarea></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal('modal-nuevo')">Cancelar</button>
-      <button class="btn btn-primary" onclick="crearLote()">Crear lote</button>
+      <button class="btn btn-primary" onclick="closeModal('modal-nuevo');toast('Lote creado correctamente','success')"><i class="ti ti-check"></i> Crear lote</button>
     </div>
   </div>
 </div>
 
 <script src="shared.js"></script>
 <script>
-function filtrar(el, tipo) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-}
+function filtrar(el){ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); el.classList.add('active'); }
 function cambiarTipo() {
   const t = document.getElementById('tipo-prod').value;
   const linea = document.getElementById('linea-gen');
   const ciclo = document.getElementById('campo-ciclo');
   if (t === 'ponedora') {
-    linea.innerHTML = '<option>Hy-Line W-36</option><option>Bovans White</option><option>Lohmann LSL</option><option>Otra</option>';
+    linea.innerHTML = '<option>Hy-Line W-36</option><option>Bovans White</option><option>Lohmann LSL</option>';
     ciclo.querySelector('input').value = 360;
-    ciclo.querySelector('.form-hint').textContent = 'Para ponedoras el ciclo productivo es ~52 semanas';
-  } else if (t === 'broiler') {
-    linea.innerHTML = '<option>Ross 308</option><option>Cobb 500</option><option>Hubbard Flex</option><option>Otra</option>';
-    ciclo.querySelector('input').value = 42;
-    ciclo.querySelector('.form-hint').textContent = 'Para pollos de engorde el estándar es 42 días';
+    ciclo.querySelector('.form-hint').textContent = 'Ciclo productivo ~52 semanas';
   }
-}
-function crearLote() {
-  closeModal('modal-nuevo');
-  toast('✅ Lote creado correctamente. Ya aparece en tu lista.', 'success');
 }
 </script>
 </body>

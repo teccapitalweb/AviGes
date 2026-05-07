@@ -6,25 +6,21 @@
 <link rel="stylesheet" href="shared.css">
 <style>
 .vacuna-card {
-  background: var(--white); border: 1px solid var(--border); border-radius: var(--r);
-  padding: 16px 18px; box-shadow: var(--shadow-sm); margin-bottom: 10px;
-  display: flex; align-items: center; gap: 14px;
-  animation: fadeUp .3s ease forwards; opacity: 0;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 14px 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 14px;
+  animation: fadeUp .4s cubic-bezier(.2,.8,.4,1) forwards; opacity: 0; transition: all .15s;
 }
-.vacuna-card:hover { border-color: var(--primary); }
-.vac-status { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
-.vac-status.ok   { background: var(--primary-l); }
-.vac-status.warn { background: var(--warn-l); }
-.vac-status.pend { background: var(--blue-l); }
-.vac-status.venc { background: var(--danger-l); }
-.vac-info { flex: 1; }
-.vac-name { font-size: 14px; font-weight: 600; color: var(--text); }
-.vac-det  { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+.vacuna-card:hover { border-color: var(--primary-m); transform: translateX(2px); box-shadow: var(--shadow-xs); }
+.vac-status { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.vac-status.ok { background: var(--primary-l); color: var(--primary); }
+.vac-status.pend { background: var(--warn-l); color: var(--warn); }
+.vac-info { flex: 1; min-width: 0; }
+.vac-name { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--text); letter-spacing: -.2px; }
+.vac-det { font-size: 12px; color: var(--text-3); margin-top: 3px; font-weight: 500; }
 .vac-right { text-align: right; flex-shrink: 0; }
-.vac-fecha { font-size: 13px; font-weight: 600; }
-.vac-dias  { font-size: 11px; color: var(--text-3); margin-top: 2px; }
-
-.trat-row { padding: 12px 0; border-bottom: 1px solid #F2F7F4; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.vac-fecha { font-size: 13px; font-weight: 700; }
+.vac-dias { font-size: 11px; color: var(--text-3); margin-top: 2px; font-weight: 500; }
+.trat-row { padding: 14px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .trat-row:last-child { border-bottom: none; }
 </style>
 </head>
@@ -33,115 +29,79 @@
 <main class="main">
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:12px;">
-      <button class="hamburger" onclick="toggleSB()">☰</button>
-      <div><div class="page-ttl">Sanidad & Vacunación</div><div class="page-sub">2 alertas activas · Plan sanitario al día</div></div>
+      <button class="hamburger" onclick="toggleSB()"><i class="ti ti-menu-2"></i></button>
+      <div><div class="page-ttl">Sanidad & Vacunación</div><div class="page-sub">2 alertas · Plan sanitario al día</div></div>
     </div>
     <div class="topbar-right">
-      <div class="icon-btn">🔔<div class="notif-dot"></div></div>
-      <button class="btn btn-secondary btn-sm" onclick="openModal('modal-trat')">+ Tratamiento</button>
-      <button class="btn btn-primary" onclick="openModal('modal-vac')">+ Vacuna aplicada</button>
+      <div class="icon-btn"><i class="ti ti-bell"></i><div class="notif-dot"></div></div>
+      <button class="btn btn-secondary btn-sm" onclick="openModal('modal-trat')"><i class="ti ti-pill"></i> Tratamiento</button>
+      <button class="btn btn-primary" onclick="openModal('modal-vac')"><i class="ti ti-vaccine"></i> Vacuna</button>
     </div>
   </div>
   <div class="content">
 
-    <!-- KPIs -->
     <div class="g4">
-      <div class="kpi delay-1"><div class="kpi-top"><div class="kpi-label">Vacunas aplicadas</div><div class="kpi-chip g">💉</div></div><div class="kpi-num">8 <span class="kpi-unit">este ciclo</span></div><div class="kpi-footer up">▲ Al día según plan</div></div>
-      <div class="kpi delay-2"><div class="kpi-top"><div class="kpi-label">Próxima vacuna</div><div class="kpi-chip w">⏰</div></div><div class="kpi-num">1 <span class="kpi-unit">día</span></div><div class="kpi-footer mid">▶ Newcastle Lote 24-C · mañana</div></div>
-      <div class="kpi delay-3"><div class="kpi-top"><div class="kpi-label">Tratamientos activos</div><div class="kpi-chip b">💊</div></div><div class="kpi-num">2 <span class="kpi-unit">lotes</span></div><div class="kpi-footer mid">▶ Lote 24-B en tratamiento</div></div>
-      <div class="kpi delay-4"><div class="kpi-top"><div class="kpi-label">Medicamentos</div><div class="kpi-chip g">📦</div></div><div class="kpi-num">12 <span class="kpi-unit">productos</span></div><div class="kpi-footer up">▲ Inventario actualizado</div></div>
+      <div class="kpi green delay-1"><div class="kpi-top"><div class="kpi-label">Vacunas aplicadas</div><div class="kpi-chip g"><i class="ti ti-vaccine"></i></div></div><div class="kpi-num">8<span class="kpi-unit"> ciclo</span></div><div class="kpi-footer up"><i class="ti ti-circle-check trend-icon"></i> Plan al día</div></div>
+      <div class="kpi warn delay-2"><div class="kpi-top"><div class="kpi-label">Próxima vacuna</div><div class="kpi-chip w"><i class="ti ti-clock"></i></div></div><div class="kpi-num">1<span class="kpi-unit"> día</span></div><div class="kpi-footer mid"><i class="ti ti-alert-triangle trend-icon"></i> Newcastle Lote 24-C</div></div>
+      <div class="kpi blue delay-3"><div class="kpi-top"><div class="kpi-label">Tratamientos activos</div><div class="kpi-chip b"><i class="ti ti-pill"></i></div></div><div class="kpi-num">2<span class="kpi-unit"> lotes</span></div><div class="kpi-footer mid"><i class="ti ti-activity trend-icon"></i> Lote 24-B en tratamiento</div></div>
+      <div class="kpi green delay-4"><div class="kpi-top"><div class="kpi-label">Productos en stock</div><div class="kpi-chip g"><i class="ti ti-package"></i></div></div><div class="kpi-num">12<span class="kpi-unit"> ítems</span></div><div class="kpi-footer up"><i class="ti ti-circle-check trend-icon"></i> Inventario actualizado</div></div>
     </div>
 
     <div class="g2">
-      <!-- Plan de vacunación -->
       <div class="card mb16">
         <div class="card-head">
-          <div class="card-ttl">Plan de vacunación — Lote 24-A (Broiler Ross 308)</div>
-          <div class="card-link" onclick="openModal('modal-vac')">+ Registrar aplicación</div>
+          <div><div class="card-ttl">Plan de vacunación</div><div class="card-sub">Lote 24-A · Broiler Ross 308 · Día 35</div></div>
+          <a class="card-link" onclick="openModal('modal-vac')"><i class="ti ti-plus"></i> Aplicar</a>
         </div>
         <div class="card-body" style="padding:14px 16px;">
-          <div class="vacuna-card delay-1">
-            <div class="vac-status ok">✅</div>
-            <div class="vac-info"><div class="vac-name">Marek (día 1 en incubadora)</div><div class="vac-det">Dosis: 0.2mL / ave · Vía: subcutánea · Lote: MK-2024-B</div></div>
-            <div class="vac-right"><div class="vac-fecha" style="color:var(--primary)">Aplicada</div><div class="vac-dias">01/04/2026</div></div>
-          </div>
-          <div class="vacuna-card delay-2">
-            <div class="vac-status ok">✅</div>
-            <div class="vac-info"><div class="vac-name">Newcastle + Bronquitis (día 7)</div><div class="vac-det">Dosis: 1 dosis/ave · Vía: ocular · Vacuna: La Sota</div></div>
-            <div class="vac-right"><div class="vac-fecha" style="color:var(--primary)">Aplicada</div><div class="vac-dias">08/04/2026</div></div>
-          </div>
-          <div class="vacuna-card delay-3">
-            <div class="vac-status ok">✅</div>
-            <div class="vac-info"><div class="vac-name">Gumboro (día 14)</div><div class="vac-det">Dosis: 1 dosis/ave · Vía: agua de bebida · Cepa: G-97</div></div>
-            <div class="vac-right"><div class="vac-fecha" style="color:var(--primary)">Aplicada</div><div class="vac-dias">15/04/2026</div></div>
-          </div>
-          <div class="vacuna-card delay-4">
-            <div class="vac-status ok">✅</div>
-            <div class="vac-info"><div class="vac-name">Newcastle refuerzo (día 21)</div><div class="vac-det">Dosis: 1 dosis/ave · Vía: agua de bebida</div></div>
-            <div class="vac-right"><div class="vac-fecha" style="color:var(--primary)">Aplicada</div><div class="vac-dias">22/04/2026</div></div>
-          </div>
-          <div class="vacuna-card delay-5" style="border:1px solid #FDE08D;background:var(--warn-l);">
-            <div class="vac-status warn">⏳</div>
-            <div class="vac-info"><div class="vac-name">Coccidiosis refuerzo (día 28)</div><div class="vac-det">Dosis: 1mL/L agua · Vía: agua de bebida · Producto: Baycox</div></div>
-            <div class="vac-right"><div class="vac-fecha" style="color:var(--warn)">Pendiente</div><div class="vac-dias">Ya venció — día 28</div></div>
-          </div>
+          <div class="vacuna-card delay-1"><div class="vac-status ok"><i class="ti ti-circle-check"></i></div><div class="vac-info"><div class="vac-name">Marek (día 1)</div><div class="vac-det">0.2mL/ave · subcutánea · Lote MK-2024-B</div></div><div class="vac-right"><div class="vac-fecha" style="color:var(--primary)">Aplicada</div><div class="vac-dias">01/04/2026</div></div></div>
+          <div class="vacuna-card delay-2"><div class="vac-status ok"><i class="ti ti-circle-check"></i></div><div class="vac-info"><div class="vac-name">Newcastle + Bronquitis (día 7)</div><div class="vac-det">1 dosis/ave · ocular · La Sota</div></div><div class="vac-right"><div class="vac-fecha" style="color:var(--primary)">Aplicada</div><div class="vac-dias">08/04/2026</div></div></div>
+          <div class="vacuna-card delay-3"><div class="vac-status ok"><i class="ti ti-circle-check"></i></div><div class="vac-info"><div class="vac-name">Gumboro (día 14)</div><div class="vac-det">1 dosis/ave · agua · Cepa G-97</div></div><div class="vac-right"><div class="vac-fecha" style="color:var(--primary)">Aplicada</div><div class="vac-dias">15/04/2026</div></div></div>
+          <div class="vacuna-card delay-4"><div class="vac-status ok"><i class="ti ti-circle-check"></i></div><div class="vac-info"><div class="vac-name">Newcastle refuerzo (día 21)</div><div class="vac-det">1 dosis/ave · agua de bebida</div></div><div class="vac-right"><div class="vac-fecha" style="color:var(--primary)">Aplicada</div><div class="vac-dias">22/04/2026</div></div></div>
+          <div class="vacuna-card delay-5" style="border-color:#FBDFA9;background:var(--warn-l);"><div class="vac-status pend"><i class="ti ti-clock-hour-4"></i></div><div class="vac-info"><div class="vac-name">Coccidiosis refuerzo (día 28)</div><div class="vac-det">1mL/L agua · Baycox</div></div><div class="vac-right"><div class="vac-fecha" style="color:var(--warn)">Pendiente</div><div class="vac-dias">Vencida hace 7 días</div></div></div>
         </div>
       </div>
 
-      <!-- Alertas sanidad + tratamientos -->
       <div style="display:flex;flex-direction:column;gap:16px;">
-        <div class="card">
-          <div class="card-head"><div class="card-ttl">🚨 Alertas sanitarias</div></div>
+        <div class="card" style="animation-delay:.18s;">
+          <div class="card-head"><div><div class="card-ttl">Alertas sanitarias</div><div class="card-sub">4 activas</div></div></div>
           <div class="card-body">
             <div class="alerts">
-              <div class="alert-item d"><div class="alert-dot"></div><div><div class="alert-msg"><strong>Lote 24-B Galpón 2</strong> — Mortalidad 3.1% día 18. Síntomas respiratorios reportados. Necropsia recomendada.</div><div class="alert-time">Alta prioridad · Hoy</div></div></div>
-              <div class="alert-item w"><div class="alert-dot"></div><div><div class="alert-msg"><strong>Newcastle — Lote 24-C</strong> — Vacuna de refuerzo pendiente. Aplicar mañana antes del amanecer.</div><div class="alert-time">Vence mañana</div></div></div>
-              <div class="alert-item w"><div class="alert-dot"></div><div><div class="alert-msg"><strong>Inventario bajo</strong> — Vacuna La Sota queda para 1 aplicación. Pedir al proveedor.</div><div class="alert-time">Calculado automáticamente</div></div></div>
-              <div class="alert-item i"><div class="alert-dot"></div><div><div class="alert-msg"><strong>Fumigación programada</strong> — Galpón 1 y 2 requieren fumigación quincenal. Próxima: 10/05.</div><div class="alert-time">Recordatorio</div></div></div>
+              <div class="alert-item d"><div class="alert-icon"><i class="ti ti-alert-circle"></i></div><div><div class="alert-msg"><strong>Lote 24-B Galpón 2</strong><br>Mortalidad 3.1% día 18. Síntomas respiratorios.</div><div class="alert-time">Alta prioridad</div></div></div>
+              <div class="alert-item w"><div class="alert-icon"><i class="ti ti-vaccine"></i></div><div><div class="alert-msg"><strong>Newcastle — Lote 24-C</strong><br>Refuerzo pendiente · Aplicar mañana 6am.</div><div class="alert-time">Vence mañana</div></div></div>
+              <div class="alert-item w"><div class="alert-icon"><i class="ti ti-package"></i></div><div><div class="alert-msg"><strong>Inventario bajo</strong><br>La Sota queda para 1 aplicación.</div><div class="alert-time">Calculado</div></div></div>
+              <div class="alert-item i"><div class="alert-icon"><i class="ti ti-spray"></i></div><div><div class="alert-msg"><strong>Fumigación programada</strong><br>Galpón 1 y 2 · 10 mayo.</div><div class="alert-time">Recordatorio</div></div></div>
             </div>
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-head"><div class="card-ttl">💊 Tratamientos activos</div><div class="card-link" onclick="openModal('modal-trat')">+ Agregar</div></div>
+        <div class="card" style="animation-delay:.22s;">
+          <div class="card-head"><div><div class="card-ttl">Tratamientos activos</div><div class="card-sub">2 en curso</div></div><a class="card-link" onclick="openModal('modal-trat')"><i class="ti ti-plus"></i></a></div>
           <div class="card-body" style="padding:0 20px;">
             <div class="trat-row">
-              <div>
-                <div style="font-size:13.5px;font-weight:600;">Enrofloxacina · Lote 24-B</div>
-                <div style="font-size:12px;color:var(--text-3);">1mL/L agua · 5 días · Inicio: 05/05/2026</div>
-              </div>
-              <div style="text-align:right;">
-                <span class="pill pill-warn"><span class="sdot w"></span> Día 2 de 5</span>
-                <div style="font-size:11px;color:var(--text-3);margin-top:3px;">Termina: 10/05</div>
-              </div>
+              <div><div style="font-size:13.5px;font-weight:700;font-family:var(--font-display);">Enrofloxacina · Lote 24-B</div><div style="font-size:12px;color:var(--text-3);margin-top:3px;">1mL/L agua · 5 días · Inicio 05/05</div></div>
+              <div style="text-align:right;"><span class="pill pill-warn"><span class="sdot w"></span> Día 2/5</span><div style="font-size:11px;color:var(--text-3);margin-top:3px;">Termina 10/05</div></div>
             </div>
             <div class="trat-row">
-              <div>
-                <div style="font-size:13.5px;font-weight:600;">Vitaminas ADE · Lote 24-A</div>
-                <div style="font-size:12px;color:var(--text-3);">0.5mL/L agua · 3 días · Inicio: 06/05/2026</div>
-              </div>
-              <div style="text-align:right;">
-                <span class="pill pill-ok"><span class="sdot g"></span> Día 1 de 3</span>
-                <div style="font-size:11px;color:var(--text-3);margin-top:3px;">Termina: 09/05</div>
-              </div>
+              <div><div style="font-size:13.5px;font-weight:700;font-family:var(--font-display);">Vitaminas ADE · Lote 24-A</div><div style="font-size:12px;color:var(--text-3);margin-top:3px;">0.5mL/L agua · 3 días · Inicio 06/05</div></div>
+              <div style="text-align:right;"><span class="pill pill-ok"><span class="sdot g"></span> Día 1/3</span><div style="font-size:11px;color:var(--text-3);margin-top:3px;">Termina 09/05</div></div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Inventario medicamentos -->
     <div class="card" style="animation-delay:.3s;">
-      <div class="card-head"><div class="card-ttl">📦 Inventario de medicamentos y vacunas</div><div class="card-link">+ Agregar producto</div></div>
+      <div class="card-head"><div><div class="card-ttl">Inventario de medicamentos</div><div class="card-sub">12 productos · 1 stock crítico</div></div><a class="card-link"><i class="ti ti-plus"></i> Producto</a></div>
       <div style="overflow-x:auto;">
         <table class="tbl">
-          <thead><tr><th>Producto</th><th>Tipo</th><th>Dosis/presentación</th><th>Stock actual</th><th>Mínimo</th><th>Vencimiento</th><th>Estado</th></tr></thead>
+          <thead><tr><th>Producto</th><th>Tipo</th><th>Presentación</th><th>Stock</th><th>Mín</th><th>Vencimiento</th><th>Estado</th></tr></thead>
           <tbody>
-            <tr><td style="font-weight:600">La Sota (Newcastle)</td><td style="color:var(--text-2)">Vacuna</td><td>1,000 dosis/frasco</td><td>2 frascos</td><td>3 frascos</td><td>2026-08-15</td><td><span class="pill pill-warn"><span class="sdot w"></span> Stock bajo</span></td></tr>
-            <tr><td style="font-weight:600">Gumboro G-97</td><td style="color:var(--text-2)">Vacuna</td><td>500 dosis/frasco</td><td>8 frascos</td><td>3 frascos</td><td>2026-11-20</td><td><span class="pill pill-ok"><span class="sdot g"></span> OK</span></td></tr>
-            <tr><td style="font-weight:600">Enrofloxacina 10%</td><td style="color:var(--text-2)">Antibiótico</td><td>1L frasco</td><td>4 frascos</td><td>2 frascos</td><td>2027-02-10</td><td><span class="pill pill-ok"><span class="sdot g"></span> OK</span></td></tr>
-            <tr><td style="font-weight:600">Baycox (Coccidiosis)</td><td style="color:var(--text-2)">Antiparasitario</td><td>1L frasco</td><td>1 frasco</td><td>2 frascos</td><td>2026-06-30</td><td><span class="pill pill-danger"><span class="sdot d"></span> Crítico</span></td></tr>
-            <tr><td style="font-weight:600">Vitaminas ADE</td><td style="color:var(--text-2)">Vitaminas</td><td>500mL frasco</td><td>6 frascos</td><td>2 frascos</td><td>2026-12-01</td><td><span class="pill pill-ok"><span class="sdot g"></span> OK</span></td></tr>
+            <tr><td style="font-weight:700">La Sota (Newcastle)</td><td><span class="badge badge-purple">Vacuna</span></td><td>1,000 dosis/frasco</td><td><strong>2</strong> frascos</td><td>3</td><td style="color:var(--text-3)">15/08/2026</td><td><span class="pill pill-warn"><span class="sdot w"></span> Bajo</span></td></tr>
+            <tr><td style="font-weight:700">Gumboro G-97</td><td><span class="badge badge-purple">Vacuna</span></td><td>500 dosis/frasco</td><td><strong>8</strong> frascos</td><td>3</td><td style="color:var(--text-3)">20/11/2026</td><td><span class="pill pill-ok"><span class="sdot g"></span> OK</span></td></tr>
+            <tr><td style="font-weight:700">Enrofloxacina 10%</td><td><span class="badge badge-blue">Antibiótico</span></td><td>1L frasco</td><td><strong>4</strong> frascos</td><td>2</td><td style="color:var(--text-3)">10/02/2027</td><td><span class="pill pill-ok"><span class="sdot g"></span> OK</span></td></tr>
+            <tr><td style="font-weight:700">Baycox</td><td><span class="badge badge-warn">Antiparasitario</span></td><td>1L frasco</td><td style="color:var(--danger);font-weight:700"><strong>1</strong> frasco</td><td>2</td><td style="color:var(--text-3)">30/06/2026</td><td><span class="pill pill-danger"><span class="sdot d"></span> Crítico</span></td></tr>
+            <tr><td style="font-weight:700">Vitaminas ADE</td><td><span class="badge badge-green">Vitamina</span></td><td>500mL frasco</td><td><strong>6</strong> frascos</td><td>2</td><td style="color:var(--text-3)">01/12/2026</td><td><span class="pill pill-ok"><span class="sdot g"></span> OK</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -150,32 +110,29 @@
   </div>
 </main>
 
-<!-- Modal vacuna -->
 <div class="modal-overlay" id="modal-vac">
   <div class="modal">
-    <div class="modal-head"><div class="modal-ttl">💉 Registrar vacuna aplicada</div><button class="modal-close" onclick="closeModal('modal-vac')">✕</button></div>
+    <div class="modal-head"><div><div class="modal-ttl">Registrar vacuna aplicada</div><div class="card-sub">Datos de la aplicación</div></div><button class="modal-close" onclick="closeModal('modal-vac')"><i class="ti ti-x"></i></button></div>
     <div class="modal-body">
-      <div class="form-row"><div class="form-group"><label class="form-label">Lote</label><select class="form-input"><option>Lote 24-A — Galpón 1</option><option>Lote 24-B — Galpón 2</option><option>Lote 24-C — Galpón 3</option><option>Lote 24-D — Galpón 4</option></select></div><div class="form-group"><label class="form-label">Fecha de aplicación</label><input type="date" class="form-input"></div></div>
-      <div class="form-group"><label class="form-label">Vacuna</label><select class="form-input"><option>Newcastle (La Sota)</option><option>Gumboro</option><option>Marek</option><option>Bronquitis Infecciosa</option><option>Coccidiosis</option><option>Otra</option></select></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Vía de aplicación</label><select class="form-input"><option>Agua de bebida</option><option>Ocular</option><option>Nasal</option><option>Subcutánea</option><option>Intramuscular</option></select></div><div class="form-group"><label class="form-label">Dosis</label><input type="text" class="form-input" placeholder="Ej: 1 dosis/ave"></div></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Lote del producto</label><input type="text" class="form-input" placeholder="Ej: VN-2024-A"></div><div class="form-group"><label class="form-label">Quién aplicó</label><input type="text" class="form-input" placeholder="Nombre del encargado"></div></div>
-      <div class="form-group"><label class="form-label">Observaciones</label><textarea class="form-input" rows="2" placeholder="Reacciones, temperatura al aplicar, etc."></textarea></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Lote</label><select class="form-input"><option>Lote 24-A · Galpón 1</option><option>Lote 24-B · Galpón 2</option><option>Lote 24-C · Galpón 3</option><option>Lote 24-D · Galpón 4</option></select></div><div class="form-group"><label class="form-label">Fecha</label><input type="date" class="form-input"></div></div>
+      <div class="form-group"><label class="form-label">Vacuna</label><select class="form-input"><option>Newcastle (La Sota)</option><option>Gumboro</option><option>Marek</option><option>Bronquitis Infecciosa</option><option>Coccidiosis</option></select></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Vía</label><select class="form-input"><option>Agua de bebida</option><option>Ocular</option><option>Nasal</option><option>Subcutánea</option></select></div><div class="form-group"><label class="form-label">Dosis</label><input type="text" class="form-input" placeholder="1 dosis/ave"></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Lote del producto</label><input type="text" class="form-input" placeholder="VN-2024-A"></div><div class="form-group"><label class="form-label">Quién aplicó</label><input type="text" class="form-input" placeholder="Nombre"></div></div>
     </div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-vac')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-vac');toast('Vacuna registrada','success')">Guardar</button></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-vac')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-vac');toast('Vacuna registrada','success')"><i class="ti ti-check"></i> Guardar</button></div>
   </div>
 </div>
 
-<!-- Modal tratamiento -->
 <div class="modal-overlay" id="modal-trat">
   <div class="modal">
-    <div class="modal-head"><div class="modal-ttl">💊 Registrar tratamiento</div><button class="modal-close" onclick="closeModal('modal-trat')">✕</button></div>
+    <div class="modal-head"><div><div class="modal-ttl">Registrar tratamiento</div></div><button class="modal-close" onclick="closeModal('modal-trat')"><i class="ti ti-x"></i></button></div>
     <div class="modal-body">
-      <div class="form-row"><div class="form-group"><label class="form-label">Lote</label><select class="form-input"><option>Lote 24-A</option><option>Lote 24-B</option><option>Lote 24-C</option><option>Lote 24-D</option></select></div><div class="form-group"><label class="form-label">Fecha inicio</label><input type="date" class="form-input"></div></div>
-      <div class="form-group"><label class="form-label">Medicamento / producto</label><input type="text" class="form-input" placeholder="Nombre del medicamento"></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Dosis y vía</label><input type="text" class="form-input" placeholder="Ej: 1mL/L agua"></div><div class="form-group"><label class="form-label">Duración (días)</label><input type="number" class="form-input" placeholder="5"></div></div>
-      <div class="form-group"><label class="form-label">Diagnóstico / motivo</label><textarea class="form-input" rows="2" placeholder="¿Por qué se aplica este tratamiento?"></textarea></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Lote</label><select class="form-input"><option>Lote 24-A</option><option>Lote 24-B</option></select></div><div class="form-group"><label class="form-label">Fecha inicio</label><input type="date" class="form-input"></div></div>
+      <div class="form-group"><label class="form-label">Medicamento</label><input type="text" class="form-input" placeholder="Nombre del producto"></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Dosis y vía</label><input type="text" class="form-input" placeholder="1mL/L agua"></div><div class="form-group"><label class="form-label">Días</label><input type="number" class="form-input" placeholder="5"></div></div>
+      <div class="form-group"><label class="form-label">Diagnóstico</label><textarea class="form-input" rows="2" placeholder="¿Por qué se aplica?"></textarea></div>
     </div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-trat')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-trat');toast('Tratamiento registrado','success')">Guardar</button></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-trat')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-trat');toast('Tratamiento registrado','success')"><i class="ti ti-check"></i> Guardar</button></div>
   </div>
 </div>
 

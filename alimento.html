@@ -11,65 +11,63 @@
 <main class="main">
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:12px;">
-      <button class="hamburger" onclick="toggleSB()">☰</button>
-      <div><div class="page-ttl">Alimento & Nutrición</div><div class="page-sub">Inventario y consumo por galpón</div></div>
+      <button class="hamburger" onclick="toggleSB()"><i class="ti ti-menu-2"></i></button>
+      <div><div class="page-ttl">Alimento & Nutrición</div><div class="page-sub">Inventario · consumo por galpón · análisis de costos</div></div>
     </div>
     <div class="topbar-right">
-      <div class="icon-btn">🔔<div class="notif-dot"></div></div>
-      <button class="btn btn-primary" onclick="openModal('modal-entrada')">+ Entrada de alimento</button>
+      <div class="icon-btn"><i class="ti ti-bell"></i><div class="notif-dot"></div></div>
+      <button class="btn btn-primary" onclick="openModal('modal-entrada')"><i class="ti ti-plus"></i> Entrada de alimento</button>
     </div>
   </div>
   <div class="content">
 
     <div class="g4">
-      <div class="kpi delay-1"><div class="kpi-top"><div class="kpi-label">Stock total</div><div class="kpi-chip g">🌽</div></div><div class="kpi-num">48.2 <span class="kpi-unit">ton</span></div><div class="kpi-footer mid">▶ Para ~6 días promedio</div></div>
-      <div class="kpi delay-2"><div class="kpi-top"><div class="kpi-label">Consumo hoy</div><div class="kpi-chip b">📊</div></div><div class="kpi-num">8.4 <span class="kpi-unit">ton</span></div><div class="kpi-footer up">▲ Dentro del rango esperado</div></div>
-      <div class="kpi delay-3"><div class="kpi-top"><div class="kpi-label">Costo alimento/día</div><div class="kpi-chip w">💰</div></div><div class="kpi-num">$26,880 <span class="kpi-unit" style="font-size:10px">MXN</span></div><div class="kpi-footer mid">▶ $3,200/ton promedio</div></div>
-      <div class="kpi delay-4"><div class="kpi-top"><div class="kpi-label">G. Alimento bajo</div><div class="kpi-chip d">⚠️</div></div><div class="kpi-num">1 <span class="kpi-unit">galpón</span></div><div class="kpi-footer down">▼ Galpón 1 — 3 días restantes</div></div>
+      <div class="kpi-modern delay-1"><div class="ki-top"><div class="ki-icon-bg g"><i class="ti ti-grain"></i></div><span class="ki-trend up"><i class="ti ti-circle-check"></i> Stock OK</span></div><div class="ki-label">Stock total</div><div class="ki-num num-mono">48.2<span>ton</span></div><div class="ki-context">Para <strong>~6 días</strong> promedio</div></div>
+      <div class="kpi-modern delay-2"><div class="ki-top"><div class="ki-icon-bg b"><i class="ti ti-chart-bar"></i></div><span class="ki-trend up"><i class="ti ti-trending-up"></i> Normal</span></div><div class="ki-label">Consumo hoy</div><div class="ki-num num-mono">8.4<span>ton</span></div><div class="ki-context">Dentro del rango esperado</div></div>
+      <div class="kpi-modern delay-3"><div class="ki-top"><div class="ki-icon-bg w"><i class="ti ti-cash"></i></div><span class="ki-trend mid"><i class="ti ti-coin"></i> $3,200/t</span></div><div class="ki-label">Costo alimento/día</div><div class="ki-num num-mono">$26.8K<span>MXN</span></div><div class="ki-context">Promedio última semana</div></div>
+      <div class="kpi-modern delay-4"><div class="ki-top"><div class="ki-icon-bg w"><i class="ti ti-alert-triangle"></i></div><span class="ki-trend down"><i class="ti ti-clock"></i> 3 días</span></div><div class="ki-label">Galpón con stock bajo</div><div class="ki-num num-mono">1<span>galpón</span></div><div class="ki-context"><strong>Galpón 1</strong> · 3 días restantes</div></div>
     </div>
 
     <div class="g2">
-      <!-- Gráfica consumo -->
-      <div class="card">
-        <div class="card-head"><div class="card-ttl">Consumo de alimento vs Estándar — Lote 24-A (Broiler)</div><div class="card-link">Ver todos</div></div>
-        <div class="card-body"><div class="chart-wrap"><canvas id="chartAlim"></canvas></div></div>
+      <div class="card delay-5">
+        <div class="card-head"><div><div class="card-ttl">Consumo vs Estándar Ross 308</div><div class="card-sub">Lote 24-A · 35 días</div></div><a class="card-link"><i class="ti ti-download"></i> Exportar</a></div>
+        <div class="card-body"><div class="chart-wrap" style="height:240px;"><canvas id="chartAlim"></canvas></div></div>
       </div>
 
-      <!-- Stock por galpón -->
-      <div class="card" style="animation-delay:.18s;">
-        <div class="card-head"><div class="card-ttl">Stock por galpón</div><div class="card-link" onclick="openModal('modal-entrada')">+ Entrada</div></div>
+      <div class="card delay-6">
+        <div class="card-head"><div><div class="card-ttl">Stock por galpón</div><div class="card-sub">Tiempo restante calculado</div></div><a class="card-link" onclick="openModal('modal-entrada')"><i class="ti ti-plus"></i> Entrada</a></div>
         <div class="card-body">
           <div style="display:flex;flex-direction:column;gap:14px;">
-            <div style="padding:12px;border-radius:10px;background:var(--warn-l);border:1px solid #FDE08D;">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                <div><div style="font-weight:600;font-size:13.5px;">🐣 Galpón 1 — Lote 24-A</div><div style="font-size:12px;color:#B45309;">Finalizador Fase 3 · Ross 308</div></div>
-                <span class="pill pill-warn">3 días</span>
+            <div style="padding:14px;border-radius:12px;background:var(--warn-l);border:1px solid #FBDFA9;">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                <div><div style="font-family:var(--font-display);font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ti ti-paw" style="color:#C96A00"></i> Galpón 1 · Lote 24-A</div><div style="font-size:11.5px;color:#92741C;font-weight:500;margin-top:2px;">Finalizador Fase 3 · Ross 308</div></div>
+                <span class="pill pill-warn"><i class="ti ti-clock"></i> 3 días</span>
               </div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;color:#B45309;margin-bottom:4px;"><span>Stock: 9.2 ton</span><span>Consumo diario: ~3.1 ton</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:11.5px;color:#92741C;margin-bottom:5px;font-weight:600;"><span>Stock: <strong>9.2 ton</strong></span><span>Consumo diario: <strong>~3.1 ton</strong></span></div>
               <div class="bar"><div class="bar-fill w" style="width:30%"></div></div>
             </div>
-            <div style="padding:12px;border-radius:10px;background:var(--bg);border:1px solid var(--border);">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                <div><div style="font-weight:600;font-size:13.5px;">🐣 Galpón 2 — Lote 24-B</div><div style="font-size:12px;color:var(--text-3);">Crecimiento Fase 2 · Cobb 500</div></div>
-                <span class="pill pill-ok">8 días</span>
+            <div style="padding:14px;border-radius:12px;background:var(--surface-2);border:1px solid var(--border);">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                <div><div style="font-family:var(--font-display);font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ti ti-paw" style="color:#C96A00"></i> Galpón 2 · Lote 24-B</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;margin-top:2px;">Crecimiento Fase 2 · Cobb 500</div></div>
+                <span class="pill pill-ok"><i class="ti ti-check"></i> 8 días</span>
               </div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-3);margin-bottom:4px;"><span>Stock: 18.4 ton</span><span>Consumo diario: ~2.3 ton</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--text-3);margin-bottom:5px;font-weight:600;"><span>Stock: <strong style="color:var(--text)">18.4 ton</strong></span><span>Diario: <strong style="color:var(--text)">~2.3 ton</strong></span></div>
               <div class="bar"><div class="bar-fill" style="width:65%"></div></div>
             </div>
-            <div style="padding:12px;border-radius:10px;background:var(--bg);border:1px solid var(--border);">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                <div><div style="font-weight:600;font-size:13.5px;">🥚 Galpón 3 — Lote 24-C</div><div style="font-size:12px;color:var(--text-3);">Postura alta producción</div></div>
-                <span class="pill pill-ok">11 días</span>
+            <div style="padding:14px;border-radius:12px;background:var(--surface-2);border:1px solid var(--border);">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                <div><div style="font-family:var(--font-display);font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ti ti-egg" style="color:var(--blue)"></i> Galpón 3 · Lote 24-C</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;margin-top:2px;">Postura alta producción</div></div>
+                <span class="pill pill-ok"><i class="ti ti-check"></i> 11 días</span>
               </div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-3);margin-bottom:4px;"><span>Stock: 12.8 ton</span><span>Consumo diario: ~1.2 ton</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--text-3);margin-bottom:5px;font-weight:600;"><span>Stock: <strong style="color:var(--text)">12.8 ton</strong></span><span>Diario: <strong style="color:var(--text)">~1.2 ton</strong></span></div>
               <div class="bar"><div class="bar-fill" style="width:78%"></div></div>
             </div>
-            <div style="padding:12px;border-radius:10px;background:var(--bg);border:1px solid var(--border);">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                <div><div style="font-weight:600;font-size:13.5px;">🥚 Galpón 4 — Lote 24-D</div><div style="font-size:12px;color:var(--text-3);">Postura inicio ciclo</div></div>
-                <span class="pill pill-ok">14 días</span>
+            <div style="padding:14px;border-radius:12px;background:var(--surface-2);border:1px solid var(--border);">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                <div><div style="font-family:var(--font-display);font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ti ti-egg" style="color:var(--blue)"></i> Galpón 4 · Lote 24-D</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;margin-top:2px;">Postura inicio ciclo</div></div>
+                <span class="pill pill-ok"><i class="ti ti-check"></i> 14 días</span>
               </div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-3);margin-bottom:4px;"><span>Stock: 7.8 ton</span><span>Consumo diario: ~0.56 ton</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--text-3);margin-bottom:5px;font-weight:600;"><span>Stock: <strong style="color:var(--text)">7.8 ton</strong></span><span>Diario: <strong style="color:var(--text)">~0.56 ton</strong></span></div>
               <div class="bar"><div class="bar-fill" style="width:85%"></div></div>
             </div>
           </div>
@@ -77,17 +75,16 @@
       </div>
     </div>
 
-    <!-- Historial entregas -->
-    <div class="card" style="animation-delay:.28s;">
-      <div class="card-head"><div class="card-ttl">Historial de entradas de alimento</div><div class="card-link">Ver todas</div></div>
+    <div class="card" style="animation-delay:.32s;">
+      <div class="card-head"><div><div class="card-ttl">Historial de entradas</div><div class="card-sub">Últimos movimientos de inventario</div></div><a class="card-link">Ver todas</a></div>
       <div style="overflow-x:auto;">
         <table class="tbl">
-          <thead><tr><th>Fecha</th><th>Galpón / Lote</th><th>Tipo de alimento</th><th>Cantidad</th><th>Proveedor</th><th>Precio/ton</th><th>Total MXN</th></tr></thead>
+          <thead><tr><th>Fecha</th><th>Galpón</th><th>Tipo</th><th>Cantidad</th><th>Proveedor</th><th>$/Ton</th><th>Total</th></tr></thead>
           <tbody>
-            <tr><td style="color:var(--text-3)">06/05</td><td><span class="badge badge-green">G1 24-A</span></td><td>Finalizador Fase 3</td><td>520 sacos / 20.8 ton</td><td>Nutrimentos del Bajío</td><td>$4,000/ton</td><td style="font-weight:700;color:var(--danger)">−$83,200</td></tr>
-            <tr><td style="color:var(--text-3)">04/05</td><td><span class="badge badge-blue">G3 24-C</span></td><td>Postura producción</td><td>280 sacos / 11.2 ton</td><td>Nutrimentos del Bajío</td><td>$4,000/ton</td><td style="font-weight:700;color:var(--danger)">−$44,800</td></tr>
-            <tr><td style="color:var(--text-3)">01/05</td><td><span class="badge badge-warn">G2 24-B</span></td><td>Crecimiento Fase 2</td><td>600 sacos / 24 ton</td><td>ProAlimentos MX</td><td>$3,750/ton</td><td style="font-weight:700;color:var(--danger)">−$90,000</td></tr>
-            <tr><td style="color:var(--text-3)">28/04</td><td><span class="badge badge-blue">G4 24-D</span></td><td>Inicio postura</td><td>200 sacos / 8 ton</td><td>Nutrimentos del Bajío</td><td>$3,900/ton</td><td style="font-weight:700;color:var(--danger)">−$31,200</td></tr>
+            <tr><td style="color:var(--text-3)">06 may</td><td><span class="badge badge-green">G1 · 24-A</span></td><td style="font-weight:500">Finalizador Fase 3</td><td class="num-mono"><strong>520</strong> sacos · 20.8 ton</td><td>Nutrimentos del Bajío</td><td class="num-mono">$4,000</td><td class="num-mono" style="font-weight:700;color:var(--danger);font-family:var(--font-display);font-size:14px;">−$83,200</td></tr>
+            <tr><td style="color:var(--text-3)">04 may</td><td><span class="badge badge-blue">G3 · 24-C</span></td><td style="font-weight:500">Postura producción</td><td class="num-mono"><strong>280</strong> sacos · 11.2 ton</td><td>Nutrimentos del Bajío</td><td class="num-mono">$4,000</td><td class="num-mono" style="font-weight:700;color:var(--danger);font-family:var(--font-display);font-size:14px;">−$44,800</td></tr>
+            <tr><td style="color:var(--text-3)">01 may</td><td><span class="badge badge-warn">G2 · 24-B</span></td><td style="font-weight:500">Crecimiento Fase 2</td><td class="num-mono"><strong>600</strong> sacos · 24 ton</td><td>ProAlimentos MX</td><td class="num-mono">$3,750</td><td class="num-mono" style="font-weight:700;color:var(--danger);font-family:var(--font-display);font-size:14px;">−$90,000</td></tr>
+            <tr><td style="color:var(--text-3)">28 abr</td><td><span class="badge badge-blue">G4 · 24-D</span></td><td style="font-weight:500">Inicio postura</td><td class="num-mono"><strong>200</strong> sacos · 8 ton</td><td>Nutrimentos del Bajío</td><td class="num-mono">$3,900</td><td class="num-mono" style="font-weight:700;color:var(--danger);font-family:var(--font-display);font-size:14px;">−$31,200</td></tr>
           </tbody>
         </table>
       </div>
@@ -96,45 +93,35 @@
   </div>
 </main>
 
-<!-- Modal entrada alimento -->
 <div class="modal-overlay" id="modal-entrada">
   <div class="modal">
-    <div class="modal-head"><div class="modal-ttl">🌽 Registrar entrada de alimento</div><button class="modal-close" onclick="closeModal('modal-entrada')">✕</button></div>
+    <div class="modal-head"><div><div class="modal-ttl">Registrar entrada de alimento</div><div class="card-sub">Datos del envío</div></div><button class="modal-close" onclick="closeModal('modal-entrada')"><i class="ti ti-x"></i></button></div>
     <div class="modal-body">
-      <div class="form-row"><div class="form-group"><label class="form-label">Galpón / Lote</label><select class="form-input"><option>Galpón 1 — Lote 24-A</option><option>Galpón 2 — Lote 24-B</option><option>Galpón 3 — Lote 24-C</option><option>Galpón 4 — Lote 24-D</option></select></div><div class="form-group"><label class="form-label">Fecha de entrada</label><input type="date" class="form-input"></div></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Tipo de alimento</label><select class="form-input"><option>Iniciador Fase 1</option><option>Crecimiento Fase 2</option><option>Finalizador Fase 3</option><option>Postura inicio ciclo</option><option>Postura producción</option><option>Otro</option></select></div><div class="form-group"><label class="form-label">Sacos de 40kg</label><input type="number" class="form-input" placeholder="0" oninput="calcAlim()"></div></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Precio por tonelada (MXN)</label><input type="number" class="form-input" placeholder="4000" oninput="calcAlim()"></div><div class="form-group"><label class="form-label">Total MXN</label><input type="text" class="form-input" id="total-alim" readonly style="background:var(--bg);font-weight:700;"></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Galpón</label><select class="form-input"><option>Galpón 1 · 24-A</option><option>Galpón 2 · 24-B</option><option>Galpón 3 · 24-C</option><option>Galpón 4 · 24-D</option></select></div><div class="form-group"><label class="form-label">Fecha</label><input type="date" class="form-input"></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Tipo de alimento</label><select class="form-input"><option>Iniciador Fase 1</option><option>Crecimiento Fase 2</option><option>Finalizador Fase 3</option><option>Postura inicio</option><option>Postura producción</option></select></div><div class="form-group"><label class="form-label">Sacos de 40kg</label><input type="number" class="form-input" placeholder="0"></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">$/Tonelada (MXN)</label><input type="number" class="form-input" placeholder="4000"></div><div class="form-group"><label class="form-label">Total</label><input type="text" class="form-input" readonly placeholder="$0" style="background:var(--surface-3);font-weight:700;"></div></div>
       <div class="form-group"><label class="form-label">Proveedor</label><input type="text" class="form-input" placeholder="Nombre del proveedor"></div>
     </div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-entrada')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-entrada');toast('Entrada registrada','success')">Guardar</button></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-entrada')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-entrada');toast('Entrada registrada','success')"><i class="ti ti-check"></i> Guardar</button></div>
   </div>
 </div>
 
 <script src="shared.js"></script>
 <script>
-const dias2 = Array.from({length:35},(_,i)=>'D'+(i+1));
-const consumoReal = [0.13,0.18,0.22,0.28,0.34,0.40,0.48,0.56,0.65,0.74,0.82,0.91,1.01,1.10,1.19,1.28,1.37,1.46,1.55,1.62,1.69,1.76,1.82,1.88,1.93,1.98,2.02,2.06,2.10,2.13,2.16,2.18,2.20,2.22,2.23];
-const consumoEst  = [0.12,0.17,0.21,0.26,0.32,0.38,0.46,0.54,0.62,0.71,0.79,0.87,0.97,1.06,1.15,1.24,1.33,1.42,1.51,1.58,1.65,1.72,1.78,1.84,1.89,1.94,1.98,2.02,2.06,2.09,2.12,2.14,2.16,2.18,2.19];
+const dias=Array.from({length:35},(_,i)=>'D'+(i+1));
+const real=[0.13,0.18,0.22,0.28,0.34,0.40,0.48,0.56,0.65,0.74,0.82,0.91,1.01,1.10,1.19,1.28,1.37,1.46,1.55,1.62,1.69,1.76,1.82,1.88,1.93,1.98,2.02,2.06,2.10,2.13,2.16,2.18,2.20,2.22,2.23];
+const std=[0.12,0.17,0.21,0.26,0.32,0.38,0.46,0.54,0.62,0.71,0.79,0.87,0.97,1.06,1.15,1.24,1.33,1.42,1.51,1.58,1.65,1.72,1.78,1.84,1.89,1.94,1.98,2.02,2.06,2.09,2.12,2.14,2.16,2.18,2.19];
 new Chart(document.getElementById('chartAlim').getContext('2d'),{
   type:'line',
-  data:{
-    labels:dias2,
-    datasets:[
-      { label:'Consumo real (kg/ave)', data:consumoReal, borderColor:'#0B8B5E', backgroundColor:'rgba(11,139,94,.07)', borderWidth:2.5, pointRadius:0, tension:.3, fill:true },
-      { label:'Estándar Ross 308', data:consumoEst, borderColor:'#3B7DD8', backgroundColor:'transparent', borderWidth:2, borderDash:[5,4], pointRadius:0, tension:.3 }
-    ]
-  },
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{labels:{color:'#8AA396',font:{family:'DM Sans',size:11.5},boxWidth:14}}},
-    scales:{x:{ticks:{color:'#8AA396',font:{size:10},maxTicksLimit:7},grid:{color:'#EDF2EF'}},y:{ticks:{color:'#8AA396',font:{size:11},callback:v=>v+'kg'},grid:{color:'#EDF2EF'}}}
+  data:{labels:dias,datasets:[
+    {label:'Consumo real (kg/ave)',data:real,borderColor:'#0B8B5E',backgroundColor:'rgba(11,139,94,.10)',borderWidth:3,pointRadius:0,pointHoverRadius:5,tension:.35,fill:true},
+    {label:'Estándar Ross 308',data:std,borderColor:'#2D6FE8',backgroundColor:'transparent',borderWidth:2,borderDash:[6,4],pointRadius:0,tension:.35}
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+    plugins:{legend:{position:'top',align:'end',labels:{color:'#7B8F84',font:{family:'DM Sans',size:12,weight:'500'},boxWidth:14,boxHeight:8,usePointStyle:true,padding:14}},tooltip:{backgroundColor:'#0F1F19',padding:14,cornerRadius:10,callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y}kg`}}},
+    scales:{x:{ticks:{color:'#7B8F84',font:{size:10,weight:'600'},maxTicksLimit:8},grid:{color:'#E1EAE5'},border:{display:false}},y:{ticks:{color:'#7B8F84',font:{size:11},callback:v=>v+'kg'},grid:{color:'#E1EAE5'},border:{display:false}}}
   }
 });
-function calcAlim(){
-  const sacos=parseInt(document.querySelector('[placeholder="0"]').value||0);
-  const precio=parseFloat(document.querySelector('[placeholder="4000"]').value||0);
-  const ton=sacos*40/1000;
-  document.getElementById('total-alim').value = ton&&precio ? '$'+(ton*precio).toLocaleString('es-MX',{minimumFractionDigits:2}) : '';
-}
 </script>
 </body>
 </html>

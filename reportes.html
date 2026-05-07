@@ -5,24 +5,37 @@
 <title>AviGes — Reportes</title>
 <link rel="stylesheet" href="shared.css">
 <style>
-.reporte-card {
-  background: var(--white); border: 1px solid var(--border); border-radius: var(--r);
-  padding: 20px; box-shadow: var(--shadow-sm); cursor: pointer; transition: all .15s;
-  animation: fadeUp .4s ease forwards; opacity: 0;
-  display: flex; flex-direction: column; gap: 12px;
+.report-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px,1fr)); gap: 16px; }
+.report-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg);
+  overflow: hidden; cursor: pointer; transition: all .2s ease;
+  animation: fadeUp .45s cubic-bezier(.2,.8,.4,1) forwards; opacity: 0;
+  position: relative;
 }
-.reporte-card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(11,139,94,.12); }
-.rep-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
-.rep-icon.g { background: var(--primary-l); }
-.rep-icon.b { background: var(--blue-l); }
-.rep-icon.w { background: var(--warn-l); }
-.rep-icon.p { background: var(--purple-l); }
-.rep-name { font-size: 15px; font-weight: 700; color: var(--text); }
-.rep-desc { font-size: 12.5px; color: var(--text-3); line-height: 1.5; }
-.rep-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid var(--border); }
-.rep-format { font-size: 11px; font-weight: 600; color: var(--text-3); }
-.btn-gen { background: var(--primary-l); color: var(--primary); border: 1px solid var(--primary-m); border-radius: 8px; padding: 7px 14px; font-size: 12.5px; font-weight: 600; cursor: pointer; font-family: var(--font); transition: all .12s; }
-.btn-gen:hover { background: var(--primary); color: #fff; }
+.report-card:hover { border-color: var(--primary-m); box-shadow: var(--shadow); transform: translateY(-3px); }
+.report-card-top {
+  padding: 22px 22px 16px; display: flex; align-items: center; gap: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.report-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center; font-size: 22px;
+  flex-shrink: 0;
+}
+.report-icon.g { background: var(--primary-l); color: var(--primary); }
+.report-icon.b { background: var(--info-l); color: var(--info); }
+.report-icon.a { background: var(--amber-l); color: var(--amber-d); }
+.report-icon.p { background: var(--plum-l); color: var(--plum); }
+.report-card-name { font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--text); letter-spacing: -.3px; }
+.report-card-desc { font-size: 12.5px; color: var(--text-3); margin-top: 3px; line-height: 1.4; }
+.report-card-body { padding: 16px 22px; font-size: 12.5px; color: var(--text-2); line-height: 1.55; }
+.report-card-footer { padding: 14px 22px; background: var(--surface-2); border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.report-tag {
+  font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 5px;
+  text-transform: uppercase; letter-spacing: .06em;
+}
+.tag-official { background: var(--amber-l); color: var(--amber-d); }
+.tag-internal { background: var(--surface-3); color: var(--text-3); }
 </style>
 </head>
 <body>
@@ -30,157 +43,172 @@
 <main class="main">
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:12px;">
-      <button class="hamburger" onclick="toggleSB()">☰</button>
-      <div><div class="page-ttl">Reportes & Exportación</div><div class="page-sub">Genera reportes de tu granja en un clic</div></div>
+      <button class="hamburger" onclick="toggleSB()"><i class="ti ti-menu-2"></i></button>
+      <div><div class="page-ttl">Reportes PDF</div><div class="page-sub">Genera reportes oficiales con un clic</div></div>
     </div>
     <div class="topbar-right">
-      <div class="icon-btn">🔔</div>
+      <div class="icon-btn"><i class="ti ti-bell"></i></div>
+      <button class="btn btn-secondary btn-sm"><i class="ti ti-history"></i> Historial</button>
+      <button class="btn btn-primary"><i class="ti ti-plus"></i> Nuevo reporte</button>
     </div>
   </div>
   <div class="content">
 
-    <div class="section-title">📄 Reportes de producción</div>
-    <div class="g3 mb16">
-      <div class="reporte-card delay-1" onclick="generar('Reporte de Cierre de Lote')">
-        <div class="rep-icon g">📊</div>
-        <div>
-          <div class="rep-name">Reporte de cierre de lote</div>
-          <div class="rep-desc">Resumen completo al cierre: IEP, CA, mortalidad, peso final, costos totales y utilidad del lote. Con gráficas.</div>
-        </div>
-        <div class="rep-footer"><span class="rep-format">PDF · Excel</span><button class="btn-gen">Generar →</button></div>
-      </div>
-      <div class="reporte-card delay-2" onclick="generar('Reporte Semanal de Producción')">
-        <div class="rep-icon b">📅</div>
-        <div>
-          <div class="rep-name">Reporte semanal</div>
-          <div class="rep-desc">Resumen de la semana: consumos, mortalidades, pesos, postura, incidencias sanitarias y temperatura.</div>
-        </div>
-        <div class="rep-footer"><span class="rep-format">PDF · Excel</span><button class="btn-gen">Generar →</button></div>
-      </div>
-      <div class="reporte-card delay-3" onclick="generar('Comparativa de Lotes')">
-        <div class="rep-icon g">🔄</div>
-        <div>
-          <div class="rep-name">Comparativa entre lotes</div>
-          <div class="rep-desc">Compara IEP, CA, mortalidad y costos entre todos tus lotes anteriores. Identifica tendencias.</div>
-        </div>
-        <div class="rep-footer"><span class="rep-format">PDF · Excel</span><button class="btn-gen">Generar →</button></div>
-      </div>
+    <div class="g4">
+      <div class="kpi-card delay-1"><div class="ki-head"><div class="ki-icon g"><i class="ti ti-file-text"></i></div></div><div class="ki-label">Reportes generados</div><div class="ki-num num-mono">42</div><div class="ki-context">Últimos 30 días</div></div>
+      <div class="kpi-card delay-2"><div class="ki-head"><div class="ki-icon a"><i class="ti ti-shield-check"></i></div></div><div class="ki-label">SENASICA</div><div class="ki-num num-mono">8</div><div class="ki-context">Reportes oficiales</div></div>
+      <div class="kpi-card delay-3"><div class="ki-head"><div class="ki-icon b"><i class="ti ti-cloud-download"></i></div></div><div class="ki-label">Descargas</div><div class="ki-num num-mono">126</div><div class="ki-context">Total histórico</div></div>
+      <div class="kpi-card delay-4"><div class="ki-head"><div class="ki-icon p"><i class="ti ti-mail"></i></div></div><div class="ki-label">Compartidos</div><div class="ki-num num-mono">14</div><div class="ki-context">Por email este mes</div></div>
     </div>
 
-    <div class="section-title">🥚 Reportes de ponedoras</div>
-    <div class="g3 mb16">
-      <div class="reporte-card delay-1" onclick="generar('Reporte Mensual de Postura')">
-        <div class="rep-icon w">🥚</div>
-        <div>
-          <div class="rep-name">Reporte mensual de postura</div>
-          <div class="rep-desc">% postura vs curva estándar, clasificación de huevo, cartones producidos y vendidos, merma.</div>
+    <h3 style="font-family:var(--font-display);font-size:16px;font-weight:700;letter-spacing:-.3px;margin:24px 0 14px;">Reportes oficiales</h3>
+
+    <div class="report-grid">
+
+      <div class="report-card delay-1" onclick="generateReport('senasica')">
+        <div class="report-card-top">
+          <div class="report-icon a"><i class="ti ti-shield-check"></i></div>
+          <div>
+            <div class="report-card-name">Reporte SENASICA</div>
+            <div class="report-card-desc">Formato oficial bioseguridad</div>
+          </div>
         </div>
-        <div class="rep-footer"><span class="rep-format">PDF · Excel</span><button class="btn-gen">Generar →</button></div>
-      </div>
-      <div class="reporte-card delay-2" onclick="generar('Inventario de Huevo')">
-        <div class="rep-icon g">📦</div>
-        <div>
-          <div class="rep-name">Inventario de huevo</div>
-          <div class="rep-desc">Stock actual por clasificación, entradas y salidas de la semana, ventas pendientes.</div>
+        <div class="report-card-body">Genera el reporte mensual con vacunaciones, mortalidad, bioseguridad y producción para SENASICA.</div>
+        <div class="report-card-footer">
+          <span class="report-tag tag-official">OFICIAL</span>
+          <span style="color:var(--primary);font-weight:600;font-size:12.5px;display:inline-flex;align-items:center;gap:4px;">Generar <i class="ti ti-arrow-right" style="font-size:14px;"></i></span>
         </div>
-        <div class="rep-footer"><span class="rep-format">PDF · Excel</span><button class="btn-gen">Generar →</button></div>
       </div>
-      <div class="reporte-card delay-3" onclick="generar('Curva de Postura vs Estándar')">
-        <div class="rep-icon b">📈</div>
-        <div>
-          <div class="rep-name">Curva postura vs Hy-Line / Bovans</div>
-          <div class="rep-desc">Gráfica de postura real contra curva oficial de la línea genética. Con análisis de desviaciones.</div>
+
+      <div class="report-card delay-2" onclick="generateReport('cierre-lote')">
+        <div class="report-card-top">
+          <div class="report-icon g"><i class="ti ti-flag-check"></i></div>
+          <div>
+            <div class="report-card-name">Cierre de lote</div>
+            <div class="report-card-desc">IEP, CA, costos finales</div>
+          </div>
         </div>
-        <div class="rep-footer"><span class="rep-format">PDF</span><button class="btn-gen">Generar →</button></div>
+        <div class="report-card-body">Reporte completo al finalizar un lote: kilos producidos, IEP final, costos por etapa, utilidad.</div>
+        <div class="report-card-footer">
+          <span class="report-tag tag-internal">INTERNO</span>
+          <span style="color:var(--primary);font-weight:600;font-size:12.5px;display:inline-flex;align-items:center;gap:4px;">Generar <i class="ti ti-arrow-right" style="font-size:14px;"></i></span>
+        </div>
       </div>
+
+      <div class="report-card delay-3" onclick="generateReport('financiero')">
+        <div class="report-card-top">
+          <div class="report-icon b"><i class="ti ti-receipt-tax"></i></div>
+          <div>
+            <div class="report-card-name">Reporte financiero</div>
+            <div class="report-card-desc">Costos, ventas, utilidad</div>
+          </div>
+        </div>
+        <div class="report-card-body">Análisis financiero del periodo: ingresos vs costos, margen, utilidad por lote y por galpón.</div>
+        <div class="report-card-footer">
+          <span class="report-tag tag-internal">INTERNO</span>
+          <span style="color:var(--primary);font-weight:600;font-size:12.5px;display:inline-flex;align-items:center;gap:4px;">Generar <i class="ti ti-arrow-right" style="font-size:14px;"></i></span>
+        </div>
+      </div>
+
+      <div class="report-card delay-4" onclick="generateReport('sanidad')">
+        <div class="report-card-top">
+          <div class="report-icon p"><i class="ti ti-vaccine"></i></div>
+          <div>
+            <div class="report-card-name">Plan sanitario</div>
+            <div class="report-card-desc">Vacunación y tratamientos</div>
+          </div>
+        </div>
+        <div class="report-card-body">Histórico de vacunas aplicadas, tratamientos, próximas dosis y bitácora sanitaria del lote.</div>
+        <div class="report-card-footer">
+          <span class="report-tag tag-official">OFICIAL</span>
+          <span style="color:var(--primary);font-weight:600;font-size:12.5px;display:inline-flex;align-items:center;gap:4px;">Generar <i class="ti ti-arrow-right" style="font-size:14px;"></i></span>
+        </div>
+      </div>
+
+      <div class="report-card delay-5" onclick="generateReport('produccion')">
+        <div class="report-card-top">
+          <div class="report-icon g"><i class="ti ti-egg"></i></div>
+          <div>
+            <div class="report-card-name">Producción huevo</div>
+            <div class="report-card-desc">Postura, clasificación, ventas</div>
+          </div>
+        </div>
+        <div class="report-card-body">Reporte mensual de producción de huevo: % postura, clasificación, ventas e inventario.</div>
+        <div class="report-card-footer">
+          <span class="report-tag tag-internal">INTERNO</span>
+          <span style="color:var(--primary);font-weight:600;font-size:12.5px;display:inline-flex;align-items:center;gap:4px;">Generar <i class="ti ti-arrow-right" style="font-size:14px;"></i></span>
+        </div>
+      </div>
+
+      <div class="report-card delay-6" onclick="generateReport('alimento')">
+        <div class="report-card-top">
+          <div class="report-icon a"><i class="ti ti-grain"></i></div>
+          <div>
+            <div class="report-card-name">Consumo alimento</div>
+            <div class="report-card-desc">Por galpón vs estándar</div>
+          </div>
+        </div>
+        <div class="report-card-body">Análisis de consumo de alimento por galpón comparado con estándar Ross/Cobb/Hy-Line.</div>
+        <div class="report-card-footer">
+          <span class="report-tag tag-internal">INTERNO</span>
+          <span style="color:var(--primary);font-weight:600;font-size:12.5px;display:inline-flex;align-items:center;gap:4px;">Generar <i class="ti ti-arrow-right" style="font-size:14px;"></i></span>
+        </div>
+      </div>
+
     </div>
 
-    <div class="section-title">💰 Reportes financieros</div>
-    <div class="g3 mb16">
-      <div class="reporte-card delay-1" onclick="generar('Estado de Resultados por Lote')">
-        <div class="rep-icon g">💵</div>
-        <div>
-          <div class="rep-name">Estado de resultados por lote</div>
-          <div class="rep-desc">Ingresos vs egresos, costo/kg producido, margen bruto y utilidad neta. Formato para contador.</div>
-        </div>
-        <div class="rep-footer"><span class="rep-format">PDF · Excel</span><button class="btn-gen">Generar →</button></div>
-      </div>
-      <div class="reporte-card delay-2" onclick="generar('Reporte de Gastos Mensual')">
-        <div class="rep-icon w">📋</div>
-        <div>
-          <div class="rep-name">Gastos del mes</div>
-          <div class="rep-desc">Todos los gastos categorizados: alimento, pollito, vacunas, mano de obra, servicios.</div>
-        </div>
-        <div class="rep-footer"><span class="rep-format">PDF · Excel</span><button class="btn-gen">Generar →</button></div>
-      </div>
-      <div class="reporte-card delay-3" onclick="generar('Flujo de Caja')">
-        <div class="rep-icon p">📊</div>
-        <div>
-          <div class="rep-name">Flujo de caja mensual</div>
-          <div class="rep-desc">Entradas y salidas de dinero del mes. Ideal para tramitar créditos FIRA o con el banco.</div>
-        </div>
-        <div class="rep-footer"><span class="rep-format">PDF · Excel</span><button class="btn-gen">Generar →</button></div>
-      </div>
-    </div>
+    <h3 style="font-family:var(--font-display);font-size:16px;font-weight:700;letter-spacing:-.3px;margin:32px 0 14px;">Reportes recientes</h3>
 
-    <div class="section-title">🇲🇽 Reportes oficiales México (SENASICA)</div>
-    <div class="g3">
-      <div class="reporte-card delay-1" onclick="generar('Reporte SENASICA — Movimiento de Aves')">
-        <div class="rep-icon g">🛡️</div>
-        <div>
-          <div class="rep-name">Movimiento de aves (SENASICA)</div>
-          <div class="rep-desc">Formato oficial para reportar entradas y salidas de aves al SENASICA. Listo para enviar.</div>
-        </div>
-        <div class="rep-footer"><span class="rep-format">PDF oficial · XML</span><button class="btn-gen" style="background:var(--primary);color:#fff;">Generar →</button></div>
-      </div>
-      <div class="reporte-card delay-2" onclick="generar('Bitácora de Bioseguridad')">
-        <div class="rep-icon b">📝</div>
-        <div>
-          <div class="rep-name">Bitácora de bioseguridad</div>
-          <div class="rep-desc">Registro de visitas, desinfecciones y controles sanitarios. Necesario para auditorías.</div>
-        </div>
-        <div class="rep-footer"><span class="rep-format">PDF</span><button class="btn-gen">Generar →</button></div>
-      </div>
-      <div class="reporte-card delay-3" onclick="generar('Historial Sanitario del Lote')">
-        <div class="rep-icon w">💉</div>
-        <div>
-          <div class="rep-name">Historial sanitario completo</div>
-          <div class="rep-desc">Todas las vacunas, tratamientos y necropsias del lote. Para el médico veterinario.</div>
-        </div>
-        <div class="rep-footer"><span class="rep-format">PDF</span><button class="btn-gen">Generar →</button></div>
+    <div class="card">
+      <div style="overflow-x:auto;">
+        <table class="tbl">
+          <thead><tr><th>Nombre</th><th>Tipo</th><th>Periodo</th><th>Generado</th><th>Tamaño</th><th></th></tr></thead>
+          <tbody>
+            <tr>
+              <td><div style="font-weight:600;display:flex;align-items:center;gap:8px;"><i class="ti ti-file-text" style="color:var(--amber-d);font-size:18px;"></i> Reporte SENASICA Abril 2026</div></td>
+              <td><span class="badge badge-amber">Oficial</span></td>
+              <td style="color:var(--text-3)">Abril 2026</td>
+              <td style="color:var(--text-3)" class="num-mono">02 may · 10:34</td>
+              <td class="num-mono" style="color:var(--text-3)">2.1 MB</td>
+              <td><button class="btn btn-secondary btn-sm"><i class="ti ti-download"></i> PDF</button></td>
+            </tr>
+            <tr>
+              <td><div style="font-weight:600;display:flex;align-items:center;gap:8px;"><i class="ti ti-flag-check" style="color:var(--primary);font-size:18px;"></i> Cierre Lote 24-X</div></td>
+              <td><span class="badge badge-green">Cierre</span></td>
+              <td style="color:var(--text-3)">Mar 2026</td>
+              <td style="color:var(--text-3)" class="num-mono">31 mar · 18:20</td>
+              <td class="num-mono" style="color:var(--text-3)">1.8 MB</td>
+              <td><button class="btn btn-secondary btn-sm"><i class="ti ti-download"></i> PDF</button></td>
+            </tr>
+            <tr>
+              <td><div style="font-weight:600;display:flex;align-items:center;gap:8px;"><i class="ti ti-receipt-tax" style="color:var(--info);font-size:18px;"></i> Reporte Financiero Q1 2026</div></td>
+              <td><span class="badge badge-blue">Financiero</span></td>
+              <td style="color:var(--text-3)">Q1 2026</td>
+              <td style="color:var(--text-3)" class="num-mono">28 mar · 09:15</td>
+              <td class="num-mono" style="color:var(--text-3)">3.4 MB</td>
+              <td><button class="btn btn-secondary btn-sm"><i class="ti ti-download"></i> PDF</button></td>
+            </tr>
+            <tr>
+              <td><div style="font-weight:600;display:flex;align-items:center;gap:8px;"><i class="ti ti-vaccine" style="color:var(--plum);font-size:18px;"></i> Plan sanitario Lote 24-A</div></td>
+              <td><span class="badge badge-plum">Sanidad</span></td>
+              <td style="color:var(--text-3)">Mar-May 2026</td>
+              <td style="color:var(--text-3)" class="num-mono">15 mar · 14:02</td>
+              <td class="num-mono" style="color:var(--text-3)">980 KB</td>
+              <td><button class="btn btn-secondary btn-sm"><i class="ti ti-download"></i> PDF</button></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
   </div>
 </main>
 
-<!-- Modal generando -->
-<div class="modal-overlay" id="modal-gen">
-  <div class="modal" style="max-width:400px;text-align:center;">
-    <div class="modal-body" style="padding:36px 24px;">
-      <div id="gen-icon" style="font-size:48px;margin-bottom:16px;">⏳</div>
-      <div id="gen-title" style="font-size:16px;font-weight:700;margin-bottom:8px;">Generando reporte...</div>
-      <div id="gen-sub" style="font-size:13px;color:var(--text-3);">Procesando datos de tu granja</div>
-      <div id="gen-bar-wrap" style="margin-top:20px;"><div class="bar" style="height:6px;"><div class="bar-fill" id="gen-bar" style="width:0%;transition:width 1.5s ease;"></div></div></div>
-    </div>
-  </div>
-</div>
-
 <script src="shared.js"></script>
 <script>
-function generar(nombre) {
-  openModal('modal-gen');
-  document.getElementById('gen-title').textContent = 'Generando: ' + nombre;
-  document.getElementById('gen-icon').textContent = '⏳';
-  document.getElementById('gen-sub').textContent = 'Procesando datos de tu granja...';
-  document.getElementById('gen-bar').style.width = '0%';
-  setTimeout(()=>{ document.getElementById('gen-bar').style.width = '100%'; }, 50);
-  setTimeout(()=>{
-    document.getElementById('gen-icon').textContent = '✅';
-    document.getElementById('gen-title').textContent = '¡Reporte listo!';
-    document.getElementById('gen-sub').textContent = nombre + '.pdf generado correctamente.';
-    setTimeout(()=>closeModal('modal-gen'), 1800);
-  }, 1800);
+function generateReport(type) {
+  toast('Generando reporte... esto tarda unos segundos', 'info');
+  setTimeout(() => toast('Reporte PDF generado correctamente', 'success'), 1500);
 }
 </script>
 </body>

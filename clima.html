@@ -11,66 +11,66 @@
 <main class="main">
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:12px;">
-      <button class="hamburger" onclick="toggleSB()">☰</button>
+      <button class="hamburger" onclick="toggleSB()"><i class="ti ti-menu-2"></i></button>
       <div><div class="page-ttl">Clima & Bioseguridad</div><div class="page-sub">Temperatura, humedad y control sanitario</div></div>
     </div>
     <div class="topbar-right">
-      <div class="icon-btn">🔔<div class="notif-dot"></div></div>
-      <button class="btn btn-primary" onclick="openModal('modal-clima')">+ Registrar clima</button>
+      <div class="icon-btn"><i class="ti ti-bell"></i><div class="notif-dot"></div></div>
+      <button class="btn btn-secondary btn-sm" onclick="openModal('modal-bio')"><i class="ti ti-shield-check"></i> Bioseguridad</button>
+      <button class="btn btn-primary" onclick="openModal('modal-clima')"><i class="ti ti-temperature"></i> Registrar clima</button>
     </div>
   </div>
   <div class="content">
 
     <div class="g4">
-      <div class="kpi delay-1"><div class="kpi-top"><div class="kpi-label">Temp. promedio hoy</div><div class="kpi-chip g">🌡️</div></div><div class="kpi-num">23.0 <span class="kpi-unit">°C</span></div><div class="kpi-footer up">▲ Dentro del rango óptimo</div></div>
-      <div class="kpi delay-2"><div class="kpi-top"><div class="kpi-label">Galpón más caliente</div><div class="kpi-chip w">🔥</div></div><div class="kpi-num">29 <span class="kpi-unit">°C</span></div><div class="kpi-footer down">▼ Galpón 2 — Riesgo estrés térmico</div></div>
-      <div class="kpi delay-3"><div class="kpi-top"><div class="kpi-label">Humedad promedio</div><div class="kpi-chip b">💧</div></div><div class="kpi-num">68.3 <span class="kpi-unit">%HR</span></div><div class="kpi-footer up">▲ Óptimo 60-75%</div></div>
-      <div class="kpi delay-4"><div class="kpi-top"><div class="kpi-label">Días sin incidencias</div><div class="kpi-chip g">🛡️</div></div><div class="kpi-num">12 <span class="kpi-unit">días</span></div><div class="kpi-footer up">▲ Bioseguridad al día</div></div>
+      <div class="kpi-modern delay-1"><div class="ki-top"><div class="ki-icon-bg g"><i class="ti ti-temperature"></i></div><span class="ki-trend up"><i class="ti ti-check"></i> Óptimo</span></div><div class="ki-label">Temp. promedio</div><div class="ki-num num-mono">23.0<span>°C</span></div><div class="ki-context">Dentro del rango óptimo</div></div>
+      <div class="kpi-modern delay-2"><div class="ki-top"><div class="ki-icon-bg w"><i class="ti ti-flame"></i></div><span class="ki-trend mid"><i class="ti ti-alert-triangle"></i> Alerta</span></div><div class="ki-label">Galpón más caliente</div><div class="ki-num num-mono">29<span>°C</span></div><div class="ki-context"><strong>Galpón 2</strong> · estrés térmico</div></div>
+      <div class="kpi-modern delay-3"><div class="ki-top"><div class="ki-icon-bg b"><i class="ti ti-droplet"></i></div><span class="ki-trend up"><i class="ti ti-check"></i> Normal</span></div><div class="ki-label">Humedad promedio</div><div class="ki-num num-mono">68.3<span>%HR</span></div><div class="ki-context">Óptimo: <strong>60-75%</strong></div></div>
+      <div class="kpi-modern delay-4"><div class="ki-top"><div class="ki-icon-bg g"><i class="ti ti-shield-check"></i></div><span class="ki-trend up"><i class="ti ti-circle-check"></i> 12 días</span></div><div class="ki-label">Sin incidencias</div><div class="ki-num num-mono">12<span>días</span></div><div class="ki-context">Bioseguridad al día</div></div>
     </div>
 
-    <!-- Gráfica temperatura + Cards por galpón -->
     <div class="g2">
-      <div class="card">
-        <div class="card-head"><div class="card-ttl">Temperatura Galpón 1 — Últimos 7 días</div><div class="card-link">Ver todos</div></div>
-        <div class="card-body"><div class="chart-wrap"><canvas id="chartTemp"></canvas></div></div>
+      <div class="card delay-5">
+        <div class="card-head"><div><div class="card-ttl">Temperatura — Últimos 7 días</div><div class="card-sub">Galpón 1 · Lote 24-A</div></div><a class="card-link">Otros galpones</a></div>
+        <div class="card-body"><div class="chart-wrap" style="height:240px;"><canvas id="chartTemp"></canvas></div></div>
       </div>
-      <div class="card" style="animation-delay:.18s;">
-        <div class="card-head"><div class="card-ttl">Estado de galpones — Hoy</div><div class="card-link" onclick="openModal('modal-clima')">Registrar</div></div>
+
+      <div class="card delay-6">
+        <div class="card-head"><div><div class="card-ttl">Estado actual</div><div class="card-sub">Lectura: hace 1 h</div></div><a class="card-link" onclick="openModal('modal-clima')">Registrar</a></div>
         <div class="card-body">
           <div style="display:flex;flex-direction:column;gap:12px;">
-            <div style="padding:12px;border-radius:10px;border:1px solid var(--border);background:var(--bg);display:flex;justify-content:space-between;align-items:center;">
-              <div><div style="font-weight:600;font-size:13.5px;">🐣 Galpón 1 · Día 35</div><div style="font-size:12px;color:var(--text-3);">Broiler Ross 308</div></div>
-              <div style="text-align:right;"><div style="font-weight:700;font-size:15px;color:var(--primary)">22°C</div><div style="font-size:12px;color:var(--text-3)">68% HR · Óptimo ✓</div></div>
+            <div style="padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--surface-2);display:flex;justify-content:space-between;align-items:center;">
+              <div><div style="font-family:var(--font-display);font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ti ti-paw" style="color:#C96A00"></i> Galpón 1 · Día 35</div><div style="font-size:12px;color:var(--text-3);font-weight:500;margin-top:2px;">Broiler Ross 308</div></div>
+              <div style="text-align:right;"><div class="num-mono" style="font-family:var(--font-display);font-weight:800;font-size:18px;color:var(--primary);letter-spacing:-.3px;">22°C</div><div style="font-size:11.5px;color:var(--text-3);font-weight:600;">68% HR · Óptimo ✓</div></div>
             </div>
-            <div style="padding:12px;border-radius:10px;border:1px solid #FDE08D;background:var(--warn-l);display:flex;justify-content:space-between;align-items:center;">
-              <div><div style="font-weight:600;font-size:13.5px;">🐣 Galpón 2 · Día 18</div><div style="font-size:12px;color:#B45309;">Broiler Cobb 500</div></div>
-              <div style="text-align:right;"><div style="font-weight:700;font-size:15px;color:var(--warn)">29°C ⚠️</div><div style="font-size:12px;color:#B45309">74% HR · Aumentar ventil.</div></div>
+            <div style="padding:14px;border-radius:12px;border:1px solid #FBDFA9;background:var(--warn-l);display:flex;justify-content:space-between;align-items:center;">
+              <div><div style="font-family:var(--font-display);font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ti ti-paw" style="color:#92741C"></i> Galpón 2 · Día 18</div><div style="font-size:12px;color:#92741C;font-weight:500;margin-top:2px;">Broiler Cobb 500</div></div>
+              <div style="text-align:right;"><div class="num-mono" style="font-family:var(--font-display);font-weight:800;font-size:18px;color:var(--warn);letter-spacing:-.3px;">29°C ⚠️</div><div style="font-size:11.5px;color:#92741C;font-weight:600;">74% HR · Ventilar</div></div>
             </div>
-            <div style="padding:12px;border-radius:10px;border:1px solid var(--border);background:var(--bg);display:flex;justify-content:space-between;align-items:center;">
-              <div><div style="font-weight:600;font-size:13.5px;">🥚 Galpón 3 · Sem. 22</div><div style="font-size:12px;color:var(--text-3);">Ponedoras Hy-Line</div></div>
-              <div style="text-align:right;"><div style="font-weight:700;font-size:15px;color:var(--primary)">20°C</div><div style="font-size:12px;color:var(--text-3)">65% HR · Óptimo ✓</div></div>
+            <div style="padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--surface-2);display:flex;justify-content:space-between;align-items:center;">
+              <div><div style="font-family:var(--font-display);font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ti ti-egg" style="color:var(--blue)"></i> Galpón 3 · Sem 22</div><div style="font-size:12px;color:var(--text-3);font-weight:500;margin-top:2px;">Hy-Line W-36</div></div>
+              <div style="text-align:right;"><div class="num-mono" style="font-family:var(--font-display);font-weight:800;font-size:18px;color:var(--primary);letter-spacing:-.3px;">20°C</div><div style="font-size:11.5px;color:var(--text-3);font-weight:600;">65% HR · Óptimo ✓</div></div>
             </div>
-            <div style="padding:12px;border-radius:10px;border:1px solid var(--border);background:var(--bg);display:flex;justify-content:space-between;align-items:center;">
-              <div><div style="font-weight:600;font-size:13.5px;">🥚 Galpón 4 · Sem. 13</div><div style="font-size:12px;color:var(--text-3);">Ponedoras Bovans</div></div>
-              <div style="text-align:right;"><div style="font-weight:700;font-size:15px;color:var(--primary)">21°C</div><div style="font-size:12px;color:var(--text-3)">66% HR · Óptimo ✓</div></div>
+            <div style="padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--surface-2);display:flex;justify-content:space-between;align-items:center;">
+              <div><div style="font-family:var(--font-display);font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ti ti-egg" style="color:var(--blue)"></i> Galpón 4 · Sem 13</div><div style="font-size:12px;color:var(--text-3);font-weight:500;margin-top:2px;">Bovans White</div></div>
+              <div style="text-align:right;"><div class="num-mono" style="font-family:var(--font-display);font-weight:800;font-size:18px;color:var(--primary);letter-spacing:-.3px;">21°C</div><div style="font-size:11.5px;color:var(--text-3);font-weight:600;">66% HR · Óptimo ✓</div></div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Bitácora bioseguridad -->
-    <div class="card" style="animation-delay:.28s;">
-      <div class="card-head"><div class="card-ttl">🛡️ Bitácora de bioseguridad</div><div class="card-link" onclick="openModal('modal-bio')">+ Registrar evento</div></div>
+    <div class="card" style="animation-delay:.32s;">
+      <div class="card-head"><div><div class="card-ttl">Bitácora de bioseguridad</div><div class="card-sub">Registro de eventos de los últimos 7 días</div></div><a class="card-link" onclick="openModal('modal-bio')"><i class="ti ti-plus"></i> Registrar</a></div>
       <div style="overflow-x:auto;">
         <table class="tbl">
-          <thead><tr><th>Fecha</th><th>Tipo de evento</th><th>Galpón</th><th>Responsable</th><th>Producto usado</th><th>Observaciones</th></tr></thead>
+          <thead><tr><th>Fecha</th><th>Tipo</th><th>Galpón</th><th>Responsable</th><th>Producto</th><th>Observaciones</th></tr></thead>
           <tbody>
-            <tr><td style="color:var(--text-3)">07/05</td><td><span class="pill pill-ok"><span class="sdot g"></span>Fumigación</span></td><td>G1 y G2</td><td>Carlos Pérez</td><td>Glutaral 20%</td><td style="color:var(--text-2)">Sin novedades</td></tr>
-            <tr><td style="color:var(--text-3)">06/05</td><td><span class="pill pill-br">Visita externa</span></td><td>G2</td><td>Dr. Roberto M.</td><td>—</td><td style="color:var(--text-2)">Veterinario asesor · Revisión sanitaria</td></tr>
-            <tr><td style="color:var(--text-3)">05/05</td><td><span class="pill pill-po">Desinfección</span></td><td>Todos</td><td>Ana García</td><td>Virkon S</td><td style="color:var(--text-2)">Pediluvios y pasillos</td></tr>
-            <tr><td style="color:var(--text-3)">03/05</td><td><span class="pill pill-ok"><span class="sdot g"></span>Control plagas</span></td><td>G3 y G4</td><td>Carlos Pérez</td><td>Neosorexa</td><td style="color:var(--text-2)">Control de roedores mensual</td></tr>
-            <tr><td style="color:var(--text-3)">01/05</td><td><span class="pill pill-br">Carga de aves</span></td><td>G2</td><td>Equipo</td><td>—</td><td style="color:var(--text-2)">Entrada Lote 24-B · Limpieza previa completa</td></tr>
+            <tr><td style="color:var(--text-3)">07 may</td><td><span class="pill pill-ok"><span class="sdot g"></span> Fumigación</span></td><td style="font-weight:500">G1 · G2</td><td>Carlos Pérez</td><td>Glutaral 20%</td><td style="color:var(--text-2)">Sin novedades</td></tr>
+            <tr><td style="color:var(--text-3)">06 may</td><td><span class="pill pill-br"><i class="ti ti-user-check"></i> Visita externa</span></td><td style="font-weight:500">G2</td><td>Dr. Roberto M.</td><td>—</td><td style="color:var(--text-2)">Veterinario asesor · Revisión</td></tr>
+            <tr><td style="color:var(--text-3)">05 may</td><td><span class="pill pill-po"><i class="ti ti-spray"></i> Desinfección</span></td><td style="font-weight:500">Todos</td><td>Ana García</td><td>Virkon S</td><td style="color:var(--text-2)">Pediluvios · pasillos</td></tr>
+            <tr><td style="color:var(--text-3)">03 may</td><td><span class="pill pill-ok"><span class="sdot g"></span> Control plagas</span></td><td style="font-weight:500">G3 · G4</td><td>Carlos Pérez</td><td>Neosorexa</td><td style="color:var(--text-2)">Control roedores mensual</td></tr>
+            <tr><td style="color:var(--text-3)">01 may</td><td><span class="pill pill-br"><i class="ti ti-truck-delivery"></i> Carga aves</span></td><td style="font-weight:500">G2</td><td>Equipo</td><td>—</td><td style="color:var(--text-2)">Entrada Lote 24-B · Limpieza previa</td></tr>
           </tbody>
         </table>
       </div>
@@ -79,57 +79,47 @@
   </div>
 </main>
 
-<!-- Modal clima -->
 <div class="modal-overlay" id="modal-clima">
   <div class="modal">
-    <div class="modal-head"><div class="modal-ttl">🌡️ Registrar clima del día</div><button class="modal-close" onclick="closeModal('modal-clima')">✕</button></div>
+    <div class="modal-head"><div><div class="modal-ttl">Registrar clima del día</div></div><button class="modal-close" onclick="closeModal('modal-clima')"><i class="ti ti-x"></i></button></div>
     <div class="modal-body">
       <div class="form-row"><div class="form-group"><label class="form-label">Galpón</label><select class="form-input"><option>Galpón 1</option><option>Galpón 2</option><option>Galpón 3</option><option>Galpón 4</option></select></div><div class="form-group"><label class="form-label">Fecha y hora</label><input type="datetime-local" class="form-input"></div></div>
       <div class="form-row-3">
-        <div class="form-group"><label class="form-label">Temp. mínima (°C)</label><input type="number" class="form-input" placeholder="18"></div>
-        <div class="form-group"><label class="form-label">Temp. máxima (°C)</label><input type="number" class="form-input" placeholder="26"></div>
-        <div class="form-group"><label class="form-label">Humedad (%HR)</label><input type="number" class="form-input" placeholder="65"></div>
+        <div class="form-group"><label class="form-label">Temp. mín (°C)</label><input type="number" class="form-input" placeholder="18"></div>
+        <div class="form-group"><label class="form-label">Temp. máx (°C)</label><input type="number" class="form-input" placeholder="26"></div>
+        <div class="form-group"><label class="form-label">% HR</label><input type="number" class="form-input" placeholder="65"></div>
       </div>
-      <div class="form-group"><label class="form-label">Observaciones</label><textarea class="form-input" rows="2" placeholder="Acciones tomadas, novedades del clima..."></textarea></div>
+      <div class="form-group"><label class="form-label">Observaciones</label><textarea class="form-input" rows="2" placeholder="Acciones tomadas..."></textarea></div>
     </div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-clima')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-clima');toast('Clima registrado','success')">Guardar</button></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-clima')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-clima');toast('Clima registrado','success')"><i class="ti ti-check"></i> Guardar</button></div>
   </div>
 </div>
 
-<!-- Modal bioseguridad -->
 <div class="modal-overlay" id="modal-bio">
   <div class="modal">
-    <div class="modal-head"><div class="modal-ttl">🛡️ Registrar evento de bioseguridad</div><button class="modal-close" onclick="closeModal('modal-bio')">✕</button></div>
+    <div class="modal-head"><div><div class="modal-ttl">Registrar evento de bioseguridad</div></div><button class="modal-close" onclick="closeModal('modal-bio')"><i class="ti ti-x"></i></button></div>
     <div class="modal-body">
-      <div class="form-row"><div class="form-group"><label class="form-label">Fecha</label><input type="date" class="form-input"></div><div class="form-group"><label class="form-label">Galpón(es)</label><select class="form-input"><option>Galpón 1</option><option>Galpón 2</option><option>Galpón 3</option><option>Galpón 4</option><option>Todos</option></select></div></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Tipo de evento</label><select class="form-input"><option>Fumigación</option><option>Desinfección</option><option>Visita externa</option><option>Control de plagas</option><option>Limpieza general</option><option>Carga/descarga de aves</option><option>Otro</option></select></div><div class="form-group"><label class="form-label">Responsable</label><input type="text" class="form-input" placeholder="Nombre"></div></div>
-      <div class="form-group"><label class="form-label">Producto usado</label><input type="text" class="form-input" placeholder="Ej: Glutaral 20%, Virkon S"></div>
-      <div class="form-group"><label class="form-label">Observaciones</label><textarea class="form-input" rows="2" placeholder="Detalles del evento..."></textarea></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Fecha</label><input type="date" class="form-input"></div><div class="form-group"><label class="form-label">Galpón(es)</label><select class="form-input"><option>Galpón 1</option><option>Galpón 2</option><option>Todos</option></select></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Tipo de evento</label><select class="form-input"><option>Fumigación</option><option>Desinfección</option><option>Visita externa</option><option>Control de plagas</option><option>Limpieza</option><option>Carga/descarga</option></select></div><div class="form-group"><label class="form-label">Responsable</label><input type="text" class="form-input" placeholder="Nombre"></div></div>
+      <div class="form-group"><label class="form-label">Producto usado</label><input type="text" class="form-input" placeholder="Glutaral 20%, Virkon S..."></div>
+      <div class="form-group"><label class="form-label">Observaciones</label><textarea class="form-input" rows="2" placeholder="Detalles..."></textarea></div>
     </div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-bio')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-bio');toast('Evento registrado','success')">Guardar</button></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-bio')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-bio');toast('Evento registrado','success')"><i class="ti ti-check"></i> Guardar</button></div>
   </div>
 </div>
 
 <script src="shared.js"></script>
 <script>
-const dias7 = ['Lun','Mar','Mié','Jue','Vie','Sáb','Hoy'];
 new Chart(document.getElementById('chartTemp').getContext('2d'),{
   type:'line',
-  data:{
-    labels:dias7,
-    datasets:[
-      { label:'Temp. máxima (°C)', data:[24,23,25,22,26,24,22], borderColor:'#F59E0B', backgroundColor:'rgba(245,158,11,.08)', borderWidth:2.5, pointBackgroundColor:'#F59E0B', pointRadius:4, tension:.4, fill:true },
-      { label:'Temp. mínima (°C)', data:[18,17,19,17,20,18,17], borderColor:'#3B7DD8', backgroundColor:'rgba(59,125,216,.05)', borderWidth:2, pointBackgroundColor:'#3B7DD8', pointRadius:4, tension:.4, fill:true },
-      { label:'Límite estrés (30°C)', data:[30,30,30,30,30,30,30], borderColor:'#E53E3E', backgroundColor:'transparent', borderWidth:1.5, borderDash:[6,4], pointRadius:0 }
-    ]
-  },
-  options:{
-    responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{labels:{color:'#8AA396',font:{family:'DM Sans',size:11.5},boxWidth:14}}},
-    scales:{
-      x:{ticks:{color:'#8AA396',font:{size:11}},grid:{color:'#EDF2EF'}},
-      y:{min:10,max:35,ticks:{color:'#8AA396',font:{size:11},callback:v=>v+'°C'},grid:{color:'#EDF2EF'}}
-    }
+  data:{ labels:['Lun','Mar','Mié','Jue','Vie','Sáb','Hoy'], datasets:[
+    { label:'Temp. máxima', data:[24,23,25,22,26,24,22], borderColor:'#E8870E', backgroundColor:'rgba(232,135,14,.10)', borderWidth:3, pointBackgroundColor:'#E8870E', pointBorderColor:'#fff', pointBorderWidth:2, pointRadius:5, tension:.4, fill:true },
+    { label:'Temp. mínima', data:[18,17,19,17,20,18,17], borderColor:'#2D6FE8', backgroundColor:'rgba(45,111,232,.06)', borderWidth:2.5, pointBackgroundColor:'#2D6FE8', pointBorderColor:'#fff', pointBorderWidth:2, pointRadius:5, tension:.4, fill:true },
+    { label:'Límite estrés', data:[30,30,30,30,30,30,30], borderColor:'#DC2D40', backgroundColor:'transparent', borderWidth:2, borderDash:[6,4], pointRadius:0 }
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+    plugins:{legend:{position:'top',align:'end',labels:{color:'#7B8F84',font:{family:'DM Sans',size:12,weight:'500'},boxWidth:14,boxHeight:8,usePointStyle:true,padding:14}},tooltip:{backgroundColor:'#0F1F19',padding:14,cornerRadius:10,callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y}°C`}}},
+    scales:{x:{ticks:{color:'#7B8F84',font:{size:11,weight:'600'}},grid:{color:'#E1EAE5'},border:{display:false}},y:{min:10,max:35,ticks:{color:'#7B8F84',font:{size:11},callback:v=>v+'°'},grid:{color:'#E1EAE5'},border:{display:false}}}
   }
 });
 </script>
