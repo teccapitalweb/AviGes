@@ -16,116 +16,212 @@
     </div>
     <div class="topbar-right">
       <div class="icon-btn"><i class="ti ti-bell"></i></div>
-      <button class="btn btn-secondary btn-sm"><i class="ti ti-users"></i> Clientes</button>
-      <button class="btn btn-primary" onclick="openModal('modal-venta')"><i class="ti ti-plus"></i> Nueva venta</button>
+      <button class="btn btn-secondary btn-sm" onclick="openModal('modal-cliente')"><i class="ti ti-users"></i> Clientes</button>
+      <button class="btn btn-primary" onclick="abrirNuevaVenta()"><i class="ti ti-plus"></i> Nueva venta</button>
     </div>
   </div>
   <div class="content">
-
-    <div class="g4">
-      <div class="kpi-modern delay-1"><div class="ki-top"><div class="ki-icon-bg g"><i class="ti ti-cash"></i></div><span class="ki-trend up"><i class="ti ti-trending-up"></i> +12%</span></div><div class="ki-label">Ingreso mes</div><div class="ki-num num-mono">$542K<span>MXN</span></div><div class="ki-context">Vs $484K en abril</div></div>
-      <div class="kpi-modern delay-2"><div class="ki-top"><div class="ki-icon-bg b"><i class="ti ti-receipt"></i></div><span class="ki-trend up"><i class="ti ti-trending-up"></i> +8</span></div><div class="ki-label">Ventas registradas</div><div class="ki-num num-mono">42<span>tickets</span></div><div class="ki-context">Promedio: <strong>$12,900</strong></div></div>
-      <div class="kpi-modern delay-3"><div class="ki-top"><div class="ki-icon-bg w"><i class="ti ti-clock"></i></div><span class="ki-trend mid"><i class="ti ti-alert-circle"></i> Pendiente</span></div><div class="ki-label">Por cobrar</div><div class="ki-num num-mono">$84K<span>MXN</span></div><div class="ki-context">3 facturas pendientes</div></div>
-      <div class="kpi-modern delay-4"><div class="ki-top"><div class="ki-icon-bg p"><i class="ti ti-users"></i></div><span class="ki-trend up"><i class="ti ti-circle-check"></i> Activos</span></div><div class="ki-label">Clientes mes</div><div class="ki-num num-mono">14<span>clientes</span></div><div class="ki-context">2 nuevos este mes</div></div>
-    </div>
-
+    <div class="g4" id="kpi-row"></div>
     <div class="g2">
       <div class="card delay-5">
-        <div class="card-head"><div><div class="card-ttl">Ventas últimos 30 días</div><div class="card-sub">Pollo y huevo</div></div><a class="card-link"><i class="ti ti-download"></i> Exportar</a></div>
+        <div class="card-head"><div><div class="card-ttl">Ventas últimos 30 días</div><div class="card-sub" id="ventas-sub">—</div></div></div>
         <div class="card-body"><div class="chart-wrap" style="height:240px;"><canvas id="chartVentas"></canvas></div></div>
       </div>
       <div class="card delay-6">
-        <div class="card-head"><div><div class="card-ttl">Top 5 clientes</div><div class="card-sub">Por volumen mensual</div></div><a class="card-link">Todos</a></div>
-        <div class="card-body">
-          <div style="display:flex;flex-direction:column;gap:14px;">
-            <div style="display:flex;align-items:center;gap:12px;">
-              <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-d));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11px;">DG</div>
-              <div style="flex:1;"><div style="font-size:13px;font-weight:600;letter-spacing:-.1px;">Distribuidora García</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;">8 compras este mes</div></div>
-              <div class="num-mono" style="font-weight:700;color:var(--primary);">$148K</div>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px;">
-              <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#C8821F,#9A6315);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11px;">AT</div>
-              <div style="flex:1;"><div style="font-size:13px;font-weight:600;letter-spacing:-.1px;">Agrotec América</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;">5 compras este mes</div></div>
-              <div class="num-mono" style="font-weight:700;color:var(--primary);">$96K</div>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px;">
-              <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#344473,#1F2D52);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11px;">MC</div>
-              <div style="flex:1;"><div style="font-size:13px;font-weight:600;letter-spacing:-.1px;">Mercado Central Tehuacán</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;">12 compras este mes</div></div>
-              <div class="num-mono" style="font-weight:700;color:var(--primary);">$84K</div>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px;">
-              <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#6B3F5F,#4A2A40);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11px;">PR</div>
-              <div style="flex:1;"><div style="font-size:13px;font-weight:600;letter-spacing:-.1px;">Pollería Reyes</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;">6 compras este mes</div></div>
-              <div class="num-mono" style="font-weight:700;color:var(--primary);">$62K</div>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px;">
-              <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#B85738,#8C3D26);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11px;">HM</div>
-              <div style="flex:1;"><div style="font-size:13px;font-weight:600;letter-spacing:-.1px;">Huevería Morales</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;">4 compras este mes</div></div>
-              <div class="num-mono" style="font-weight:700;color:var(--primary);">$48K</div>
-            </div>
-          </div>
-        </div>
+        <div class="card-head"><div><div class="card-ttl">Top 5 clientes</div><div class="card-sub">Por volumen</div></div></div>
+        <div class="card-body" id="top-clientes"></div>
       </div>
     </div>
-
     <div class="card mb16">
-      <div class="card-head"><div><div class="card-ttl">Historial de ventas</div><div class="card-sub">Mayo 2026</div></div>
-        <div style="display:flex;gap:8px;">
-          <button class="btn btn-secondary btn-sm"><i class="ti ti-filter"></i> Filtrar</button>
-          <button class="btn btn-secondary btn-sm"><i class="ti ti-download"></i> CSV</button>
-        </div>
+      <div class="card-head"><div><div class="card-ttl">Historial de ventas</div><div class="card-sub" id="ventas-count">—</div></div>
+        <button class="btn btn-secondary btn-sm" onclick="exportarCSV()"><i class="ti ti-download"></i> CSV</button>
       </div>
-      <div style="overflow-x:auto;">
-        <table class="tbl">
-          <thead><tr><th>Fecha</th><th>Cliente</th><th>Producto</th><th>Cantidad</th><th>$/Unidad</th><th>Total</th><th>Estado</th></tr></thead>
-          <tbody>
-            <tr><td style="color:var(--text-3)" class="num-mono">06 may</td><td style="font-weight:600">Distribuidora García</td><td><span class="pill pill-br"><i class="ti ti-burger"></i> Pollo en pie</span></td><td class="num-mono">2,850 kg</td><td class="num-mono">$36.00</td><td class="num-mono" style="font-weight:700;color:var(--primary);font-family:var(--font-display);font-size:14px;">+$102,600</td><td><span class="pill pill-ok"><span class="sdot g"></span> Pagado</span></td></tr>
-            <tr><td style="color:var(--text-3)" class="num-mono">06 may</td><td style="font-weight:600">Mercado Central</td><td><span class="pill pill-po"><i class="ti ti-egg"></i> Huevo extra</span></td><td class="num-mono">240 ctn</td><td class="num-mono">$72.00</td><td class="num-mono" style="font-weight:700;color:var(--primary);font-family:var(--font-display);font-size:14px;">+$17,280</td><td><span class="pill pill-ok"><span class="sdot g"></span> Pagado</span></td></tr>
-            <tr><td style="color:var(--text-3)" class="num-mono">05 may</td><td style="font-weight:600">Agrotec América</td><td><span class="pill pill-br"><i class="ti ti-burger"></i> Pollo en pie</span></td><td class="num-mono">1,200 kg</td><td class="num-mono">$36.00</td><td class="num-mono" style="font-weight:700;color:var(--primary);font-family:var(--font-display);font-size:14px;">+$43,200</td><td><span class="pill pill-warn"><span class="sdot w"></span> Pendiente</span></td></tr>
-            <tr><td style="color:var(--text-3)" class="num-mono">04 may</td><td style="font-weight:600">Huevería Morales</td><td><span class="pill pill-po"><i class="ti ti-egg"></i> Huevo grande</span></td><td class="num-mono">180 ctn</td><td class="num-mono">$64.00</td><td class="num-mono" style="font-weight:700;color:var(--primary);font-family:var(--font-display);font-size:14px;">+$11,520</td><td><span class="pill pill-ok"><span class="sdot g"></span> Pagado</span></td></tr>
-            <tr><td style="color:var(--text-3)" class="num-mono">03 may</td><td style="font-weight:600">Pollería Reyes</td><td><span class="pill pill-br"><i class="ti ti-burger"></i> Pollo en pie</span></td><td class="num-mono">980 kg</td><td class="num-mono">$36.00</td><td class="num-mono" style="font-weight:700;color:var(--primary);font-family:var(--font-display);font-size:14px;">+$35,280</td><td><span class="pill pill-ok"><span class="sdot g"></span> Pagado</span></td></tr>
-            <tr><td style="color:var(--text-3)" class="num-mono">01 may</td><td style="font-weight:600">Distribuidora García</td><td><span class="pill pill-po"><i class="ti ti-egg"></i> Huevo extra</span></td><td class="num-mono">800 ctn</td><td class="num-mono">$68.00</td><td class="num-mono" style="font-weight:700;color:var(--primary);font-family:var(--font-display);font-size:14px;">+$54,400</td><td><span class="pill pill-ok"><span class="sdot g"></span> Pagado</span></td></tr>
-            <tr><td style="color:var(--text-3)" class="num-mono">28 abr</td><td style="font-weight:600">Mercado Central</td><td><span class="pill pill-po"><i class="ti ti-egg"></i> Huevo jumbo</span></td><td class="num-mono">120 ctn</td><td class="num-mono">$84.00</td><td class="num-mono" style="font-weight:700;color:var(--primary);font-family:var(--font-display);font-size:14px;">+$10,080</td><td><span class="pill pill-warn"><span class="sdot w"></span> Pendiente</span></td></tr>
-          </tbody>
-        </table>
-      </div>
+      <div style="overflow-x:auto;"><table class="tbl" id="tbl-ventas"><thead><tr><th>Fecha</th><th>Cliente</th><th>Producto</th><th>Cantidad</th><th>$/U</th><th>Total</th><th>Estado</th><th></th></tr></thead><tbody></tbody></table></div>
     </div>
-
   </div>
 </main>
 
 <div class="modal-overlay" id="modal-venta">
-  <div class="modal">
-    <div class="modal-head"><div><div class="modal-ttl">Registrar venta</div><div class="card-sub">Datos de la operación</div></div><button class="modal-close" onclick="closeModal('modal-venta')"><i class="ti ti-x"></i></button></div>
+  <div class="modal" style="max-width:640px;">
+    <div class="modal-head"><div><div class="modal-ttl">Nueva venta</div></div><button class="modal-close" onclick="closeModal('modal-venta')"><i class="ti ti-x"></i></button></div>
     <div class="modal-body">
-      <div class="form-row"><div class="form-group"><label class="form-label">Fecha</label><input type="date" class="form-input"></div><div class="form-group"><label class="form-label">Cliente</label><select class="form-input"><option>Distribuidora García</option><option>Agrotec América</option><option>Mercado Central</option><option>+ Nuevo cliente</option></select></div></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Tipo</label><select class="form-input"><option>Pollo en pie (kg)</option><option>Huevo jumbo (ctn)</option><option>Huevo extra (ctn)</option><option>Huevo grande (ctn)</option><option>Huevo mediano (ctn)</option></select></div><div class="form-group"><label class="form-label">Lote origen</label><select class="form-input"><option>Lote 24-A</option><option>Lote 24-B</option><option>Lote 24-C</option><option>Lote 24-D</option></select></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Fecha</label><input type="date" class="form-input" id="v-fecha"></div><div class="form-group"><label class="form-label">Cliente</label><select class="form-input" id="v-cliente"></select></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Producto</label><select class="form-input" id="v-tipo"><option>Pollo en pie</option><option>Huevo jumbo</option><option>Huevo extra</option><option>Huevo grande</option><option>Huevo mediano</option></select></div><div class="form-group"><label class="form-label">Lote origen</label><select class="form-input" id="v-lote"></select></div></div>
       <div class="form-row-3">
-        <div class="form-group"><label class="form-label">Cantidad</label><input type="number" class="form-input" placeholder="0"></div>
-        <div class="form-group"><label class="form-label">$/Unidad MXN</label><input type="number" class="form-input" placeholder="36.00"></div>
-        <div class="form-group"><label class="form-label">Total</label><input type="text" class="form-input" readonly placeholder="$0" style="background:var(--surface-3);font-weight:700;"></div>
+        <div class="form-group"><label class="form-label">Cantidad</label><input type="number" class="form-input" id="v-cant" oninput="calcTotal()" placeholder="0"></div>
+        <div class="form-group"><label class="form-label">$/Unidad</label><input type="number" class="form-input" id="v-precio" step="0.01" oninput="calcTotal()" placeholder="36.00"></div>
+        <div class="form-group"><label class="form-label">Total MXN</label><input type="text" class="form-input" id="v-total" readonly style="background:var(--surface-3);font-weight:700;font-family:var(--font-display);color:var(--primary);"></div>
       </div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Estado pago</label><select class="form-input"><option>Pagado en efectivo</option><option>Pagado transferencia</option><option>Pendiente · 7 días</option><option>Pendiente · 15 días</option><option>Pendiente · 30 días</option></select></div><div class="form-group"><label class="form-label">Folio/Factura</label><input type="text" class="form-input" placeholder="F-2026-001"></div></div>
-      <div class="form-group"><label class="form-label">Notas</label><textarea class="form-input" rows="2" placeholder="Observaciones..."></textarea></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Estado pago</label><select class="form-input" id="v-estado"><option>Pagado en efectivo</option><option>Pagado transferencia</option><option>Pendiente · 7 días</option><option>Pendiente · 15 días</option><option>Pendiente · 30 días</option></select></div><div class="form-group"><label class="form-label">Folio</label><input type="text" class="form-input" id="v-folio"></div></div>
     </div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-venta')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-venta');toast('Venta registrada','success')"><i class="ti ti-check"></i> Guardar venta</button></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-venta')">Cancelar</button><button class="btn btn-primary" onclick="guardarVenta()"><i class="ti ti-check"></i> Guardar</button></div>
   </div>
 </div>
 
-<script src="shared.js"></script>
+<div class="modal-overlay" id="modal-cliente">
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-head"><div><div class="modal-ttl">Nuevo cliente</div></div><button class="modal-close" onclick="closeModal('modal-cliente')"><i class="ti ti-x"></i></button></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Nombre/Razón social</label><input type="text" class="form-input" id="c-nombre"></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Contacto</label><input type="text" class="form-input" id="c-contacto"></div><div class="form-group"><label class="form-label">Teléfono</label><input type="text" class="form-input" id="c-tel"></div></div>
+      <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="c-email"></div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-cliente')">Cancelar</button><button class="btn btn-primary" onclick="guardarCliente()"><i class="ti ti-check"></i> Guardar</button></div>
+  </div>
+</div>
+
+<script src="db.js"></script><script src="standards.js"></script><script src="calc.js"></script>
+<script src="auth.js"></script><script src="seed.js"></script><script src="shared.js"></script>
 <script>
-const dias=Array.from({length:30},(_,i)=>(i+1));
-new Chart(document.getElementById('chartVentas').getContext('2d'),{
-  type:'bar',
-  data:{ labels:dias, datasets:[
-    { label:'Pollo (MXN)', data:[12000,15000,8000,18000,12000,22000,14000,11000,16000,13000,19000,8000,14000,17000,21000,12000,15000,18000,11000,16000,14000,19000,17000,15000,21000,18000,14000,16000,20000,18000], backgroundColor:'rgba(31,107,71,.85)', borderRadius:5, stack:'a', barPercentage:.6 },
-    { label:'Huevo (MXN)', data:[8000,9000,7000,10000,8500,11000,9500,7500,10500,9000,11500,7000,9500,10500,12000,9000,10000,11000,8000,10500,9500,11500,10500,9500,12500,11000,9500,10500,12000,11000], backgroundColor:'rgba(200,130,31,.85)', borderRadius:5, stack:'a', barPercentage:.6 }
-  ]},
-  options:{ responsive:true, maintainAspectRatio:false,
-    plugins:{legend:{position:'top',align:'end',labels:{color:'#7A6F62',font:{family:'Inter Tight',size:12,weight:'500'},boxWidth:14,boxHeight:8,usePointStyle:true,padding:14}},tooltip:{backgroundColor:'#1A1612',padding:14,cornerRadius:10,callbacks:{label:c=>` ${c.dataset.label}: $${c.parsed.y.toLocaleString('es-MX')}`}}},
-    scales:{x:{stacked:true,ticks:{color:'#7A6F62',font:{size:10,weight:'600'},maxTicksLimit:10},grid:{display:false},border:{display:false}},y:{stacked:true,ticks:{color:'#7A6F62',font:{size:11},callback:v=>'$'+(v/1000)+'K'},grid:{color:'#E8DFD0'},border:{display:false}}}
+function renderPage() {
+  const ventas = store.list('ventas');
+  const ahora = new Date();
+  const inicioMes = new Date(ahora.getFullYear(), ahora.getMonth(), 1);
+  const ventasMes = ventas.filter(v => new Date(v.fecha) >= inicioMes);
+  const totalMes = ventasMes.reduce((s,v) => s+v.total, 0);
+  const pendiente = ventas.filter(v => v.estadoPago?.includes('Pendiente')).reduce((s,v)=>s+v.total,0);
+  const clientesActivos = new Set(ventasMes.map(v => v.clienteId)).size;
+
+  document.getElementById('kpi-row').innerHTML = `
+    <div class="kpi-modern delay-1"><div class="ki-top"><div class="ki-icon-bg g"><i class="ti ti-cash"></i></div><span class="ki-trend up"><i class="ti ti-trending-up"></i> ${ventasMes.length}</span></div><div class="ki-label">Ingreso del mes</div><div class="ki-num num-mono">${mxn(totalMes)}<span></span></div><div class="ki-context">${ventasMes.length} venta${ventasMes.length===1?'':'s'} este mes</div></div>
+    <div class="kpi-modern delay-2"><div class="ki-top"><div class="ki-icon-bg b"><i class="ti ti-receipt"></i></div><span class="ki-trend up"><i class="ti ti-list"></i></span></div><div class="ki-label">Total ventas</div><div class="ki-num num-mono">${ventas.length}<span>tickets</span></div><div class="ki-context">Promedio: <strong>${ventas.length?mxn(ventas.reduce((s,v)=>s+v.total,0)/ventas.length):'$0'}</strong></div></div>
+    <div class="kpi-modern delay-3"><div class="ki-top"><div class="ki-icon-bg w"><i class="ti ti-clock"></i></div><span class="ki-trend ${pendiente?'mid':'up'}"><i class="ti ti-${pendiente?'alert-circle':'check'}"></i></span></div><div class="ki-label">Por cobrar</div><div class="ki-num num-mono">${mxn(pendiente)}<span></span></div><div class="ki-context">${ventas.filter(v=>v.estadoPago?.includes('Pendiente')).length} pendientes</div></div>
+    <div class="kpi-modern delay-4"><div class="ki-top"><div class="ki-icon-bg p"><i class="ti ti-users"></i></div><span class="ki-trend up"><i class="ti ti-circle-check"></i></span></div><div class="ki-label">Clientes activos</div><div class="ki-num num-mono">${clientesActivos}<span>mes</span></div><div class="ki-context">${store.list('clientes').length} totales</div></div>`;
+
+  // Top clientes
+  const totales = {};
+  ventasMes.forEach(v => { totales[v.clienteId] = (totales[v.clienteId]||0) + v.total; });
+  const top = Object.entries(totales).sort((a,b) => b[1]-a[1]).slice(0,5);
+  const colors = ['var(--primary)','#C8821F','#344473','#6B3F5F','#B85738'];
+  document.getElementById('top-clientes').innerHTML = top.length ? top.map(([id,total],i) => {
+    const c = store.get('clientes', id);
+    const ini = (c?.nombre||'??').split(' ').slice(0,2).map(p=>p[0]).join('').toUpperCase();
+    const compras = ventasMes.filter(v => v.clienteId === id).length;
+    return `<div style="display:flex;align-items:center;gap:12px;padding:8px 0;"><div style="width:32px;height:32px;border-radius:50%;background:${colors[i]};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;">${ini}</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">${escapeHTML(c?.nombre||'?')}</div><div style="font-size:11px;color:var(--text-3);font-weight:500;">${compras} compras</div></div><div class="num-mono" style="font-weight:700;color:var(--primary);">${mxn(total)}</div></div>`;
+  }).join('') : '<div class="empty"><div class="empty-sub">Sin ventas este mes</div></div>';
+
+  // Ventas-sub
+  document.getElementById('ventas-sub').textContent = `${ventasMes.length} ventas · ${mxn(totalMes)} en total`;
+  document.getElementById('ventas-count').textContent = `${ventas.length} ventas registradas`;
+
+  // Tabla
+  const tbody = document.querySelector('#tbl-ventas tbody');
+  if (!ventas.length) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-3);padding:40px;">Sin ventas registradas</td></tr>'; }
+  else tbody.innerHTML = ventas.sort((a,b)=>new Date(b.fecha)-new Date(a.fecha)).map(v => {
+    const esPollo = v.tipo?.includes('Pollo');
+    return `<tr>
+      <td class="num-mono" style="color:var(--text-3)">${fmtFecha(v.fecha,{short:true})}</td>
+      <td style="font-weight:600">${escapeHTML(v.cliente||'')}</td>
+      <td><span class="pill ${esPollo?'pill-br':'pill-po'}"><i class="ti ti-${esPollo?'burger':'egg'}"></i> ${escapeHTML(v.tipo||'')}</span></td>
+      <td class="num-mono">${num(v.cantidad)} ${escapeHTML(v.unidad||'')}</td>
+      <td class="num-mono">${mxnDec(v.precioUnitario)}</td>
+      <td class="num-mono" style="font-weight:700;color:var(--primary);font-family:var(--font-display);font-size:14px;">+${mxn(v.total)}</td>
+      <td><span class="pill ${v.estadoPago?.includes('Pagado')?'pill-ok':'pill-warn'}"><span class="sdot ${v.estadoPago?.includes('Pagado')?'g':'w'}"></span> ${v.estadoPago?.includes('Pagado')?'Pagado':'Pendiente'}</span></td>
+      <td><button class="btn btn-ghost btn-sm" onclick="eliminarVenta('${v.id}')"><i class="ti ti-trash"></i></button></td>
+    </tr>`;
+  }).join('');
+
+  // Gráfica últimos 30 días
+  renderChart(ventas);
+}
+
+function renderChart(ventas) {
+  const dias = [], dataPollo = [], dataHuevo = [];
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date(); d.setDate(d.getDate()-i);
+    const fStr = d.toISOString().slice(0,10);
+    dias.push(d.getDate());
+    const dayVentas = ventas.filter(v => v.fecha?.slice(0,10) === fStr);
+    dataPollo.push(dayVentas.filter(v=>v.tipo?.includes('Pollo')).reduce((s,v)=>s+v.total,0));
+    dataHuevo.push(dayVentas.filter(v=>v.tipo?.includes('Huevo')).reduce((s,v)=>s+v.total,0));
   }
-});
+  if (window._chV) window._chV.destroy();
+  window._chV = new Chart(document.getElementById('chartVentas').getContext('2d'),{
+    type:'bar', data:{ labels:dias, datasets:[
+      { label:'Pollo', data:dataPollo, backgroundColor:'rgba(31,107,71,.85)', borderRadius:5, stack:'a', barPercentage:.6 },
+      { label:'Huevo', data:dataHuevo, backgroundColor:'rgba(200,130,31,.85)', borderRadius:5, stack:'a', barPercentage:.6 }]},
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{position:'top',align:'end',labels:{font:{family:'Inter Tight',size:12},usePointStyle:true,padding:14,boxWidth:12,boxHeight:8}}, tooltip:{backgroundColor:'#1A1612',padding:12,cornerRadius:10,callbacks:{label:c=>` ${c.dataset.label}: ${mxn(c.parsed.y)}`}}},
+      scales:{ x:{stacked:true,grid:{display:false},ticks:{font:{size:10,weight:'600'},maxTicksLimit:10}}, y:{stacked:true,grid:{color:'#E8DFD0'},border:{display:false},ticks:{callback:v=>'$'+(v/1000).toFixed(0)+'K'}}}
+    }
+  });
+}
+
+function abrirNuevaVenta() {
+  document.getElementById('v-fecha').value = new Date().toISOString().slice(0,10);
+  document.getElementById('v-cliente').innerHTML = store.list('clientes').map(c => `<option value="${c.id}">${escapeHTML(c.nombre)}</option>`).join('') + '<option value="_nuevo">+ Nuevo cliente</option>';
+  document.getElementById('v-lote').innerHTML = '<option value="">— Sin lote específico —</option>' + store.list('lotes',{estado:'activo'}).map(l => `<option value="${l.id}">${l.nombre}</option>`).join('');
+  document.getElementById('v-cant').value = '';
+  document.getElementById('v-precio').value = '';
+  document.getElementById('v-total').value = '';
+  document.getElementById('v-folio').value = `F-${new Date().getFullYear()}-${String(store.list('ventas').length+1).padStart(3,'0')}`;
+  openModal('modal-venta');
+}
+
+function calcTotal() {
+  const c = Number(document.getElementById('v-cant').value)||0;
+  const p = Number(document.getElementById('v-precio').value)||0;
+  document.getElementById('v-total').value = mxn(c*p);
+}
+
+function guardarVenta() {
+  const cId = document.getElementById('v-cliente').value;
+  if (cId === '_nuevo') { closeModal('modal-venta'); openModal('modal-cliente'); return; }
+  const cliente = store.get('clientes', cId);
+  if (!cliente) { toast('Cliente requerido','danger'); return; }
+  const cant = Number(document.getElementById('v-cant').value)||0;
+  const precio = Number(document.getElementById('v-precio').value)||0;
+  if (!cant || !precio) { toast('Cantidad y precio requeridos','danger'); return; }
+  const tipo = document.getElementById('v-tipo').value;
+  const data = {
+    fecha: document.getElementById('v-fecha').value,
+    clienteId: cId, cliente: cliente.nombre,
+    tipo, loteId: document.getElementById('v-lote').value || null,
+    cantidad: cant, unidad: tipo.includes('Pollo')?'kg':'ctn',
+    precioUnitario: precio, total: cant*precio,
+    estadoPago: document.getElementById('v-estado').value,
+    folio: document.getElementById('v-folio').value
+  };
+  store.create('ventas', data);
+  logActivity({ texto: `<strong>${auth.current()?.nombre||'Tú'}</strong> registró venta · <strong>+${mxn(data.total)}</strong>`, tipo:'g', icono:'cash' });
+  closeModal('modal-venta');
+  toast('Venta registrada','success');
+  renderPage();
+}
+
+function guardarCliente() {
+  const data = {
+    nombre: document.getElementById('c-nombre').value.trim(),
+    contacto: document.getElementById('c-contacto').value.trim(),
+    telefono: document.getElementById('c-tel').value.trim(),
+    email: document.getElementById('c-email').value.trim()
+  };
+  if (!data.nombre) { toast('Nombre requerido','danger'); return; }
+  store.create('clientes', data);
+  ['c-nombre','c-contacto','c-tel','c-email'].forEach(id => document.getElementById(id).value='');
+  closeModal('modal-cliente');
+  toast('Cliente agregado','success');
+  abrirNuevaVenta(); // re-abrir venta con cliente nuevo
+}
+
+function eliminarVenta(id) {
+  if (!confirm('¿Eliminar esta venta?')) return;
+  store.delete('ventas', id);
+  toast('Venta eliminada','info');
+  renderPage();
+}
+
+function exportarCSV() {
+  const ventas = store.list('ventas').sort((a,b)=>new Date(b.fecha)-new Date(a.fecha));
+  let csv = 'Fecha,Cliente,Producto,Cantidad,Unidad,$/U,Total,Estado,Folio\n';
+  ventas.forEach(v => csv += `"${v.fecha}","${v.cliente}","${v.tipo}",${v.cantidad},"${v.unidad}",${v.precioUnitario},${v.total},"${v.estadoPago}","${v.folio||''}"\n`);
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = `ventas-${new Date().toISOString().slice(0,10)}.csv`; a.click();
+  toast('CSV descargado','success');
+}
+
+setTimeout(renderPage, 50);
 </script>
 </body>
 </html>

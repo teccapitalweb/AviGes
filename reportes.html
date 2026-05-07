@@ -2,40 +2,28 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AviGes — Reportes</title>
+<title>AviGes — Reportes PDF</title>
 <link rel="stylesheet" href="shared.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.0/jspdf.plugin.autotable.min.js"></script>
 <style>
-.report-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px,1fr)); gap: 16px; }
-.report-card {
-  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg);
-  overflow: hidden; cursor: pointer; transition: all .2s ease;
-  animation: fadeUp .45s cubic-bezier(.2,.8,.4,1) forwards; opacity: 0;
-  position: relative;
-}
-.report-card:hover { border-color: var(--primary-m); box-shadow: var(--shadow); transform: translateY(-3px); }
-.report-card-top {
-  padding: 22px 22px 16px; display: flex; align-items: center; gap: 14px;
-  border-bottom: 1px solid var(--border);
-}
-.report-icon {
-  width: 48px; height: 48px; border-radius: 12px;
-  display: flex; align-items: center; justify-content: center; font-size: 22px;
-  flex-shrink: 0;
-}
-.report-icon.g { background: var(--primary-l); color: var(--primary); }
-.report-icon.b { background: var(--info-l); color: var(--info); }
-.report-icon.a { background: var(--amber-l); color: var(--amber-d); }
-.report-icon.p { background: var(--plum-l); color: var(--plum); }
-.report-card-name { font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--text); letter-spacing: -.3px; }
-.report-card-desc { font-size: 12.5px; color: var(--text-3); margin-top: 3px; line-height: 1.4; }
-.report-card-body { padding: 16px 22px; font-size: 12.5px; color: var(--text-2); line-height: 1.55; }
-.report-card-footer { padding: 14px 22px; background: var(--surface-2); border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-.report-tag {
-  font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 5px;
-  text-transform: uppercase; letter-spacing: .06em;
-}
-.tag-official { background: var(--amber-l); color: var(--amber-d); }
-.tag-internal { background: var(--surface-3); color: var(--text-3); }
+.reporte-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 26px 28px; box-shadow: var(--shadow-xs); transition: all .2s; cursor: pointer; animation: fadeUp .5s cubic-bezier(.2,.8,.4,1) forwards; opacity: 0; position: relative; overflow: hidden; }
+.reporte-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); border-color: var(--primary-m); }
+.rep-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 18px; }
+.rep-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.rep-title { font-family: var(--font-display); font-size: 17px; font-weight: 700; letter-spacing: -.4px; }
+.rep-sub { font-size: 12.5px; color: var(--text-3); margin-top: 3px; font-weight: 500; }
+.rep-body { font-size: 13px; color: var(--text-2); line-height: 1.55; min-height: 50px; }
+.rep-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+.rep-tag { font-size: 10.5px; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: .06em; }
+.rep-tag.oficial { background: var(--primary-l); color: var(--primary); }
+.rep-tag.interno { background: var(--surface-3); color: var(--text-2); }
+.lote-pick-row { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; transition: all .15s; margin-bottom: 8px; }
+.lote-pick-row:hover { border-color: var(--primary); background: var(--primary-ll); }
+.lp-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--primary-l); color: var(--primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.lib-status { padding: 12px 14px; border-radius: 9px; font-size: 12.5px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.lib-status.ok { background: var(--primary-l); color: var(--primary); border: 1px solid var(--primary-m); }
+.lib-status.err { background: var(--danger-l); color: var(--danger); border: 1px solid #ECC4C4; }
 </style>
 </head>
 <body>
@@ -48,168 +36,471 @@
     </div>
     <div class="topbar-right">
       <div class="icon-btn"><i class="ti ti-bell"></i></div>
-      <button class="btn btn-secondary btn-sm"><i class="ti ti-history"></i> Historial</button>
-      <button class="btn btn-primary"><i class="ti ti-plus"></i> Nuevo reporte</button>
+      <div id="lib-check"></div>
     </div>
   </div>
   <div class="content">
 
+    <div style="margin-bottom:18px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--text-3);margin-bottom:14px;">Reportes oficiales</div>
+      <div class="g4">
+
+        <div class="reporte-card delay-1" onclick="generarSenasica()">
+          <div class="rep-head"><div class="rep-icon" style="background:var(--primary-l);color:var(--primary);"><i class="ti ti-shield-check"></i></div><div><div class="rep-title">Reporte SENASICA</div><div class="rep-sub">Formato oficial bioseguridad</div></div></div>
+          <div class="rep-body">Genera el reporte mensual con vacunaciones, mortalidad, bioseguridad y producción para SENASICA.</div>
+          <div class="rep-foot"><span class="rep-tag oficial">Oficial</span><span style="color:var(--primary);font-weight:700;font-size:13px;">Generar <i class="ti ti-arrow-right"></i></span></div>
+        </div>
+
+        <div class="reporte-card delay-2" onclick="abrirSelectorLote('cierre')">
+          <div class="rep-head"><div class="rep-icon" style="background:var(--info-l);color:var(--info);"><i class="ti ti-flag-2"></i></div><div><div class="rep-title">Cierre de lote</div><div class="rep-sub">IEP, CA, costos finales</div></div></div>
+          <div class="rep-body">Reporte completo al finalizar un lote: kilos producidos, IEP final, costos por etapa, utilidad.</div>
+          <div class="rep-foot"><span class="rep-tag interno">Interno</span><span style="color:var(--primary);font-weight:700;font-size:13px;">Generar <i class="ti ti-arrow-right"></i></span></div>
+        </div>
+
+        <div class="reporte-card delay-3" onclick="generarFinanciero()">
+          <div class="rep-head"><div class="rep-icon" style="background:var(--amber-l);color:var(--amber-d);"><i class="ti ti-cash"></i></div><div><div class="rep-title">Reporte financiero</div><div class="rep-sub">Costos, ventas, utilidad</div></div></div>
+          <div class="rep-body">Análisis financiero del periodo: ingresos vs costos, margen, utilidad por lote y por galpón.</div>
+          <div class="rep-foot"><span class="rep-tag interno">Interno</span><span style="color:var(--primary);font-weight:700;font-size:13px;">Generar <i class="ti ti-arrow-right"></i></span></div>
+        </div>
+
+        <div class="reporte-card delay-4" onclick="generarPlanSanitario()">
+          <div class="rep-head"><div class="rep-icon" style="background:var(--terracotta-l);color:var(--terracotta);"><i class="ti ti-vaccine"></i></div><div><div class="rep-title">Plan sanitario</div><div class="rep-sub">Vacunación y tratamientos</div></div></div>
+          <div class="rep-body">Histórico de vacunas aplicadas, tratamientos, próximas dosis y bitácora sanitaria del lote.</div>
+          <div class="rep-foot"><span class="rep-tag oficial">Oficial</span><span style="color:var(--primary);font-weight:700;font-size:13px;">Generar <i class="ti ti-arrow-right"></i></span></div>
+        </div>
+
+      </div>
+    </div>
+
     <div class="g4">
-      <div class="kpi-card delay-1"><div class="ki-head"><div class="ki-icon g"><i class="ti ti-file-text"></i></div></div><div class="ki-label">Reportes generados</div><div class="ki-num num-mono">42</div><div class="ki-context">Últimos 30 días</div></div>
-      <div class="kpi-card delay-2"><div class="ki-head"><div class="ki-icon a"><i class="ti ti-shield-check"></i></div></div><div class="ki-label">SENASICA</div><div class="ki-num num-mono">8</div><div class="ki-context">Reportes oficiales</div></div>
-      <div class="kpi-card delay-3"><div class="ki-head"><div class="ki-icon b"><i class="ti ti-cloud-download"></i></div></div><div class="ki-label">Descargas</div><div class="ki-num num-mono">126</div><div class="ki-context">Total histórico</div></div>
-      <div class="kpi-card delay-4"><div class="ki-head"><div class="ki-icon p"><i class="ti ti-mail"></i></div></div><div class="ki-label">Compartidos</div><div class="ki-num num-mono">14</div><div class="ki-context">Por email este mes</div></div>
-    </div>
-
-    <h3 style="font-family:var(--font-display);font-size:16px;font-weight:700;letter-spacing:-.3px;margin:24px 0 14px;">Reportes oficiales</h3>
-
-    <div class="report-grid">
-
-      <div class="report-card delay-1" onclick="generateReport('senasica')">
-        <div class="report-card-top">
-          <div class="report-icon a"><i class="ti ti-shield-check"></i></div>
-          <div>
-            <div class="report-card-name">Reporte SENASICA</div>
-            <div class="report-card-desc">Formato oficial bioseguridad</div>
-          </div>
-        </div>
-        <div class="report-card-body">Genera el reporte mensual con vacunaciones, mortalidad, bioseguridad y producción para SENASICA.</div>
-        <div class="report-card-footer">
-          <span class="report-tag tag-official">OFICIAL</span>
-          <span style="color:var(--primary);font-weight:600;font-size:12.5px;display:inline-flex;align-items:center;gap:4px;">Generar <i class="ti ti-arrow-right" style="font-size:14px;"></i></span>
-        </div>
+      <div class="reporte-card delay-5" onclick="generarProduccionHuevo()">
+        <div class="rep-head"><div class="rep-icon" style="background:var(--amber-l);color:var(--amber-d);"><i class="ti ti-egg"></i></div><div><div class="rep-title">Producción huevo</div><div class="rep-sub">Postura, clasificación, ventas</div></div></div>
+        <div class="rep-body">Reporte mensual de producción de huevo: % postura, clasificación, ventas e inventario.</div>
+        <div class="rep-foot"><span class="rep-tag interno">Interno</span><span style="color:var(--primary);font-weight:700;font-size:13px;">Generar <i class="ti ti-arrow-right"></i></span></div>
       </div>
-
-      <div class="report-card delay-2" onclick="generateReport('cierre-lote')">
-        <div class="report-card-top">
-          <div class="report-icon g"><i class="ti ti-flag-check"></i></div>
-          <div>
-            <div class="report-card-name">Cierre de lote</div>
-            <div class="report-card-desc">IEP, CA, costos finales</div>
-          </div>
-        </div>
-        <div class="report-card-body">Reporte completo al finalizar un lote: kilos producidos, IEP final, costos por etapa, utilidad.</div>
-        <div class="report-card-footer">
-          <span class="report-tag tag-internal">INTERNO</span>
-          <span style="color:var(--primary);font-weight:600;font-size:12.5px;display:inline-flex;align-items:center;gap:4px;">Generar <i class="ti ti-arrow-right" style="font-size:14px;"></i></span>
-        </div>
-      </div>
-
-      <div class="report-card delay-3" onclick="generateReport('financiero')">
-        <div class="report-card-top">
-          <div class="report-icon b"><i class="ti ti-receipt-tax"></i></div>
-          <div>
-            <div class="report-card-name">Reporte financiero</div>
-            <div class="report-card-desc">Costos, ventas, utilidad</div>
-          </div>
-        </div>
-        <div class="report-card-body">Análisis financiero del periodo: ingresos vs costos, margen, utilidad por lote y por galpón.</div>
-        <div class="report-card-footer">
-          <span class="report-tag tag-internal">INTERNO</span>
-          <span style="color:var(--primary);font-weight:600;font-size:12.5px;display:inline-flex;align-items:center;gap:4px;">Generar <i class="ti ti-arrow-right" style="font-size:14px;"></i></span>
-        </div>
-      </div>
-
-      <div class="report-card delay-4" onclick="generateReport('sanidad')">
-        <div class="report-card-top">
-          <div class="report-icon p"><i class="ti ti-vaccine"></i></div>
-          <div>
-            <div class="report-card-name">Plan sanitario</div>
-            <div class="report-card-desc">Vacunación y tratamientos</div>
-          </div>
-        </div>
-        <div class="report-card-body">Histórico de vacunas aplicadas, tratamientos, próximas dosis y bitácora sanitaria del lote.</div>
-        <div class="report-card-footer">
-          <span class="report-tag tag-official">OFICIAL</span>
-          <span style="color:var(--primary);font-weight:600;font-size:12.5px;display:inline-flex;align-items:center;gap:4px;">Generar <i class="ti ti-arrow-right" style="font-size:14px;"></i></span>
-        </div>
-      </div>
-
-      <div class="report-card delay-5" onclick="generateReport('produccion')">
-        <div class="report-card-top">
-          <div class="report-icon g"><i class="ti ti-egg"></i></div>
-          <div>
-            <div class="report-card-name">Producción huevo</div>
-            <div class="report-card-desc">Postura, clasificación, ventas</div>
-          </div>
-        </div>
-        <div class="report-card-body">Reporte mensual de producción de huevo: % postura, clasificación, ventas e inventario.</div>
-        <div class="report-card-footer">
-          <span class="report-tag tag-internal">INTERNO</span>
-          <span style="color:var(--primary);font-weight:600;font-size:12.5px;display:inline-flex;align-items:center;gap:4px;">Generar <i class="ti ti-arrow-right" style="font-size:14px;"></i></span>
-        </div>
-      </div>
-
-      <div class="report-card delay-6" onclick="generateReport('alimento')">
-        <div class="report-card-top">
-          <div class="report-icon a"><i class="ti ti-grain"></i></div>
-          <div>
-            <div class="report-card-name">Consumo alimento</div>
-            <div class="report-card-desc">Por galpón vs estándar</div>
-          </div>
-        </div>
-        <div class="report-card-body">Análisis de consumo de alimento por galpón comparado con estándar Ross/Cobb/Hy-Line.</div>
-        <div class="report-card-footer">
-          <span class="report-tag tag-internal">INTERNO</span>
-          <span style="color:var(--primary);font-weight:600;font-size:12.5px;display:inline-flex;align-items:center;gap:4px;">Generar <i class="ti ti-arrow-right" style="font-size:14px;"></i></span>
-        </div>
-      </div>
-
-    </div>
-
-    <h3 style="font-family:var(--font-display);font-size:16px;font-weight:700;letter-spacing:-.3px;margin:32px 0 14px;">Reportes recientes</h3>
-
-    <div class="card">
-      <div style="overflow-x:auto;">
-        <table class="tbl">
-          <thead><tr><th>Nombre</th><th>Tipo</th><th>Periodo</th><th>Generado</th><th>Tamaño</th><th></th></tr></thead>
-          <tbody>
-            <tr>
-              <td><div style="font-weight:600;display:flex;align-items:center;gap:8px;"><i class="ti ti-file-text" style="color:var(--amber-d);font-size:18px;"></i> Reporte SENASICA Abril 2026</div></td>
-              <td><span class="badge badge-amber">Oficial</span></td>
-              <td style="color:var(--text-3)">Abril 2026</td>
-              <td style="color:var(--text-3)" class="num-mono">02 may · 10:34</td>
-              <td class="num-mono" style="color:var(--text-3)">2.1 MB</td>
-              <td><button class="btn btn-secondary btn-sm"><i class="ti ti-download"></i> PDF</button></td>
-            </tr>
-            <tr>
-              <td><div style="font-weight:600;display:flex;align-items:center;gap:8px;"><i class="ti ti-flag-check" style="color:var(--primary);font-size:18px;"></i> Cierre Lote 24-X</div></td>
-              <td><span class="badge badge-green">Cierre</span></td>
-              <td style="color:var(--text-3)">Mar 2026</td>
-              <td style="color:var(--text-3)" class="num-mono">31 mar · 18:20</td>
-              <td class="num-mono" style="color:var(--text-3)">1.8 MB</td>
-              <td><button class="btn btn-secondary btn-sm"><i class="ti ti-download"></i> PDF</button></td>
-            </tr>
-            <tr>
-              <td><div style="font-weight:600;display:flex;align-items:center;gap:8px;"><i class="ti ti-receipt-tax" style="color:var(--info);font-size:18px;"></i> Reporte Financiero Q1 2026</div></td>
-              <td><span class="badge badge-blue">Financiero</span></td>
-              <td style="color:var(--text-3)">Q1 2026</td>
-              <td style="color:var(--text-3)" class="num-mono">28 mar · 09:15</td>
-              <td class="num-mono" style="color:var(--text-3)">3.4 MB</td>
-              <td><button class="btn btn-secondary btn-sm"><i class="ti ti-download"></i> PDF</button></td>
-            </tr>
-            <tr>
-              <td><div style="font-weight:600;display:flex;align-items:center;gap:8px;"><i class="ti ti-vaccine" style="color:var(--plum);font-size:18px;"></i> Plan sanitario Lote 24-A</div></td>
-              <td><span class="badge badge-plum">Sanidad</span></td>
-              <td style="color:var(--text-3)">Mar-May 2026</td>
-              <td style="color:var(--text-3)" class="num-mono">15 mar · 14:02</td>
-              <td class="num-mono" style="color:var(--text-3)">980 KB</td>
-              <td><button class="btn btn-secondary btn-sm"><i class="ti ti-download"></i> PDF</button></td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="reporte-card delay-6" onclick="generarConsumoAlimento()">
+        <div class="rep-head"><div class="rep-icon" style="background:var(--amber-l);color:var(--amber-d);"><i class="ti ti-grain"></i></div><div><div class="rep-title">Consumo alimento</div><div class="rep-sub">Por galpón vs estándar</div></div></div>
+        <div class="rep-body">Análisis de consumo de alimento por galpón comparado con estándar Ross/Cobb/Hy-Line.</div>
+        <div class="rep-foot"><span class="rep-tag interno">Interno</span><span style="color:var(--primary);font-weight:700;font-size:13px;">Generar <i class="ti ti-arrow-right"></i></span></div>
       </div>
     </div>
 
+    <div class="card mb16" style="margin-top:24px;">
+      <div class="card-head"><div><div class="card-ttl">Reportes recientes</div><div class="card-sub" id="rec-sub">—</div></div></div>
+      <div style="overflow-x:auto;"><table class="tbl" id="tbl-rec"><thead><tr><th>Nombre</th><th>Tipo</th><th>Periodo</th><th>Generado</th><th>Tamaño</th><th></th></tr></thead><tbody></tbody></table></div>
+    </div>
   </div>
 </main>
 
-<script src="shared.js"></script>
+<!-- MODAL: Selector de lote -->
+<div class="modal-overlay" id="modal-sel-lote">
+  <div class="modal" style="max-width:560px;">
+    <div class="modal-head"><div><div class="modal-ttl" id="sel-ttl">Selecciona un lote</div><div class="card-sub" id="sel-sub">Para generar el reporte</div></div><button class="modal-close" onclick="closeModal('modal-sel-lote')"><i class="ti ti-x"></i></button></div>
+    <div class="modal-body" id="sel-body" style="max-height:60vh;overflow-y:auto;"></div>
+  </div>
+</div>
+
+<script src="db.js"></script><script src="standards.js"></script><script src="calc.js"></script>
+<script src="auth.js"></script><script src="seed.js"></script><script src="shared.js"></script>
 <script>
-function generateReport(type) {
-  toast('Generando reporte... esto tarda unos segundos', 'info');
-  setTimeout(() => toast('Reporte PDF generado correctamente', 'success'), 1500);
+// ─── Verificar carga de jsPDF ───
+let jsPDF, hasAutoTable = false;
+function checkLibs() {
+  const lib = document.getElementById('lib-check');
+  if (typeof window.jspdf === 'undefined' || !window.jspdf.jsPDF) {
+    lib.innerHTML = '<span class="lib-status err"><i class="ti ti-alert-triangle"></i> jsPDF no cargó</span>';
+    toast('No se pudo cargar jsPDF · revisa tu conexión','danger');
+    return false;
+  }
+  jsPDF = window.jspdf.jsPDF;
+  // Verificar autoTable
+  const testDoc = new jsPDF();
+  hasAutoTable = typeof testDoc.autoTable === 'function';
+  if (!hasAutoTable) {
+    lib.innerHTML = '<span class="lib-status err"><i class="ti ti-alert-triangle"></i> autoTable no cargó</span>';
+    toast('No se pudo cargar el plugin autoTable','danger');
+    return false;
+  }
+  lib.innerHTML = '<span class="lib-status ok"><i class="ti ti-check"></i> PDF listo</span>';
+  return true;
 }
+
+// ─── Helpers PDF ───
+function pdfHeader(doc, titulo, subtitulo) {
+  const granja = store.getDoc('granja');
+  doc.setFillColor(31, 107, 71);
+  doc.rect(0, 0, 210, 26, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(18);
+  doc.text('AviGes', 14, 14);
+  doc.setFontSize(8);
+  doc.setFont('helvetica', 'normal');
+  doc.text('Software Avicola Mexicano', 14, 19);
+  doc.text(`Folio: ${'AVI-' + Date.now().toString(36).toUpperCase()}`, 196, 14, { align:'right' });
+  doc.text(`Generado: ${new Date().toLocaleString('es-MX')}`, 196, 19, { align:'right' });
+  doc.setTextColor(0, 0, 0);
+  doc.setFontSize(15);
+  doc.setFont('helvetica', 'bold');
+  doc.text(titulo, 14, 38);
+  if (subtitulo) {
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(120, 110, 100);
+    doc.text(subtitulo, 14, 44);
+  }
+  doc.setFontSize(9);
+  doc.setTextColor(80, 70, 60);
+  doc.text(granja.nombre || '—', 196, 36, { align:'right' });
+  doc.text(`${granja.propietario || ''} · ${granja.rfc || ''}`, 196, 41, { align:'right' });
+  doc.text(`${granja.telefono || ''}`, 196, 46, { align:'right' });
+  doc.setDrawColor(232, 223, 208);
+  doc.setLineWidth(.3);
+  doc.line(14, 50, 196, 50);
+}
+
+function pdfFooter(doc) {
+  const h = doc.internal.pageSize.height;
+  const totalPages = doc.internal.getNumberOfPages();
+  for (let i = 1; i <= totalPages; i++) {
+    doc.setPage(i);
+    doc.setDrawColor(232, 223, 208);
+    doc.line(14, h-15, 196, h-15);
+    doc.setFontSize(8);
+    doc.setTextColor(150, 140, 130);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Generado con AviGes · TEC CAPITAL · aviges.mx', 14, h-9);
+    doc.text(`Página ${i} de ${totalPages}`, 196, h-9, { align:'right' });
+  }
+}
+
+function descargarYRegistrar(doc, nombre, tipo, periodo) {
+  try {
+    const blob = doc.output('blob');
+    const sizeKB = Math.round(blob.size/1024);
+    const sizeStr = sizeKB > 1024 ? (sizeKB/1024).toFixed(1)+' MB' : sizeKB+' KB';
+    doc.save(nombre + '.pdf');
+    store.create('reportes', { nombre, tipo, periodo, fecha: new Date().toISOString(), tamano: sizeStr });
+    logActivity({ texto:`<strong>${auth.current()?.nombre||'Usuario'}</strong> generó reporte <strong>${nombre}</strong>`, tipo:'b', icono:'file-text' });
+    toast('Reporte PDF descargado','success');
+    renderRecientes();
+  } catch (e) {
+    console.error('Error descargando PDF:', e);
+    toast('Error al guardar PDF: '+e.message,'danger');
+  }
+}
+
+// ─── Selector de lote universal ───
+let pendingReport = null;
+function abrirSelectorLote(tipo) {
+  pendingReport = tipo;
+  const lotes = store.list('lotes');
+  if (!lotes.length) { toast('No hay lotes registrados','danger'); return; }
+  document.getElementById('sel-ttl').textContent = 'Selecciona un lote';
+  document.getElementById('sel-sub').textContent = 'Para generar el reporte de cierre';
+  document.getElementById('sel-body').innerHTML = lotes.map(l => {
+    const r = calc.resumenLote(l);
+    const galpon = store.get('galpones',l.galponId)?.nombre || '—';
+    const isCerrado = l.estado === 'cerrado';
+    return `<div class="lote-pick-row" onclick="ejecutarReporte('${l.id}')">
+      <div class="lp-icon"><i class="ti ti-${l.tipo==='broiler'?'burger':'egg'}"></i></div>
+      <div style="flex:1;"><div style="font-weight:700;font-size:14px;">${escapeHTML(l.nombre)} <span style="font-size:11.5px;color:var(--text-3);font-weight:500;margin-left:6px;">${escapeHTML(galpon)} · ${escapeHTML(l.linea)}</span></div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;margin-top:2px;">${num(r.avesVivas)} aves vivas · día ${r.dias}/${l.duracion} · IEP ${r.iep||'—'}</div></div>
+      <span class="pill ${isCerrado?'pill-warn':'pill-ok'}"><span class="sdot ${isCerrado?'w':'g'}"></span> ${isCerrado?'Cerrado':'Activo'}</span>
+    </div>`;
+  }).join('');
+  openModal('modal-sel-lote');
+}
+
+function ejecutarReporte(loteId) {
+  closeModal('modal-sel-lote');
+  if (pendingReport === 'cierre') generarCierreLote(loteId);
+}
+
+// ─── REPORTE SENASICA ───
+function generarSenasica() {
+  if (!checkLibs()) return;
+  try {
+    const doc = new jsPDF();
+    pdfHeader(doc, 'REPORTE SENASICA', `Bioseguridad y producción avícola · ${new Date().toLocaleDateString('es-MX',{month:'long',year:'numeric'})}`);
+    const granja = store.getDoc('granja');
+    let y = 60;
+
+    doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(31, 107, 71);
+    doc.text('1. DATOS DE LA UNIDAD DE PRODUCCION', 14, y); y += 6;
+    doc.setFontSize(9); doc.setFont('helvetica', 'normal'); doc.setTextColor(0, 0, 0);
+    [['Nombre granja:', granja.nombre || '—'], ['Propietario:', granja.propietario || '—'], ['RFC:', granja.rfc || '—'], ['Direccion:', granja.direccion || '—'], ['Telefono:', granja.telefono || '—'], ['Folio SENASICA:', granja.folioSenasica || 'PENDIENTE']].forEach(([k,v]) => { doc.setFont('helvetica','bold'); doc.text(k, 14, y); doc.setFont('helvetica','normal'); doc.text(String(v), 50, y); y += 5; });
+
+    y += 4;
+    doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(31, 107, 71);
+    doc.text('2. POBLACION ACTUAL', 14, y); y += 4;
+    const lotes = store.list('lotes',{estado:'activo'});
+    doc.autoTable({
+      startY: y, head: [['Lote','Galpon','Linea','Tipo','Inicial','Actual','% Mort.','Dia']],
+      body: lotes.map(l => { const r = calc.resumenLote(l); return [l.nombre, store.get('galpones',l.galponId)?.nombre||'—', l.linea, l.tipo, num(l.avesIniciales), num(r.avesVivas), r.pctMortalidad.toFixed(2)+'%', r.dias+'/'+l.duracion]; }),
+      headStyles:{fillColor:[31,107,71], fontSize:8, fontStyle:'bold'}, bodyStyles:{fontSize:8}, theme:'striped', margin:{left:14, right:14}
+    });
+    y = doc.lastAutoTable.finalY + 8;
+
+    doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(31, 107, 71);
+    doc.text('3. VACUNACIONES APLICADAS', 14, y); y += 4;
+    const vac = store.list('vacunas',{estado:'aplicada'});
+    doc.autoTable({
+      startY: y, head: [['Fecha','Lote','Vacuna','Via','Aplicador']],
+      body: vac.length?vac.map(v => [fmtFecha(v.fecha), store.get('lotes',v.loteId)?.nombre||'—', v.vacuna, v.via, v.aplicador||'—']):[['Sin registros','','','','']],
+      headStyles:{fillColor:[31,107,71], fontSize:8}, bodyStyles:{fontSize:8}, theme:'striped', margin:{left:14, right:14}
+    });
+    y = doc.lastAutoTable.finalY + 8;
+
+    if (y > 240) { doc.addPage(); y = 20; }
+    doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(31, 107, 71);
+    doc.text('4. EVENTOS DE BIOSEGURIDAD', 14, y); y += 4;
+    const bio = store.list('bioseguridad').sort((a,b)=>new Date(b.fecha)-new Date(a.fecha)).slice(0,15);
+    doc.autoTable({
+      startY: y, head: [['Fecha','Tipo','Galpones','Responsable','Producto']],
+      body: bio.length?bio.map(b => [fmtFecha(b.fecha), b.tipo, b.galpones||'—', b.responsable||'—', b.producto||'—']):[['Sin registros','','','','']],
+      headStyles:{fillColor:[31,107,71], fontSize:8}, bodyStyles:{fontSize:8}, theme:'striped', margin:{left:14, right:14}
+    });
+    y = doc.lastAutoTable.finalY + 14;
+
+    if (y > 240) { doc.addPage(); y = 30; }
+    doc.setDrawColor(180, 170, 160); doc.line(110, y+15, 196, y+15);
+    doc.setFontSize(8); doc.setTextColor(80, 70, 60);
+    doc.text('Firma del responsable', 153, y+20, {align:'center'});
+    doc.text(granja.propietario || '', 153, y+24, {align:'center'});
+
+    pdfFooter(doc);
+    descargarYRegistrar(doc, `Reporte-SENASICA-${new Date().toISOString().slice(0,7)}`, 'Oficial', new Date().toLocaleDateString('es-MX',{month:'long',year:'numeric'}));
+  } catch (e) { console.error(e); toast('Error: '+e.message,'danger'); }
+}
+
+// ─── CIERRE LOTE ───
+function generarCierreLote(loteId) {
+  if (!checkLibs()) return;
+  if (!loteId) { abrirSelectorLote('cierre'); return; }
+  try {
+    const lote = store.get('lotes', loteId);
+    if (!lote) { toast('Lote no encontrado','danger'); return; }
+    const r = calc.resumenLote(lote);
+    const doc = new jsPDF();
+    pdfHeader(doc, `CIERRE DE LOTE · ${lote.nombre}`, `${store.get('galpones',lote.galponId)?.nombre} · ${lote.linea} · ${lote.tipo}`);
+
+    let y = 60;
+    doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(31, 107, 71);
+    doc.text('RESUMEN ZOOTECNICO', 14, y); y += 6;
+    doc.setFontSize(10); doc.setFont('helvetica','normal'); doc.setTextColor(0,0,0);
+    [['Aves iniciales:', num(lote.avesIniciales)], ['Aves vivas finales:', num(r.avesVivas)], ['Mortalidad acumulada:', r.pctMortalidad.toFixed(2)+'%'], ['Viabilidad:', r.viabilidad.toFixed(2)+'%'], ['Dias en granja:', r.dias], ['Peso promedio (g):', num(r.ultimoPeso)], ['Conversion alimenticia:', r.ca || '—'], ['Indice de Eficiencia (IEP):', r.iep || '—'], ['Consumo total alimento:', num(Math.round(r.consumoTotal))+' kg']].forEach(([k,v]) => { doc.setFont('helvetica','bold'); doc.text(k, 14, y); doc.setFont('helvetica','normal'); doc.text(String(v), 80, y); y += 5; });
+
+    y += 8;
+    doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(31, 107, 71);
+    doc.text('RESUMEN ECONOMICO', 14, y); y += 6;
+    doc.setFontSize(10); doc.setFont('helvetica','normal'); doc.setTextColor(0,0,0);
+    [['Costos totales:', mxn(r.costoTotal)], ['Ingresos por ventas:', mxn(r.ingresoTotal)], ['Margen / utilidad:', mxn(r.margen)], ['Costo por kg producido:', calc.costoPorKg(lote) ? mxnDec(calc.costoPorKg(lote)) : '—'], ['Margen %:', r.ingresoTotal ? ((r.margen/r.ingresoTotal)*100).toFixed(1)+'%' : '—']].forEach(([k,v]) => { doc.setFont('helvetica','bold'); doc.text(k, 14, y); doc.setFont('helvetica','normal'); doc.text(String(v), 80, y); y += 5; });
+
+    y += 6;
+    doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(31, 107, 71);
+    doc.text('DESGLOSE DE GASTOS', 14, y); y += 4;
+    const gastos = store.list('gastos',{loteId:lote.id});
+    doc.autoTable({
+      startY: y, head: [['Fecha','Concepto','Categoria','Monto']],
+      body: gastos.length?gastos.map(g=>[fmtFecha(g.fecha),g.concepto,g.categoria,mxn(g.monto)]):[['Sin gastos','','','']],
+      headStyles:{fillColor:[31,107,71], fontSize:8}, bodyStyles:{fontSize:8}, theme:'striped', margin:{left:14, right:14}
+    });
+
+    pdfFooter(doc);
+    descargarYRegistrar(doc, `Cierre-${lote.nombre.replace(/\s+/g,'-')}`, 'Cierre', fmtFecha(lote.fechaInicio,{short:true})+' a '+fmtFecha(new Date(),{short:true}));
+  } catch (e) { console.error(e); toast('Error: '+e.message,'danger'); }
+}
+
+// ─── FINANCIERO ───
+function generarFinanciero() {
+  if (!checkLibs()) return;
+  try {
+    const doc = new jsPDF();
+    pdfHeader(doc, 'REPORTE FINANCIERO', `Periodo: ${new Date().toLocaleDateString('es-MX',{month:'long',year:'numeric'})}`);
+    let y = 60;
+    const ahora = new Date(), inicioMes = new Date(ahora.getFullYear(), ahora.getMonth(), 1);
+    const ventas = store.list('ventas').filter(v => new Date(v.fecha) >= inicioMes);
+    const gastos = store.list('gastos').filter(g => new Date(g.fecha) >= inicioMes);
+    const totVentas = ventas.reduce((s,v)=>s+v.total,0);
+    const totGastos = gastos.reduce((s,g)=>s+g.monto,0);
+    const utilidad = totVentas - totGastos;
+
+    doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(31, 107, 71);
+    doc.text('RESUMEN DEL PERIODO', 14, y); y += 6;
+    doc.setFontSize(10); doc.setFont('helvetica','normal'); doc.setTextColor(0,0,0);
+    [['Ingresos totales:', mxn(totVentas)], ['Gastos totales:', mxn(totGastos)], ['Utilidad neta:', mxn(utilidad)], ['Margen:', totVentas?((utilidad/totVentas*100).toFixed(1)+'%'):'—']].forEach(([k,v]) => { doc.setFont('helvetica','bold'); doc.text(k, 14, y); doc.setFont('helvetica','normal'); doc.text(v, 70, y); y += 5; });
+
+    y += 6;
+    doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(31, 107, 71);
+    doc.text('VENTAS DEL PERIODO', 14, y); y += 4;
+    doc.autoTable({
+      startY: y, head: [['Fecha','Cliente','Producto','Cant.','Total','Estado']],
+      body: ventas.length?ventas.map(v=>[fmtFecha(v.fecha,{short:true}),v.cliente,v.tipo,num(v.cantidad)+' '+v.unidad,mxn(v.total),v.estadoPago]):[['Sin ventas','','','','','']],
+      headStyles:{fillColor:[31,107,71], fontSize:8}, bodyStyles:{fontSize:8}, theme:'striped', margin:{left:14, right:14}
+    });
+    y = doc.lastAutoTable.finalY + 8;
+
+    if (y > 240) { doc.addPage(); y = 20; }
+    doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(31, 107, 71);
+    doc.text('GASTOS DEL PERIODO', 14, y); y += 4;
+    doc.autoTable({
+      startY: y, head: [['Fecha','Concepto','Categoria','Proveedor','Monto']],
+      body: gastos.length?gastos.map(g=>[fmtFecha(g.fecha,{short:true}),g.concepto,g.categoria,g.proveedor||'—',mxn(g.monto)]):[['Sin gastos','','','','']],
+      headStyles:{fillColor:[31,107,71], fontSize:8}, bodyStyles:{fontSize:8}, theme:'striped', margin:{left:14, right:14}
+    });
+
+    pdfFooter(doc);
+    descargarYRegistrar(doc, `Financiero-${new Date().toISOString().slice(0,7)}`, 'Financiero', new Date().toLocaleDateString('es-MX',{month:'long',year:'numeric'}));
+  } catch (e) { console.error(e); toast('Error: '+e.message,'danger'); }
+}
+
+// ─── PLAN SANITARIO ───
+function generarPlanSanitario() {
+  if (!checkLibs()) return;
+  try {
+    const doc = new jsPDF();
+    pdfHeader(doc, 'PLAN SANITARIO', 'Vacunaciones, tratamientos e inventario sanitario');
+    let y = 60;
+
+    doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(31, 107, 71);
+    doc.text('VACUNAS APLICADAS', 14, y); y += 4;
+    const vac = store.list('vacunas');
+    doc.autoTable({
+      startY: y, head: [['Fecha','Lote','Vacuna','Via','Dosis','Aplicador','Estado']],
+      body: vac.length?vac.sort((a,b)=>new Date(b.fecha)-new Date(a.fecha)).map(v=>[fmtFecha(v.fecha,{short:true}),store.get('lotes',v.loteId)?.nombre||'—',v.vacuna,v.via,v.dosis||'—',v.aplicador||'—',v.estado]):[['Sin registros','','','','','','']],
+      headStyles:{fillColor:[31,107,71], fontSize:8}, bodyStyles:{fontSize:8}, theme:'striped', margin:{left:14, right:14}
+    });
+    y = doc.lastAutoTable.finalY + 8;
+
+    if (y > 240) { doc.addPage(); y = 20; }
+    doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(31, 107, 71);
+    doc.text('TRATAMIENTOS', 14, y); y += 4;
+    const trat = store.list('tratamientos');
+    doc.autoTable({
+      startY: y, head: [['Inicio','Lote','Medicamento','Dosis','Dias','Diagnostico','Estado']],
+      body: trat.length?trat.map(t=>[fmtFecha(t.fechaInicio,{short:true}),store.get('lotes',t.loteId)?.nombre||'—',t.medicamento,t.dosis||'—',t.dias,t.diagnostico||'—',t.estado]):[['Sin registros','','','','','','']],
+      headStyles:{fillColor:[31,107,71], fontSize:8}, bodyStyles:{fontSize:8}, theme:'striped', margin:{left:14, right:14}
+    });
+    y = doc.lastAutoTable.finalY + 8;
+
+    if (y > 230) { doc.addPage(); y = 20; }
+    doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(31, 107, 71);
+    doc.text('INVENTARIO SANITARIO', 14, y); y += 4;
+    const inv = store.list('inventarioSanidad');
+    doc.autoTable({
+      startY: y, head: [['Producto','Tipo','Presentacion','Stock','Min','Vencimiento']],
+      body: inv.length?inv.map(i=>[i.producto,i.tipo,i.presentacion||'—',i.stock,i.minimo,fmtFecha(i.vencimiento,{short:true})]):[['Sin productos','','','','','']],
+      headStyles:{fillColor:[31,107,71], fontSize:8}, bodyStyles:{fontSize:8}, theme:'striped', margin:{left:14, right:14}
+    });
+
+    pdfFooter(doc);
+    descargarYRegistrar(doc, `Plan-Sanitario-${new Date().toISOString().slice(0,10)}`, 'Sanidad', 'Histórico');
+  } catch (e) { console.error(e); toast('Error: '+e.message,'danger'); }
+}
+
+// ─── PRODUCCION HUEVO ───
+function generarProduccionHuevo() {
+  if (!checkLibs()) return;
+  try {
+    const doc = new jsPDF();
+    pdfHeader(doc, 'PRODUCCION DE HUEVO', `Postura · clasificacion · ${new Date().toLocaleDateString('es-MX',{month:'long',year:'numeric'})}`);
+    let y = 60;
+
+    const ponedoras = store.list('lotes', l => l.tipo==='ponedora' && l.estado==='activo');
+    const huevos = store.list('huevos');
+    const inicioMes = new Date(); inicioMes.setDate(1); inicioMes.setHours(0,0,0,0);
+    const huevosMes = huevos.filter(h => new Date(h.fecha) >= inicioMes);
+    const totalMes = huevosMes.reduce((s,h)=>s+h.total,0);
+
+    doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(31, 107, 71);
+    doc.text('RESUMEN DEL MES', 14, y); y += 6;
+    doc.setFontSize(10); doc.setFont('helvetica','normal'); doc.setTextColor(0,0,0);
+    [['Total huevos producidos:', num(totalMes)+' pzas'], ['Equivalente cartones:', num(Math.round(totalMes/12))], ['Lotes ponedoras activos:', ponedoras.length], ['Aves totales:', num(ponedoras.reduce((s,l)=>s+calc.avesVivas(l),0))]].forEach(([k,v]) => { doc.setFont('helvetica','bold'); doc.text(k, 14, y); doc.setFont('helvetica','normal'); doc.text(String(v), 80, y); y += 5; });
+
+    y += 6;
+    doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(31, 107, 71);
+    doc.text('PRODUCCION POR LOTE', 14, y); y += 4;
+    doc.autoTable({
+      startY: y, head: [['Lote','Linea','Aves','Sem','Total mes','% postura','Jumbo','Extra','Grande','Mediano','Rotos']],
+      body: ponedoras.length?ponedoras.map(l => {
+        const tot = huevosMes.filter(h=>h.loteId===l.id).reduce((s,h)=>s+h.total,0);
+        const dist = huevosMes.filter(h=>h.loteId===l.id).reduce((acc,h)=>{ acc.j+=h.jumbo||0; acc.e+=h.extra||0; acc.g+=h.grande||0; acc.m+=h.mediano||0; acc.r+=h.rotos||0; return acc; }, {j:0,e:0,g:0,m:0,r:0});
+        return [l.nombre, l.linea, num(calc.avesVivas(l)), calc.semanasLote(l), num(tot), calc.pctPosturaHoy(l).toFixed(1)+'%', num(dist.j), num(dist.e), num(dist.g), num(dist.m), num(dist.r)];
+      }):[['Sin lotes ponedora','','','','','','','','','','']],
+      headStyles:{fillColor:[31,107,71], fontSize:7}, bodyStyles:{fontSize:7}, theme:'striped', margin:{left:14, right:14}
+    });
+
+    pdfFooter(doc);
+    descargarYRegistrar(doc, `Produccion-Huevo-${new Date().toISOString().slice(0,7)}`, 'Producción', new Date().toLocaleDateString('es-MX',{month:'long',year:'numeric'}));
+  } catch (e) { console.error(e); toast('Error: '+e.message,'danger'); }
+}
+
+// ─── CONSUMO ALIMENTO ───
+function generarConsumoAlimento() {
+  if (!checkLibs()) return;
+  try {
+    const doc = new jsPDF();
+    pdfHeader(doc, 'CONSUMO DE ALIMENTO', 'Real vs estandar · por galpon');
+    let y = 60;
+
+    const galpones = store.list('galpones',{activo:true});
+    doc.autoTable({
+      startY: y, head: [['Galpon','Tipo','Lotes activos','Stock kg','Dias restantes','Consumo total']],
+      body: galpones.length?galpones.map(g => {
+        const lotesG = store.list('lotes', l => l.galponId===g.id && l.estado==='activo');
+        const consTot = lotesG.reduce((s,l)=>s+calc.consumoTotal(l.id),0);
+        const dias = calc.diasStockGalpon(g.id);
+        return [g.nombre, g.tipo, lotesG.length, num(Math.round(calc.stockAlimentoGalpon(g.id))), dias!==null?dias+' d':'—', num(Math.round(consTot))+' kg'];
+      }):[['Sin galpones','','','','','']],
+      headStyles:{fillColor:[31,107,71], fontSize:8}, bodyStyles:{fontSize:8}, theme:'striped', margin:{left:14, right:14}
+    });
+    y = doc.lastAutoTable.finalY + 8;
+
+    if (y > 240) { doc.addPage(); y = 20; }
+    doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(31, 107, 71);
+    doc.text('ENTRADAS DEL MES', 14, y); y += 4;
+    const inicioMes = new Date(); inicioMes.setDate(1);
+    const entradas = store.list('entradasAlimento').filter(e => new Date(e.fecha) >= inicioMes);
+    doc.autoTable({
+      startY: y, head: [['Fecha','Galpon','Tipo','Sacos','Kg','Total']],
+      body: entradas.length?entradas.map(e=>[fmtFecha(e.fecha,{short:true}), store.get('galpones',e.galponId)?.nombre||'—', e.tipo, e.sacos, num(e.kgTotal)+' kg', mxn(e.total)]):[['Sin entradas','','','','','']],
+      headStyles:{fillColor:[31,107,71], fontSize:8}, bodyStyles:{fontSize:8}, theme:'striped', margin:{left:14, right:14}
+    });
+
+    pdfFooter(doc);
+    descargarYRegistrar(doc, `Consumo-Alimento-${new Date().toISOString().slice(0,7)}`, 'Alimento', new Date().toLocaleDateString('es-MX',{month:'long',year:'numeric'}));
+  } catch (e) { console.error(e); toast('Error: '+e.message,'danger'); }
+}
+
+// ─── HISTORIAL DE REPORTES ───
+function renderRecientes() {
+  const reps = store.list('reportes').sort((a,b)=>new Date(b.fecha)-new Date(a.fecha)).slice(0,10);
+  document.getElementById('rec-sub').textContent = reps.length ? `${reps.length} reportes generados recientemente` : 'Aún no has generado reportes';
+  const tbody = document.querySelector('#tbl-rec tbody');
+  if (!reps.length) tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-3);padding:40px;">Genera tu primer reporte haciendo clic en cualquier tarjeta de arriba</td></tr>';
+  else tbody.innerHTML = reps.map(r => {
+    const tipoColor = { 'Oficial':'pill-ok', 'Cierre':'pill-br', 'Financiero':'pill-warn', 'Sanidad':'pill-po' }[r.tipo] || 'pill-warn';
+    const icon = { 'Oficial':'shield-check', 'Cierre':'flag-2', 'Financiero':'cash', 'Sanidad':'vaccine', 'Producción':'egg', 'Alimento':'grain' }[r.tipo] || 'file-text';
+    return `<tr>
+      <td><span style="display:inline-flex;align-items:center;gap:8px;font-weight:600;"><i class="ti ti-${icon}" style="color:var(--primary);font-size:16px;"></i> ${escapeHTML(r.nombre)}</span></td>
+      <td><span class="pill ${tipoColor}">${escapeHTML(r.tipo)}</span></td>
+      <td style="color:var(--text-2)">${escapeHTML(r.periodo||'—')}</td>
+      <td class="num-mono" style="color:var(--text-3)">${fmtFecha(r.fecha,{dateTime:true})}</td>
+      <td class="num-mono" style="color:var(--text-3)">${escapeHTML(r.tamano||'—')}</td>
+      <td><button class="btn btn-ghost btn-sm" onclick="store.delete('reportes','${r.id}');renderRecientes();"><i class="ti ti-trash"></i></button></td>
+    </tr>`;
+  }).join('');
+}
+
+// Esperar a que jsPDF cargue (a veces tarda en CDN)
+function esperarLibs(intentos=20) {
+  if (typeof window.jspdf !== 'undefined' && window.jspdf.jsPDF) {
+    checkLibs(); renderRecientes(); return;
+  }
+  if (intentos <= 0) { checkLibs(); renderRecientes(); return; }
+  setTimeout(()=>esperarLibs(intentos-1), 100);
+}
+setTimeout(esperarLibs, 100);
 </script>
 </body>
 </html>

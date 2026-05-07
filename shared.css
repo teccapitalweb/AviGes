@@ -502,3 +502,50 @@ select.form-input { cursor: pointer; appearance: none; background-image: url("da
 @media(max-width:480px){
   .g4 { grid-template-columns: 1fr; }
 }
+
+/* === Aliases adicionales para variantes de color === */
+.kpi-modern .ki-icon-bg.r { background: var(--terracotta-l); color: var(--terracotta); }
+.kpi-modern .ki-icon-bg.a { background: var(--amber-l); color: var(--amber-d); }
+.kpi-modern .ki-trend.dn { background: var(--terracotta-l); color: var(--terracotta); }
+.kpi-modern .ki-trend.md { background: var(--amber-l); color: var(--amber-d); }
+.kpi-modern .ki-num.g { color: var(--primary); }
+.kpi-modern .ki-num.r { color: var(--terracotta); }
+.kpi-modern .ki-num.a { color: var(--amber-d); }
+.bar-fill.r { background: linear-gradient(90deg, var(--terracotta) 0%, #8a2828 100%); }
+.bar-fill.g { background: linear-gradient(90deg, var(--primary) 0%, var(--primary-d) 100%); }
+
+/* mrow - filas resumen económico */
+.mrow { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+.mrow:last-child { border-bottom: none; }
+.mrow-l { color: var(--text-2); font-weight: 500; }
+.mrow-r { font-weight: 700; font-family: var(--font-mono); }
+.mrow-r.g { color: var(--primary); }
+.mrow-r.r { color: var(--terracotta); }
+
+/* iep variants */
+.iep { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 7px; font-family: var(--font-mono); font-size: 12.5px; font-weight: 700; letter-spacing: -.2px; }
+.iep.ex { background: var(--primary-l); color: var(--primary); }
+.iep.bk { background: var(--info-l); color: var(--info); }
+.iep.rg { background: var(--amber-l); color: var(--amber-d); }
+.iep.bd { background: var(--terracotta-l); color: var(--terracotta); }
+
+/* card-link - enlaces con flecha en headers */
+.card-link { font-size: 12.5px; color: var(--primary); font-weight: 600; text-decoration: none; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; transition: gap .15s; }
+.card-link:hover { gap: 7px; }
+
+/* nav-badge - contador en sidebar */
+.nav-badge { background: var(--terracotta); color: #fff; font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 10px; margin-left: auto; min-width: 20px; text-align: center; line-height: 1.4; }
+.nav-badge.info { background: var(--info); }
+
+
+
+
+/* responsive sidebar */
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); transition: transform .25s; z-index: 100; position: fixed; }
+  .sidebar.open { transform: translateX(0); }
+  .main { margin-left: 0; }
+  .hamburger { display: block; }
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 99; opacity: 0; pointer-events: none; transition: opacity .2s; }
+  .overlay.show { opacity: 1; pointer-events: auto; }
+}

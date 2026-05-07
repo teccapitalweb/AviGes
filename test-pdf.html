@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>AviGes — Diagnóstico PDF</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.0/jspdf.plugin.autotable.min.js"></script>
+<style>
+body { font-family: system-ui, -apple-system, sans-serif; max-width: 720px; margin: 40px auto; padding: 0 20px; background: #FAF7F2; color: #1A1612; }
+h1 { font-size: 28px; margin-bottom: 8px; }
+.sub { color: #888; margin-bottom: 24px; }
+.test { background: #fff; border: 1px solid #E8DFD0; border-radius: 12px; padding: 20px; margin-bottom: 12px; display: flex; align-items: center; gap: 14px; }
+.icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; flex-shrink: 0; }
+.ok { background: #DCEFE2; color: #1F6B47; }
+.fail { background: #F4D7D7; color: #B83838; }
+.info { flex: 1; }
+.title { font-weight: 700; font-size: 14px; }
+.detail { font-size: 12px; color: #666; margin-top: 2px; font-family: ui-monospace, monospace; }
+button { background: #1F6B47; color: #fff; border: none; padding: 12px 22px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 16px; }
+button:hover { background: #144B30; }
+</style>
+</head>
+<body>
+<h1>🔍 Diagnóstico PDF — AviGes</h1>
+<p class="sub">Verifica que tu navegador puede generar PDFs. Si TODO sale ✓, los reportes de AviGes funcionarán igual.</p>
+
+<div id="results"></div>
+
+<button onclick="testFinal()">Generar PDF de prueba</button>
+
+<script>
+const r = document.getElementById('results');
+function check(title, pass, detail) {
+  const div = document.createElement('div');
+  div.className = 'test';
+  div.innerHTML = `<div class="icon ${pass?'ok':'fail'}">${pass?'✓':'✗'}</div><div class="info"><div class="title">${title}</div><div class="detail">${detail}</div></div>`;
+  r.appendChild(div);
+  return pass;
+}
+
+setTimeout(() => {
+  const a = check('jsPDF cargado', typeof window.jspdf !== 'undefined' && !!window.jspdf.jsPDF, typeof window.jspdf !== 'undefined' ? 'window.jspdf.jsPDF disponible' : 'window.jspdf NO existe — revisa conexión a CDN');
+  let b = false;
+  if (a) {
+    try {
+      const { jsPDF } = window.jspdf;
+      const d = new jsPDF();
+      b = check('autoTable plugin', typeof d.autoTable === 'function', typeof d.autoTable === 'function' ? 'doc.autoTable() disponible' : 'plugin no se aplicó al doc');
+    } catch (e) { check('autoTable plugin', false, e.message); }
+  }
+  check('localStorage funciona', (() => { try { localStorage.setItem('_t','1'); localStorage.removeItem('_t'); return true; } catch(e) { return false; } })(), 'persistencia de datos OK');
+  check('Navegador moderno', !!window.URL && !!window.URL.createObjectURL, 'puede descargar archivos');
+}, 600);
+
+function testFinal() {
+  try {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFillColor(31, 107, 71);
+    doc.rect(0, 0, 210, 26, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'bold');
+    doc.text('AviGes · PDF de prueba', 14, 16);
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Si ves este PDF descargado, todo funciona correctamente.', 14, 40);
+    doc.text('Generado: ' + new Date().toLocaleString('es-MX'), 14, 50);
+    doc.autoTable({
+      startY: 60,
+      head: [['Test', 'Resultado']],
+      body: [
+        ['jsPDF', 'OK'],
+        ['autoTable', 'OK'],
+        ['Descarga', 'OK'],
+        ['Browser', navigator.userAgent.split(' ').slice(-2).join(' ')]
+      ],
+      headStyles: { fillColor: [31, 107, 71] }
+    });
+    doc.save('aviges-test.pdf');
+    alert('✓ PDF generado y descargado. Revisa tu carpeta de Descargas.');
+  } catch (e) {
+    alert('✗ Error: ' + e.message);
+  }
+}
+</script>
+</body>
+</html>

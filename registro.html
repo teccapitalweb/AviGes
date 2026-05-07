@@ -2,332 +2,245 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AviGes — Registro Diario</title>
+<title>AviGes — Registro diario</title>
 <link rel="stylesheet" href="shared.css">
 <style>
-.campo-mode { max-width: 540px; margin: 0 auto; }
-.lote-selector {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-d) 100%);
-  border-radius: 14px; padding: 18px 20px; margin-bottom: 20px; cursor: pointer;
-  display: flex; align-items: center; justify-content: space-between; color: #fff;
-  box-shadow: var(--shadow-primary);
-}
-.lote-sel-name { font-family: var(--font-display); font-size: 17px; font-weight: 800; letter-spacing: -.3px; display: flex; align-items: center; gap: 8px; }
-.lote-sel-sub { font-size: 12.5px; opacity: .9; margin-top: 4px; }
-.lote-sel-arrow { width: 32px; height: 32px; background: rgba(255,255,255,.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
-
-.reg-section {
-  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg);
-  margin-bottom: 14px; box-shadow: var(--shadow-xs); overflow: hidden;
-}
-.reg-section-head {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 18px; background: var(--surface-2);
-  border-bottom: 1px solid var(--border);
-}
-.reg-section-title { font-family: var(--font-display); font-size: 14.5px; font-weight: 700; display: flex; align-items: center; gap: 8px; letter-spacing: -.2px; }
-.reg-section-title i { font-size: 18px; color: var(--primary); }
-.reg-section-body { padding: 18px; }
-
-.big-input-wrap { position: relative; margin-bottom: 14px; }
-.big-label { font-size: 11.5px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing:.06em; margin-bottom: 7px; display: block; }
-.big-input {
-  width: 100%; padding: 14px 16px; border: 2px solid var(--border); border-radius: 11px;
-  font-family: var(--font-display); font-size: 24px; font-weight: 800; color: var(--text);
-  text-align: center; outline: none; transition: all .15s; -webkit-appearance: none;
-  letter-spacing: -.5px;
-}
-.big-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(11,139,94,.12); }
-.input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.input-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-
-.quick-btns { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
-.qbtn {
-  padding: 9px 16px; border-radius: 10px; border: 1.5px solid var(--border);
-  font-size: 14px; font-weight: 700; background: var(--surface); cursor: pointer;
-  color: var(--text-2); transition: all .12s; font-family: var(--font); flex: 1; min-width: 60px;
-}
-.qbtn:hover { border-color: var(--primary); color: var(--primary); }
-.qbtn:active { transform: scale(.95); }
-.qbtn.selected { background: var(--primary); border-color: var(--primary); color: #fff; box-shadow: var(--shadow-primary); }
-
-.calc-box {
-  background: linear-gradient(135deg, var(--primary-l) 0%, var(--primary-ll) 100%);
-  border: 1px solid var(--primary-m); border-radius: 14px; padding: 16px 18px; margin-top: 14px;
-}
-.calc-header {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 11.5px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing:.07em; margin-bottom: 10px;
-}
-.calc-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; padding: 5px 0; }
-.calc-label { color: var(--text-2); font-weight: 500; }
-.calc-val { font-family: var(--font-display); font-weight: 800; color: var(--primary); font-size: 14.5px; letter-spacing: -.2px; }
-.calc-val.warn { color: var(--warn); }
-.calc-val.danger { color: var(--danger); }
-
-.btn-guardar {
-  width: 100%; padding: 16px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-d) 100%);
-  color: #fff; border: none; border-radius: 14px; font-family: var(--font-display); font-size: 16px;
-  font-weight: 800; cursor: pointer; margin-top: 8px; transition: all .15s; letter-spacing: -.2px;
-  box-shadow: var(--shadow-primary); display: flex; align-items: center; justify-content: center; gap: 10px;
-}
-.btn-guardar:active { transform: scale(.98); }
-
-.alerta-campo {
-  display: flex; align-items: flex-start; gap: 11px;
-  background: var(--warn-l); border: 1px solid #FBDFA9; border-radius: 11px;
-  padding: 12px 14px; margin-bottom: 14px; font-size: 13px; line-height: 1.4; color: var(--text);
-}
-.alerta-campo i { color: var(--warn); font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.reg-wrap { max-width: 920px; margin: 0 auto; }
+.lote-pick { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 18px 22px; margin-bottom: 18px; box-shadow: var(--shadow-xs); }
+.lp-grid { display: grid; grid-template-columns: 60px 1fr auto; gap: 14px; align-items: center; }
+.lp-icon { width: 60px; height: 60px; border-radius: 14px; background: linear-gradient(135deg, var(--primary-l), var(--primary-ll)); display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--primary); }
+.lp-info-name { font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: -.4px; }
+.lp-info-sub { font-size: 12.5px; color: var(--text-3); margin-top: 3px; font-weight: 500; }
+.field-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 22px; margin-bottom: 14px; box-shadow: var(--shadow-xs); }
+.fc-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.fc-icon { width: 36px; height: 36px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.fc-icon.g { background: var(--primary-l); color: var(--primary); }
+.fc-icon.r { background: var(--terracotta-l); color: var(--terracotta); }
+.fc-icon.b { background: var(--info-l); color: var(--info); }
+.fc-icon.a { background: var(--amber-l); color: var(--amber-d); }
+.fc-title { font-family: var(--font-display); font-size: 15px; font-weight: 700; letter-spacing: -.2px; }
+.fc-hint { font-size: 12px; color: var(--text-3); margin-top: 1px; font-weight: 500; }
+.big-input { width: 100%; padding: 14px 18px; border: 2px solid var(--border); border-radius: 12px; font-family: var(--font-display); font-size: 24px; font-weight: 700; color: var(--text); outline: none; background: var(--surface); transition: all .15s; letter-spacing: -.5px; font-feature-settings: 'tnum'; }
+.big-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(31,107,71,.10); }
+.calc-row { background: var(--primary-ll); border: 1px solid var(--primary-m); border-radius: 11px; padding: 14px 18px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
+.calc-lbl { font-size: 12px; color: var(--primary); font-weight: 600; }
+.calc-val { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--primary); letter-spacing: -.4px; }
 </style>
 </head>
 <body>
 <div id="sidebar-mount"></div>
 <main class="main">
   <div class="topbar">
-    <div style="display:flex;align-items:center;gap:12px;">
+    <div style="display:flex;align-items:center;gap:14px;">
       <button class="hamburger" onclick="toggleSB()"><i class="ti ti-menu-2"></i></button>
-      <div><div class="page-ttl">Registro diario</div><div class="page-sub" id="fecha-reg"></div></div>
+      <div><div class="page-ttl">Registro diario</div><div class="page-sub" id="reg-sub">—</div></div>
     </div>
-    <div class="topbar-right"><div class="icon-btn"><i class="ti ti-bell"></i></div></div>
+    <div class="topbar-right">
+      <div class="icon-btn"><i class="ti ti-bell"></i></div>
+      <button class="btn btn-secondary btn-sm" onclick="window.location='lotes.html'"><i class="ti ti-list"></i> Ver lotes</button>
+    </div>
   </div>
-
   <div class="content">
-    <div class="campo-mode">
+    <div class="reg-wrap">
 
-      <div class="lote-selector" onclick="openModal('modal-lotes')">
-        <div>
-          <div class="lote-sel-name"><i class="ti ti-paw"></i> Lote 24-A · Galpón 1</div>
-          <div class="lote-sel-sub">Broiler Ross 308 · 18,400 aves · Día 35 de 42</div>
-        </div>
-        <div class="lote-sel-arrow"><i class="ti ti-chevron-down"></i></div>
-      </div>
-
-      <div class="alerta-campo">
-        <i class="ti ti-alert-triangle"></i>
-        <div>La CA de ayer (1.89) está por encima del estándar Ross. Verifica el consumo de alimento y peso de hoy.</div>
-      </div>
-
-      <!-- Mortalidad -->
-      <div class="reg-section">
-        <div class="reg-section-head">
-          <div class="reg-section-title"><i class="ti ti-heart-broken"></i> Mortalidad del día</div>
-          <span style="font-size:11.5px;color:var(--text-3);font-weight:600;">Obligatorio</span>
-        </div>
-        <div class="reg-section-body">
-          <div class="quick-btns">
-            <button class="qbtn" onclick="setMort(0,this)">0</button>
-            <button class="qbtn" onclick="setMort(5,this)">5</button>
-            <button class="qbtn" onclick="setMort(10,this)">10</button>
-            <button class="qbtn" onclick="setMort(15,this)">15</button>
-            <button class="qbtn" onclick="setMort(20,this)">20</button>
-          </div>
-          <div class="big-input-wrap">
-            <span class="big-label">Aves muertas hoy</span>
-            <input type="number" class="big-input" id="mort" value="0" oninput="calcular()">
-          </div>
-          <div class="input-row">
-            <div>
-              <span class="big-label">Causa principal</span>
-              <select class="form-input">
-                <option>Seleccionar...</option><option>Newcastle</option><option>Gumboro</option>
-                <option>Marek</option><option>Coccidiosis</option><option>Calor</option>
-                <option>Aplastamiento</option><option>Sin causa aparente</option>
-              </select>
+      <div class="lote-pick">
+        <div class="lp-grid">
+          <div class="lp-icon"><i class="ti ti-paw"></i></div>
+          <div>
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-3);margin-bottom:4px;">Selecciona el lote y fecha</div>
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+              <select class="form-input" id="sel-lote" onchange="cargarPreview()" style="max-width:280px;font-weight:600;"></select>
+              <input type="date" class="form-input" id="sel-fecha" onchange="cargarPreview()" style="max-width:160px;">
             </div>
-            <div>
-              <span class="big-label">Acumuladas</span>
-              <input type="text" class="form-input" value="331" readonly style="background:var(--surface-3);font-weight:700;">
-            </div>
+            <div class="lp-info-sub" id="lote-preview" style="margin-top:10px;">—</div>
           </div>
         </div>
       </div>
 
-      <!-- Pesaje -->
-      <div class="reg-section">
-        <div class="reg-section-head">
-          <div class="reg-section-title"><i class="ti ti-scale"></i> Pesaje semanal</div>
-          <span class="pill pill-warn" style="font-size:10.5px;">Día de pesaje</span>
+      <!-- MORTALIDAD -->
+      <div class="field-card">
+        <div class="fc-head">
+          <div class="fc-icon r"><i class="ti ti-emergency-bed"></i></div>
+          <div><div class="fc-title">Mortalidad del día</div><div class="fc-hint">Aves muertas hoy en este lote</div></div>
         </div>
-        <div class="reg-section-body">
-          <div class="big-input-wrap">
-            <span class="big-label">Peso promedio (gramos)</span>
-            <input type="number" class="big-input" id="peso" placeholder="0" oninput="calcular()">
-          </div>
-          <div class="input-row">
-            <div>
-              <span class="big-label">Aves pesadas</span>
-              <input type="number" class="form-input" value="50">
-            </div>
-            <div>
-              <span class="big-label">Estándar Ross hoy</span>
-              <input type="text" class="form-input" value="2,180g" readonly style="background:var(--surface-3);font-weight:700;color:var(--blue);">
-            </div>
-          </div>
+        <input type="number" class="big-input" id="f-mortalidad" placeholder="0" min="0">
+        <div class="calc-row" id="calc-mort" style="display:none;"></div>
+      </div>
+
+      <!-- PESO -->
+      <div class="field-card">
+        <div class="fc-head">
+          <div class="fc-icon g"><i class="ti ti-scale"></i></div>
+          <div><div class="fc-title">Peso promedio (gramos)</div><div class="fc-hint">Pesa al menos 50 aves al azar para promediar · opcional, llenar 1-2 veces por semana</div></div>
+        </div>
+        <input type="number" class="big-input" id="f-peso" placeholder="0" min="0">
+        <div class="calc-row" id="calc-peso" style="display:none;"></div>
+      </div>
+
+      <!-- ALIMENTO -->
+      <div class="field-card">
+        <div class="fc-head">
+          <div class="fc-icon a"><i class="ti ti-grain"></i></div>
+          <div><div class="fc-title">Alimento consumido (kg)</div><div class="fc-hint">Total servido al lote este día</div></div>
+        </div>
+        <input type="number" class="big-input" id="f-alimento" placeholder="0" step="0.1" min="0">
+        <select class="form-input" id="f-alim-tipo" style="margin-top:10px;">
+          <option>Iniciador</option><option>Crecimiento</option><option>Finalizador Fase 1</option><option>Finalizador Fase 2</option><option>Postura producción</option><option>Otro</option>
+        </select>
+      </div>
+
+      <!-- AGUA -->
+      <div class="field-card">
+        <div class="fc-head">
+          <div class="fc-icon b"><i class="ti ti-droplet"></i></div>
+          <div><div class="fc-title">Agua consumida (litros)</div><div class="fc-hint">Lectura del medidor de agua</div></div>
+        </div>
+        <input type="number" class="big-input" id="f-agua" placeholder="0" min="0">
+        <div class="calc-row" id="calc-ratio" style="display:none;"></div>
+      </div>
+
+      <!-- TEMP -->
+      <div class="field-card">
+        <div class="fc-head">
+          <div class="fc-icon a"><i class="ti ti-temperature"></i></div>
+          <div><div class="fc-title">Temperatura del galpón (°C)</div><div class="fc-hint">Min/Max del día · Humedad opcional</div></div>
+        </div>
+        <div class="form-row-3">
+          <div class="form-group"><label class="form-label">Mínima</label><input type="number" class="form-input" id="f-tmin" placeholder="20"></div>
+          <div class="form-group"><label class="form-label">Máxima</label><input type="number" class="form-input" id="f-tmax" placeholder="26"></div>
+          <div class="form-group"><label class="form-label">Humedad %</label><input type="number" class="form-input" id="f-hum" placeholder="65"></div>
         </div>
       </div>
 
-      <!-- Agua -->
-      <div class="reg-section">
-        <div class="reg-section-head">
-          <div class="reg-section-title"><i class="ti ti-droplet"></i> Consumo de agua</div>
+      <!-- OBSERVACIONES -->
+      <div class="field-card">
+        <div class="fc-head">
+          <div class="fc-icon b"><i class="ti ti-notes"></i></div>
+          <div><div class="fc-title">Observaciones</div><div class="fc-hint">Notas, síntomas, eventos</div></div>
         </div>
-        <div class="reg-section-body">
-          <div class="big-input-wrap">
-            <span class="big-label">Litros consumidos hoy</span>
-            <input type="number" class="big-input" id="agua" placeholder="0" oninput="calcular()">
-          </div>
-          <div style="font-size:12px;color:var(--text-3);font-weight:500;line-height:1.5;">📊 Rango esperado día 35: 3,200 – 3,800 L · Promedio ayer: 3,450 L</div>
-        </div>
+        <textarea class="form-input" id="f-obs" rows="3" placeholder="Sin novedades..."></textarea>
       </div>
 
-      <!-- Alimento -->
-      <div class="reg-section">
-        <div class="reg-section-head">
-          <div class="reg-section-title"><i class="ti ti-grain"></i> Consumo de alimento</div>
-        </div>
-        <div class="reg-section-body">
-          <div class="input-row">
-            <div>
-              <span class="big-label">Sacos de 40kg</span>
-              <input type="number" class="big-input" id="sacos" placeholder="0" style="font-size:22px;" oninput="calcular()">
-            </div>
-            <div>
-              <span class="big-label">Kg adicionales</span>
-              <input type="number" class="big-input" id="kg-extra" placeholder="0" style="font-size:22px;" oninput="calcular()">
-            </div>
-          </div>
-          <div style="font-size:12px;color:var(--text-3);font-weight:500;margin-top:10px;">📊 Esperado día 35: ~22 ton total (≈1.20 kg/ave)</div>
-          <div style="margin-top:12px;">
-            <span class="big-label">Tipo de alimento</span>
-            <select class="form-input"><option>Finalizador (Fase 3)</option><option>Iniciador (Fase 1)</option><option>Crecimiento (Fase 2)</option></select>
-          </div>
-        </div>
+      <div style="display:flex;gap:10px;margin:24px 0;">
+        <button class="btn btn-secondary" onclick="window.location='lotes.html'" style="flex:1;">Cancelar</button>
+        <button class="btn btn-primary" onclick="guardarRegistro()" style="flex:2;"><i class="ti ti-check"></i> Guardar registro</button>
       </div>
-
-      <!-- Clima -->
-      <div class="reg-section">
-        <div class="reg-section-head">
-          <div class="reg-section-title"><i class="ti ti-temperature"></i> Clima del galpón</div>
-        </div>
-        <div class="reg-section-body">
-          <div class="input-row-3">
-            <div>
-              <span class="big-label">Mín °C</span>
-              <input type="number" class="big-input" placeholder="--" style="font-size:20px;">
-            </div>
-            <div>
-              <span class="big-label">Máx °C</span>
-              <input type="number" class="big-input" id="temp-max" placeholder="--" style="font-size:20px;" oninput="checkTemp()">
-            </div>
-            <div>
-              <span class="big-label">% HR</span>
-              <input type="number" class="big-input" placeholder="--" style="font-size:20px;">
-            </div>
-          </div>
-          <div id="temp-alerta" style="display:none;" class="alerta-campo" style="margin-top:14px;margin-bottom:0;">
-            <i class="ti ti-alert-triangle"></i>
-            <div>Temperatura sobre 30°C — riesgo de estrés térmico. Aumenta ventilación.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Observaciones -->
-      <div class="reg-section">
-        <div class="reg-section-head">
-          <div class="reg-section-title"><i class="ti ti-notes"></i> Observaciones del día</div>
-        </div>
-        <div class="reg-section-body">
-          <textarea class="form-input" rows="3" placeholder="Cualquier novedad: visitas, problemas, acciones..."></textarea>
-        </div>
-      </div>
-
-      <!-- Cálculos -->
-      <div class="calc-box">
-        <div class="calc-header"><i class="ti ti-calculator"></i> Cálculos automáticos</div>
-        <div class="calc-row"><span class="calc-label">Mortalidad acumulada</span><span class="calc-val" id="c-mort">1.80%</span></div>
-        <div class="calc-row"><span class="calc-label">Aves vivas al cierre</span><span class="calc-val" id="c-vivas">18,069</span></div>
-        <div class="calc-row"><span class="calc-label">Relación agua/alimento</span><span class="calc-val" id="c-ratio">—</span></div>
-        <div class="calc-row"><span class="calc-label">IEP estimado</span><span class="calc-val" id="c-iep">312 pts</span></div>
-        <div class="calc-row"><span class="calc-label">CA acumulada</span><span class="calc-val" id="c-ca">1.78</span></div>
-      </div>
-
-      <button class="btn-guardar" onclick="guardar()">
-        <i class="ti ti-check"></i> Guardar registro del día
-      </button>
 
     </div>
   </div>
 </main>
 
-<!-- Modal lotes -->
-<div class="modal-overlay" id="modal-lotes">
-  <div class="modal">
-    <div class="modal-head"><div class="modal-ttl">Seleccionar lote</div><button class="modal-close" onclick="closeModal('modal-lotes')"><i class="ti ti-x"></i></button></div>
-    <div class="modal-body" style="padding:8px 16px;">
-      <div onclick="selLote('24-A','Galpón 1','Broiler Ross 308 · 18,400 aves · Día 35')" style="padding:14px;border:2px solid var(--primary);border-radius:11px;cursor:pointer;margin-bottom:8px;background:var(--primary-l);">
-        <div style="font-weight:700;color:var(--primary);font-family:var(--font-display);">🐣 Lote 24-A · Galpón 1</div>
-        <div style="font-size:12px;color:var(--text-2);margin-top:3px;">Broiler Ross 308 · 18,400 aves · Día 35</div>
-      </div>
-      <div onclick="selLote('24-B','Galpón 2','Broiler Cobb 500 · 20,100 aves · Día 18')" style="padding:14px;border:1px solid var(--border);border-radius:11px;cursor:pointer;margin-bottom:8px;">
-        <div style="font-weight:700;font-family:var(--font-display);">🐣 Lote 24-B · Galpón 2</div>
-        <div style="font-size:12px;color:var(--text-3);margin-top:3px;">Broiler Cobb 500 · 20,100 aves · Día 18</div>
-      </div>
-      <div onclick="selLote('24-C','Galpón 3','Ponedora Hy-Line · 12,800 aves · Sem 22')" style="padding:14px;border:1px solid var(--border);border-radius:11px;cursor:pointer;margin-bottom:8px;">
-        <div style="font-weight:700;font-family:var(--font-display);">🥚 Lote 24-C · Galpón 3</div>
-        <div style="font-size:12px;color:var(--text-3);margin-top:3px;">Hy-Line W-36 · 12,800 aves · Semana 22</div>
-      </div>
-      <div onclick="selLote('24-D','Galpón 4','Ponedora Bovans · 11,200 aves · Sem 13')" style="padding:14px;border:1px solid var(--border);border-radius:11px;cursor:pointer;">
-        <div style="font-weight:700;font-family:var(--font-display);">🥚 Lote 24-D · Galpón 4</div>
-        <div style="font-size:12px;color:var(--text-3);margin-top:3px;">Bovans White · 11,200 aves · Semana 13</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script src="shared.js"></script>
+<script src="db.js"></script><script src="standards.js"></script><script src="calc.js"></script>
+<script src="auth.js"></script><script src="seed.js"></script><script src="shared.js"></script>
 <script>
-document.getElementById('fecha-reg').textContent = new Date().toLocaleDateString('es-MX',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+function llenarSelector() {
+  const lotes = store.list('lotes', { estado: 'activo' });
+  document.getElementById('sel-lote').innerHTML = lotes.map(l =>
+    `<option value="${l.id}">${l.nombre} · ${store.get('galpones',l.galponId)?.nombre} · ${l.linea}</option>`
+  ).join('') || '<option value="">No hay lotes activos</option>';
+  document.getElementById('sel-fecha').value = new Date().toISOString().slice(0,10);
+}
 
-function setMort(n, btn) {
-  document.getElementById('mort').value = n;
-  document.querySelectorAll('.qbtn').forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
-  calcular();
+function cargarPreview() {
+  const id = document.getElementById('sel-lote').value;
+  if (!id) return;
+  const l = store.get('lotes', id);
+  const r = calc.resumenLote(l);
+  document.getElementById('lote-preview').innerHTML =
+    `<strong>${num(r.avesVivas)}</strong> aves vivas · día <strong>${r.dias}/${l.duracion}</strong> · CA <strong>${r.ca||'—'}</strong> · IEP <strong>${r.iep||'—'}</strong>`;
+  document.getElementById('reg-sub').textContent =
+    `${l.nombre} · ${fmtFecha(document.getElementById('sel-fecha').value, {full:true})}`;
+
+  // Listeners para auto-cálculo
+  document.getElementById('f-mortalidad').oninput = () => actualizarCalculos(l);
+  document.getElementById('f-peso').oninput = () => actualizarCalculos(l);
+  document.getElementById('f-agua').oninput = () => actualizarCalculos(l);
+  document.getElementById('f-alimento').oninput = () => actualizarCalculos(l);
+  actualizarCalculos(l);
 }
-function calcular() {
-  const mort = parseInt(document.getElementById('mort').value||0);
-  const sacos = parseInt(document.getElementById('sacos').value||0);
-  const kgExtra = parseInt(document.getElementById('kg-extra').value||0);
-  const agua = parseInt(document.getElementById('agua').value||0);
-  const aves = 18400;
-  const avesVivas = aves - (331 + mort);
-  const mortAcum = ((331+mort)/aves*100).toFixed(2);
-  const kgAlim = sacos*40 + kgExtra;
-  document.getElementById('c-mort').textContent = mortAcum + '%';
-  document.getElementById('c-mort').className = 'calc-val' + (parseFloat(mortAcum)>3?' danger':'');
-  document.getElementById('c-vivas').textContent = avesVivas.toLocaleString('es-MX');
-  if(agua && kgAlim) document.getElementById('c-ratio').textContent = (agua/kgAlim).toFixed(2);
+
+function actualizarCalculos(l) {
+  const r = calc.resumenLote(l);
+  const mort = Number(document.getElementById('f-mortalidad').value) || 0;
+  const peso = Number(document.getElementById('f-peso').value) || 0;
+  const agua = Number(document.getElementById('f-agua').value) || 0;
+  const alim = Number(document.getElementById('f-alimento').value) || 0;
+
+  // Mortalidad acumulada con la nueva mortalidad
+  if (mort > 0) {
+    const muertasAcum = calc.mortalidadTotal(l.id) + mort;
+    const pctNuevo = (muertasAcum / l.avesIniciales * 100).toFixed(2);
+    const isAlto = pctNuevo > 3;
+    const calcEl = document.getElementById('calc-mort');
+    calcEl.style.display = 'flex';
+    calcEl.innerHTML = `<span class="calc-lbl">Mortalidad acumulada</span><span class="calc-val" style="color:${isAlto?'var(--danger)':'var(--primary)'}">${pctNuevo}% ${isAlto?'<i class="ti ti-alert-triangle" style="font-size:14px;"></i>':''}</span>`;
+    if (isAlto) calcEl.style.background = 'var(--danger-l)';
+  } else { document.getElementById('calc-mort').style.display = 'none'; }
+
+  // Peso vs estándar
+  if (peso > 0 && l.tipo === 'broiler') {
+    const pesoStd = std.pesoEsperado(l.linea, r.dias);
+    const dif = peso - pesoStd;
+    const calcEl = document.getElementById('calc-peso');
+    calcEl.style.display = 'flex';
+    calcEl.innerHTML = `<span class="calc-lbl">Estándar ${l.linea} día ${r.dias}</span><span class="calc-val" style="color:${dif>=0?'var(--primary)':'var(--amber-d)'}">${num(pesoStd)}g · ${dif>=0?'+':''}${num(dif)}g</span>`;
+  } else { document.getElementById('calc-peso').style.display = 'none'; }
+
+  // Ratio agua/alimento
+  if (agua > 0 && alim > 0) {
+    const ratio = (agua / alim).toFixed(2);
+    const isOk = ratio >= 1.5 && ratio <= 2.0;
+    const calcEl = document.getElementById('calc-ratio');
+    calcEl.style.display = 'flex';
+    calcEl.innerHTML = `<span class="calc-lbl">Ratio agua/alimento</span><span class="calc-val" style="color:${isOk?'var(--primary)':'var(--amber-d)'}">${ratio} ${isOk?'<i class="ti ti-check"></i>':'fuera de rango (1.7 ideal)'}</span>`;
+  } else { document.getElementById('calc-ratio').style.display = 'none'; }
 }
-function checkTemp() {
-  const t = parseInt(document.getElementById('temp-max').value||0);
-  document.getElementById('temp-alerta').style.display = t > 30 ? 'flex' : 'none';
+
+function guardarRegistro() {
+  const loteId = document.getElementById('sel-lote').value;
+  if (!loteId) { toast('Selecciona un lote','danger'); return; }
+  const fecha = document.getElementById('sel-fecha').value;
+  if (!fecha) { toast('Selecciona la fecha','danger'); return; }
+
+  const data = {
+    loteId, fecha,
+    mortalidad: Number(document.getElementById('f-mortalidad').value) || 0,
+    peso: Number(document.getElementById('f-peso').value) || 0,
+    alimentoKg: Number(document.getElementById('f-alimento').value) || 0,
+    alimentoTipo: document.getElementById('f-alim-tipo').value,
+    agua: Number(document.getElementById('f-agua').value) || 0,
+    tempMin: Number(document.getElementById('f-tmin').value) || 0,
+    tempMax: Number(document.getElementById('f-tmax').value) || 0,
+    humedad: Number(document.getElementById('f-hum').value) || 0,
+    observaciones: document.getElementById('f-obs').value.trim(),
+    usuario: auth.current()?.nombre || 'Usuario'
+  };
+
+  store.create('registros', data);
+  // También guardar lectura clima
+  if (data.tempMin || data.tempMax) {
+    const lote = store.get('lotes', loteId);
+    store.create('clima', {
+      galponId: lote.galponId, fecha,
+      tempMin: data.tempMin, tempMax: data.tempMax,
+      humedad: data.humedad, observaciones: ''
+    });
+  }
+
+  const lote = store.get('lotes', loteId);
+  logActivity({ texto: `<strong>${data.usuario}</strong> registró día en <strong>${lote.nombre}</strong>`, tipo: 'b', icono: 'edit' });
+
+  // Si mortalidad alta, generar alerta
+  const totalMort = calc.mortalidadTotal(loteId);
+  if ((totalMort / lote.avesIniciales * 100) > 3) {
+    logActivity({ texto: `Alerta automática: <strong>Mortalidad superó 3%</strong> en ${store.get('galpones',lote.galponId)?.nombre}`, tipo: 'r', icono: 'alert-circle' });
+  }
+
+  toast('Registro guardado','success');
+  setTimeout(() => window.location = 'lotes.html', 800);
 }
-function selLote(lote, galpon, desc) {
-  const isPo = lote.includes('C')||lote.includes('D');
-  document.querySelector('.lote-sel-name').innerHTML = (isPo?'<i class="ti ti-egg"></i>':'<i class="ti ti-paw"></i>') + ' Lote ' + lote + ' · ' + galpon;
-  document.querySelector('.lote-sel-sub').textContent = desc;
-  closeModal('modal-lotes');
-}
-function guardar() {
-  const btn = document.querySelector('.btn-guardar');
-  btn.innerHTML = '<i class="ti ti-loader"></i> Guardando...';
-  setTimeout(()=>{
-    btn.innerHTML = '<i class="ti ti-check"></i> ¡Guardado correctamente!';
-    toast('Registro del día guardado · ¡Buen trabajo!', 'success');
-    setTimeout(()=>{ btn.innerHTML='<i class="ti ti-check"></i> Guardar registro del día'; }, 2500);
-  }, 1100);
-}
+
+setTimeout(() => { llenarSelector(); cargarPreview(); }, 50);
 </script>
 </body>
 </html>

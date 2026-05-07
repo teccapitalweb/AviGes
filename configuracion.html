@@ -5,72 +5,32 @@
 <title>AviGes — Configuración</title>
 <link rel="stylesheet" href="shared.css">
 <style>
-.settings-grid { display: grid; grid-template-columns: 240px 1fr; gap: 24px; align-items: flex-start; }
-.settings-nav {
-  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg);
-  padding: 8px; position: sticky; top: 80px;
-}
-.settings-nav-item {
-  display: flex; align-items: center; gap: 10px; padding: 9px 12px;
-  font-size: 13px; font-weight: 500; color: var(--text-2); cursor: pointer;
-  border-radius: 8px; transition: all .15s; letter-spacing: -.1px;
-}
-.settings-nav-item:hover { background: var(--surface-2); color: var(--text); }
-.settings-nav-item.active { background: var(--primary-l); color: var(--primary); font-weight: 600; }
-.settings-nav-item i { font-size: 17px; }
-
-.section-block {
-  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg);
-  margin-bottom: 16px;
-}
-.section-block-head {
-  padding: 18px 22px; border-bottom: 1px solid var(--border);
-}
-.section-block-ttl { font-family: var(--font-display); font-size: 15px; font-weight: 700; letter-spacing: -.3px; }
-.section-block-sub { font-size: 12.5px; color: var(--text-3); margin-top: 3px; font-weight: 500; }
-.section-block-body { padding: 22px; }
-
-.user-row {
-  display: flex; align-items: center; gap: 14px;
-  padding: 14px 0; border-bottom: 1px solid var(--border);
-}
-.user-row:last-child { border-bottom: none; }
-.role-tag {
-  font-size: 10.5px; font-weight: 700; padding: 3px 8px; border-radius: 5px;
-  text-transform: uppercase; letter-spacing: .05em;
-}
+.cfg-grid { display: grid; grid-template-columns: 220px 1fr; gap: 24px; }
+.cfg-nav { position: sticky; top: 90px; align-self: start; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 12px; box-shadow: var(--shadow-xs); }
+.cfg-link { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 9px; font-size: 13px; font-weight: 600; color: var(--text-2); cursor: pointer; transition: all .12s; letter-spacing: -.1px; }
+.cfg-link:hover { background: var(--surface-2); color: var(--text); }
+.cfg-link.active { background: var(--primary-l); color: var(--primary); }
+.cfg-link i { font-size: 16px; }
+.cfg-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 28px; box-shadow: var(--shadow-xs); margin-bottom: 16px; }
+.cfg-sec-head { margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+.cfg-sec-ttl { font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: -.4px; }
+.cfg-sec-sub { font-size: 12.5px; color: var(--text-3); margin-top: 3px; font-weight: 500; }
+.toggle-row { display: flex; align-items: center; gap: 14px; padding: 14px; border: 1px solid var(--border); border-radius: 11px; background: var(--surface); margin-bottom: 8px; }
+.toggle-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.toggle-info { flex: 1; }
+.toggle-name { font-weight: 700; font-size: 13.5px; font-family: var(--font-display); letter-spacing: -.2px; }
+.toggle-desc { font-size: 11.5px; color: var(--text-3); margin-top: 2px; font-weight: 500; }
+.toggle-sw { position: relative; width: 44px; height: 24px; background: var(--surface-3); border-radius: 12px; cursor: pointer; transition: background .2s; flex-shrink: 0; border: 1px solid var(--border); }
+.toggle-sw::after { content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; background: #fff; border-radius: 50%; transition: transform .2s; box-shadow: 0 2px 5px rgba(0,0,0,.15); }
+.toggle-sw.on { background: var(--primary); border-color: var(--primary); }
+.toggle-sw.on::after { transform: translateX(20px); }
+.user-row { display: flex; align-items: center; gap: 14px; padding: 12px 16px; border: 1px solid var(--border); border-radius: 11px; margin-bottom: 8px; background: var(--surface); }
+.user-av { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+.role-tag { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; letter-spacing: -.1px; }
 .role-admin { background: var(--primary-l); color: var(--primary); }
 .role-encargado { background: var(--info-l); color: var(--info); }
 .role-vendedor { background: var(--amber-l); color: var(--amber-d); }
-
-.toggle {
-  position: relative; width: 42px; height: 24px; background: var(--border);
-  border-radius: 12px; cursor: pointer; transition: background .2s;
-}
-.toggle::before {
-  content:''; position: absolute; top: 2px; left: 2px;
-  width: 20px; height: 20px; background: #fff; border-radius: 50%;
-  transition: left .2s; box-shadow: 0 1px 3px rgba(0,0,0,.2);
-}
-.toggle.on { background: var(--primary); }
-.toggle.on::before { left: 20px; }
-
-.integration-card {
-  display: flex; align-items: center; gap: 14px;
-  padding: 14px; border: 1px solid var(--border); border-radius: 11px;
-  background: var(--surface-2);
-}
-.integ-logo {
-  width: 44px; height: 44px; border-radius: 11px;
-  display: flex; align-items: center; justify-content: center; font-size: 22px;
-  flex-shrink: 0; background: var(--surface);
-  border: 1px solid var(--border);
-}
-
-@media(max-width:900px){
-  .settings-grid { grid-template-columns: 1fr; }
-  .settings-nav { position: static; }
-}
+@media(max-width:900px){ .cfg-grid { grid-template-columns: 1fr; } .cfg-nav { position: static; display: flex; gap: 6px; overflow-x: auto; padding: 8px; } .cfg-link { white-space: nowrap; } }
 </style>
 </head>
 <body>
@@ -79,206 +39,333 @@
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:12px;">
       <button class="hamburger" onclick="toggleSB()"><i class="ti ti-menu-2"></i></button>
-      <div><div class="page-ttl">Configuración</div><div class="page-sub">Granja, usuarios, integraciones</div></div>
+      <div><div class="page-ttl">Configuración</div><div class="page-sub">Granja · galpones · usuarios · alertas</div></div>
     </div>
     <div class="topbar-right">
       <div class="icon-btn"><i class="ti ti-bell"></i></div>
-      <button class="btn btn-primary"><i class="ti ti-check"></i> Guardar todo</button>
+      <button class="btn btn-secondary btn-sm" onclick="resetDB()"><i class="ti ti-refresh"></i> Reset demo</button>
     </div>
   </div>
   <div class="content">
-
-    <div class="settings-grid">
-      <div class="settings-nav">
-        <div class="settings-nav-item active"><i class="ti ti-building"></i> Granja</div>
-        <div class="settings-nav-item"><i class="ti ti-home"></i> Galpones</div>
-        <div class="settings-nav-item"><i class="ti ti-users"></i> Usuarios</div>
-        <div class="settings-nav-item"><i class="ti ti-plug"></i> Integraciones</div>
-        <div class="settings-nav-item"><i class="ti ti-bell"></i> Alertas</div>
-        <div class="settings-nav-item"><i class="ti ti-cloud-upload"></i> Respaldos</div>
-        <div class="settings-nav-item"><i class="ti ti-license"></i> Licencia</div>
-      </div>
+    <div class="cfg-grid">
+      <nav class="cfg-nav">
+        <div class="cfg-link active" onclick="scrollTo('granja',event)"><i class="ti ti-home"></i> Granja</div>
+        <div class="cfg-link" onclick="scrollTo('galpones',event)"><i class="ti ti-building-warehouse"></i> Galpones</div>
+        <div class="cfg-link" onclick="scrollTo('usuarios',event)"><i class="ti ti-users"></i> Usuarios</div>
+        <div class="cfg-link" onclick="scrollTo('integraciones',event)"><i class="ti ti-plug"></i> Integraciones</div>
+        <div class="cfg-link" onclick="scrollTo('alertas',event)"><i class="ti ti-bell"></i> Alertas</div>
+        <div class="cfg-link" onclick="scrollTo('respaldos',event)"><i class="ti ti-database"></i> Respaldos</div>
+        <div class="cfg-link" onclick="scrollTo('licencia',event)"><i class="ti ti-license"></i> Licencia</div>
+      </nav>
 
       <div>
-
-        <!-- DATOS DE GRANJA -->
-        <div class="section-block">
-          <div class="section-block-head">
-            <div class="section-block-ttl">Datos de la granja</div>
-            <div class="section-block-sub">Información que aparecerá en reportes oficiales</div>
-          </div>
-          <div class="section-block-body">
-            <div class="form-row"><div class="form-group"><label class="form-label">Nombre de la granja</label><input type="text" class="form-input" value="Granja El Progreso"></div><div class="form-group"><label class="form-label">RFC</label><input type="text" class="form-input" value="GAEP890512XYZ"></div></div>
-            <div class="form-row"><div class="form-group"><label class="form-label">Propietario</label><input type="text" class="form-input" value="Jorge Ramírez"></div><div class="form-group"><label class="form-label">Teléfono</label><input type="text" class="form-input" value="+52 238 147 8840"></div></div>
-            <div class="form-group"><label class="form-label">Dirección</label><input type="text" class="form-input" value="Carretera Tehuacán-Esperanza Km 12, Tehuacán, Puebla"></div>
-            <div class="form-row"><div class="form-group"><label class="form-label">Folio SENASICA</label><input type="text" class="form-input" placeholder="ABC-12345"></div><div class="form-group"><label class="form-label">Tipo de operación</label><select class="form-input"><option>Mixta (broiler + ponedora)</option><option>Solo broilers</option><option>Solo ponedoras</option></select></div></div>
-          </div>
-        </div>
+        <!-- GRANJA -->
+        <section id="granja" class="cfg-section">
+          <div class="cfg-sec-head"><div class="cfg-sec-ttl">Datos de la granja</div><div class="cfg-sec-sub">Información oficial usada en reportes</div></div>
+          <div class="form-row"><div class="form-group"><label class="form-label">Nombre granja</label><input type="text" class="form-input" id="g-nombre"></div><div class="form-group"><label class="form-label">Propietario</label><input type="text" class="form-input" id="g-prop"></div></div>
+          <div class="form-row"><div class="form-group"><label class="form-label">RFC</label><input type="text" class="form-input" id="g-rfc"></div><div class="form-group"><label class="form-label">Teléfono</label><input type="text" class="form-input" id="g-tel"></div></div>
+          <div class="form-group"><label class="form-label">Dirección</label><input type="text" class="form-input" id="g-dir"></div>
+          <div class="form-row"><div class="form-group"><label class="form-label">Folio SENASICA</label><input type="text" class="form-input" id="g-folio" placeholder="Pendiente"></div><div class="form-group"><label class="form-label">Tipo</label><select class="form-input" id="g-tipo"><option value="mixta">Mixta</option><option value="broiler">Solo broilers</option><option value="ponedora">Solo ponedoras</option></select></div></div>
+          <button class="btn btn-primary" onclick="guardarGranja()" style="margin-top:10px;"><i class="ti ti-check"></i> Guardar cambios</button>
+        </section>
 
         <!-- GALPONES -->
-        <div class="section-block">
-          <div class="section-block-head" style="display:flex;justify-content:space-between;align-items:center;">
-            <div>
-              <div class="section-block-ttl">Galpones</div>
-              <div class="section-block-sub">4 galpones registrados</div>
-            </div>
-            <button class="btn btn-secondary btn-sm"><i class="ti ti-plus"></i> Agregar</button>
-          </div>
-          <div style="overflow-x:auto;">
-            <table class="tbl">
-              <thead><tr><th>Galpón</th><th>Capacidad</th><th>Tipo</th><th>Sistema</th><th>Estado</th><th></th></tr></thead>
-              <tbody>
-                <tr><td style="font-weight:600">Galpón 1</td><td class="num-mono">22,000 aves</td><td><span class="pill pill-br">Broiler</span></td><td>Piso · cama</td><td><span class="pill pill-ok"><span class="sdot g"></span> Activo</span></td><td><button class="btn btn-ghost btn-sm"><i class="ti ti-edit"></i></button></td></tr>
-                <tr><td style="font-weight:600">Galpón 2</td><td class="num-mono">22,000 aves</td><td><span class="pill pill-br">Broiler</span></td><td>Piso · cama</td><td><span class="pill pill-ok"><span class="sdot g"></span> Activo</span></td><td><button class="btn btn-ghost btn-sm"><i class="ti ti-edit"></i></button></td></tr>
-                <tr><td style="font-weight:600">Galpón 3</td><td class="num-mono">14,000 aves</td><td><span class="pill pill-po">Ponedora</span></td><td>Jaula automatizada</td><td><span class="pill pill-ok"><span class="sdot g"></span> Activo</span></td><td><button class="btn btn-ghost btn-sm"><i class="ti ti-edit"></i></button></td></tr>
-                <tr><td style="font-weight:600">Galpón 4</td><td class="num-mono">12,500 aves</td><td><span class="pill pill-po">Ponedora</span></td><td>Jaula automatizada</td><td><span class="pill pill-ok"><span class="sdot g"></span> Activo</span></td><td><button class="btn btn-ghost btn-sm"><i class="ti ti-edit"></i></button></td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <section id="galpones" class="cfg-section">
+          <div class="cfg-sec-head" style="display:flex;justify-content:space-between;align-items:flex-end;"><div><div class="cfg-sec-ttl">Galpones</div><div class="cfg-sec-sub" id="galp-sub">—</div></div><button class="btn btn-secondary btn-sm" onclick="abrirGalpon()"><i class="ti ti-plus"></i> Nuevo</button></div>
+          <div id="galp-list"></div>
+        </section>
 
         <!-- USUARIOS -->
-        <div class="section-block">
-          <div class="section-block-head" style="display:flex;justify-content:space-between;align-items:center;">
-            <div>
-              <div class="section-block-ttl">Usuarios y permisos</div>
-              <div class="section-block-sub">3 usuarios activos · roles diferenciados</div>
-            </div>
-            <button class="btn btn-secondary btn-sm" onclick="openModal('modal-user')"><i class="ti ti-user-plus"></i> Invitar</button>
-          </div>
-          <div class="section-block-body" style="padding:8px 22px;">
-            <div class="user-row">
-              <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-d));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0;">JR</div>
-              <div style="flex:1;"><div style="font-weight:700;font-size:13.5px;">Jorge Ramírez <span style="font-size:11px;color:var(--text-3);font-weight:500;margin-left:6px;">(tú)</span></div><div style="font-size:12px;color:var(--text-3);font-weight:500;margin-top:2px;">jorge@granjaelprogreso.com · Última conexión: hace 5 min</div></div>
-              <span class="role-tag role-admin">Admin</span>
-              <button class="btn btn-ghost btn-sm"><i class="ti ti-dots-vertical"></i></button>
-            </div>
-            <div class="user-row">
-              <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#344473,#1F2D52);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0;">CP</div>
-              <div style="flex:1;"><div style="font-weight:700;font-size:13.5px;">Carlos Pérez</div><div style="font-size:12px;color:var(--text-3);font-weight:500;margin-top:2px;">carlos@granjaelprogreso.com · Última conexión: hace 30 min</div></div>
-              <span class="role-tag role-encargado">Encargado</span>
-              <button class="btn btn-ghost btn-sm"><i class="ti ti-dots-vertical"></i></button>
-            </div>
-            <div class="user-row">
-              <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#C8821F,#9A6315);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0;">AG</div>
-              <div style="flex:1;"><div style="font-weight:700;font-size:13.5px;">Ana García</div><div style="font-size:12px;color:var(--text-3);font-weight:500;margin-top:2px;">ana@granjaelprogreso.com · Última conexión: hace 2 h</div></div>
-              <span class="role-tag role-vendedor">Vendedor</span>
-              <button class="btn btn-ghost btn-sm"><i class="ti ti-dots-vertical"></i></button>
-            </div>
-          </div>
-        </div>
+        <section id="usuarios" class="cfg-section">
+          <div class="cfg-sec-head" style="display:flex;justify-content:space-between;align-items:flex-end;"><div><div class="cfg-sec-ttl">Usuarios</div><div class="cfg-sec-sub" id="user-sub">—</div></div><button class="btn btn-secondary btn-sm" onclick="abrirUsuario()"><i class="ti ti-user-plus"></i> Nuevo</button></div>
+          <div id="user-list"></div>
+        </section>
 
-        <!-- INTEGRACIONES -->
-        <div class="section-block">
-          <div class="section-block-head">
-            <div class="section-block-ttl">Integraciones</div>
-            <div class="section-block-sub">Conecta AviGes con tus herramientas favoritas</div>
+        <!-- INTEGRACIONES (estáticas - próximamente funcional) -->
+        <section id="integraciones" class="cfg-section">
+          <div class="cfg-sec-head"><div class="cfg-sec-ttl">Integraciones</div><div class="cfg-sec-sub">Conecta AviGes con tus herramientas favoritas</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="toggle-row"><div class="toggle-icon" style="background:#25D36622;color:#25D366;"><i class="ti ti-brand-whatsapp"></i></div><div class="toggle-info"><div class="toggle-name">WhatsApp · WATI</div><div class="toggle-desc">Alertas y registros desde celular</div></div><div class="toggle-sw on" onclick="this.classList.toggle('on');toast('Próximamente disponible','info')"></div></div>
+            <div class="toggle-row"><div class="toggle-icon" style="background:var(--terracotta-l);color:var(--terracotta);"><i class="ti ti-mail"></i></div><div class="toggle-info"><div class="toggle-name">Email · Resend</div><div class="toggle-desc">Reportes PDF automáticos</div></div><div class="toggle-sw on" onclick="this.classList.toggle('on');toast('Próximamente disponible','info')"></div></div>
+            <div class="toggle-row"><div class="toggle-icon" style="background:var(--primary-l);color:var(--primary);"><i class="ti ti-shield-check"></i></div><div class="toggle-info"><div class="toggle-name">SENASICA</div><div class="toggle-desc">Reportes oficiales auto-generados</div></div><div class="toggle-sw on" onclick="this.classList.toggle('on');toast('Próximamente disponible','info')"></div></div>
+            <div class="toggle-row"><div class="toggle-icon" style="background:var(--info-l);color:var(--info);"><i class="ti ti-receipt-tax"></i></div><div class="toggle-info"><div class="toggle-name">Facturación CFDI 4.0</div><div class="toggle-desc">Próximamente · Q3 2026</div></div><div class="toggle-sw" onclick="toast('Disponible Q3 2026','info')"></div></div>
           </div>
-          <div class="section-block-body">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-              <div class="integration-card">
-                <div class="integ-logo" style="background:#25D366;color:#fff;"><i class="ti ti-brand-whatsapp"></i></div>
-                <div style="flex:1;"><div style="font-weight:700;font-size:13.5px;">WhatsApp · WATI</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;margin-top:2px;">Alertas y registros desde celular</div></div>
-                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-              </div>
-              <div class="integration-card">
-                <div class="integ-logo" style="background:var(--terracotta-l);color:var(--terracotta);"><i class="ti ti-mail"></i></div>
-                <div style="flex:1;"><div style="font-weight:700;font-size:13.5px;">Email · Resend</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;margin-top:2px;">Reportes PDF automáticos</div></div>
-                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-              </div>
-              <div class="integration-card">
-                <div class="integ-logo" style="background:var(--amber-l);color:var(--amber-d);"><i class="ti ti-shield-check"></i></div>
-                <div style="flex:1;"><div style="font-weight:700;font-size:13.5px;">SENASICA</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;margin-top:2px;">Reportes oficiales auto-generados</div></div>
-                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-              </div>
-              <div class="integration-card">
-                <div class="integ-logo" style="background:var(--info-l);color:var(--info);"><i class="ti ti-receipt"></i></div>
-                <div style="flex:1;"><div style="font-weight:700;font-size:13.5px;">Facturación CFDI 4.0</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;margin-top:2px;">Próximamente · Q3 2026</div></div>
-                <div class="toggle" style="opacity:.5;cursor:not-allowed;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
+          <div style="margin-top:14px;padding:12px 14px;background:var(--info-l);border:1px solid #C8D4E8;border-left:4px solid var(--info);border-radius:9px;font-size:12px;color:var(--text-2);"><i class="ti ti-info-circle" style="color:var(--info);margin-right:6px;"></i> Integraciones funcionales en próxima fase</div>
+        </section>
 
         <!-- ALERTAS -->
-        <div class="section-block">
-          <div class="section-block-head">
-            <div class="section-block-ttl">Alertas automáticas</div>
-            <div class="section-block-sub">Configura qué alertas quieres recibir y cómo</div>
+        <section id="alertas" class="cfg-section">
+          <div class="cfg-sec-head"><div class="cfg-sec-ttl">Alertas automáticas</div><div class="cfg-sec-sub">Recibe avisos cuando algo requiere tu atención</div></div>
+          <div id="alert-toggles"></div>
+          <button class="btn btn-primary" onclick="guardarAlertas()" style="margin-top:10px;"><i class="ti ti-check"></i> Guardar</button>
+        </section>
+
+        <!-- RESPALDOS -->
+        <section id="respaldos" class="cfg-section">
+          <div class="cfg-sec-head"><div class="cfg-sec-ttl">Respaldos y datos</div><div class="cfg-sec-sub">Exporta o importa tus datos · Reset demo</div></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn btn-secondary" onclick="exportarDB()"><i class="ti ti-download"></i> Exportar respaldo (JSON)</button>
+            <label class="btn btn-secondary" style="cursor:pointer;"><i class="ti ti-upload"></i> Importar respaldo<input type="file" accept=".json" id="imp-file" style="display:none;" onchange="importarDB(this)"></label>
+            <button class="btn btn-secondary" style="border-color:var(--terracotta);color:var(--terracotta);" onclick="resetDB()"><i class="ti ti-refresh"></i> Resetear a demo</button>
           </div>
-          <div class="section-block-body" style="padding:8px 22px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--border);">
-              <div><div style="font-weight:600;font-size:13.5px;">Mortalidad alta (&gt;3%)</div><div style="font-size:12px;color:var(--text-3);font-weight:500;margin-top:2px;">WhatsApp + email · Inmediato</div></div>
-              <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--border);">
-              <div><div style="font-weight:600;font-size:13.5px;">Vacuna pendiente</div><div style="font-size:12px;color:var(--text-3);font-weight:500;margin-top:2px;">WhatsApp · 1 día antes</div></div>
-              <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--border);">
-              <div><div style="font-weight:600;font-size:13.5px;">Alimento bajo</div><div style="font-size:12px;color:var(--text-3);font-weight:500;margin-top:2px;">WhatsApp · 3 días antes</div></div>
-              <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--border);">
-              <div><div style="font-weight:600;font-size:13.5px;">Temperatura alta (&gt;30°C)</div><div style="font-size:12px;color:var(--text-3);font-weight:500;margin-top:2px;">WhatsApp · Inmediato</div></div>
-              <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;">
-              <div><div style="font-weight:600;font-size:13.5px;">Reporte diario</div><div style="font-size:12px;color:var(--text-3);font-weight:500;margin-top:2px;">Email · Todas las mañanas 7 AM</div></div>
-              <div class="toggle" onclick="this.classList.toggle('on')"></div>
-            </div>
-          </div>
-        </div>
+          <div style="margin-top:14px;padding:12px 14px;background:var(--surface-2);border:1px solid var(--border);border-radius:9px;font-size:12px;color:var(--text-3);"><i class="ti ti-info-circle" style="margin-right:6px;"></i> Datos guardados localmente en este navegador. Para multidispositivo se requiere Firebase (próxima fase).</div>
+        </section>
 
         <!-- LICENCIA -->
-        <div class="section-block">
-          <div class="section-block-head">
-            <div class="section-block-ttl">Tu licencia AviGes</div>
-            <div class="section-block-sub">Detalles de tu suscripción</div>
-          </div>
-          <div class="section-block-body">
-            <div style="background:linear-gradient(135deg,var(--primary) 0%, var(--primary-d) 100%);padding:24px;border-radius:14px;color:#fff;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow-primary);">
-              <div>
-                <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;opacity:.85;">Plan activo</div>
-                <div style="font-family:var(--font-display);font-size:24px;font-weight:700;letter-spacing:-.5px;margin-top:6px;">Licencia Vitalicia</div>
-                <div style="font-size:13px;opacity:.9;margin-top:4px;">Compra única · Sin renovaciones · Soporte 1 año</div>
-              </div>
-              <div style="text-align:right;">
-                <div class="num-mono" style="font-family:var(--font-display);font-size:28px;font-weight:700;letter-spacing:-.6px;">$2,999</div>
-                <div style="font-size:11.5px;opacity:.85;font-weight:600;">MXN · Pagado 15 ene 2026</div>
-              </div>
-            </div>
-            <div style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
-              <div style="padding:14px;background:var(--surface-2);border:1px solid var(--border);border-radius:11px;text-align:center;"><div style="font-size:11px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">Galpones</div><div class="num-mono" style="font-family:var(--font-display);font-size:18px;font-weight:700;margin-top:4px;">Ilimitados</div></div>
-              <div style="padding:14px;background:var(--surface-2);border:1px solid var(--border);border-radius:11px;text-align:center;"><div style="font-size:11px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">Usuarios</div><div class="num-mono" style="font-family:var(--font-display);font-size:18px;font-weight:700;margin-top:4px;">Hasta 10</div></div>
-              <div style="padding:14px;background:var(--surface-2);border:1px solid var(--border);border-radius:11px;text-align:center;"><div style="font-size:11px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">Soporte WA</div><div class="num-mono" style="font-family:var(--font-display);font-size:18px;font-weight:700;margin-top:4px;color:var(--primary);">Activo</div></div>
-            </div>
-          </div>
-        </div>
-
+        <section id="licencia" class="cfg-section">
+          <div class="cfg-sec-head"><div class="cfg-sec-ttl">Licencia AviGes</div><div class="cfg-sec-sub">Detalles de tu plan</div></div>
+          <div id="lic-info"></div>
+        </section>
       </div>
     </div>
   </div>
 </main>
 
-<div class="modal-overlay" id="modal-user">
-  <div class="modal">
-    <div class="modal-head"><div><div class="modal-ttl">Invitar usuario</div></div><button class="modal-close" onclick="closeModal('modal-user')"><i class="ti ti-x"></i></button></div>
+<!-- MODALES -->
+<div class="modal-overlay" id="modal-galpon">
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-head"><div><div class="modal-ttl" id="gp-modal-ttl">Nuevo galpón</div></div><button class="modal-close" onclick="closeModal('modal-galpon')"><i class="ti ti-x"></i></button></div>
     <div class="modal-body">
-      <div class="form-row"><div class="form-group"><label class="form-label">Nombre</label><input type="text" class="form-input" placeholder="Nombre completo"></div><div class="form-group"><label class="form-label">Correo</label><input type="email" class="form-input" placeholder="email@ejemplo.com"></div></div>
-      <div class="form-group"><label class="form-label">Rol</label><select class="form-input"><option>Encargado · acceso completo a operación</option><option>Vendedor · solo ventas y reportes</option><option>Solo lectura · ver pero no editar</option></select></div>
-      <div class="form-group"><label class="form-label">Galpones asignados</label><select class="form-input"><option>Todos los galpones</option><option>Solo Galpón 1</option><option>Solo Galpón 2</option><option>Solo Galpón 3</option><option>Solo Galpón 4</option></select></div>
+      <input type="hidden" id="gp-id">
+      <div class="form-group"><label class="form-label">Nombre</label><input type="text" class="form-input" id="gp-nombre"></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Tipo</label><select class="form-input" id="gp-tipo"><option value="broiler">Broiler</option><option value="ponedora">Ponedora</option></select></div><div class="form-group"><label class="form-label">Capacidad (aves)</label><input type="number" class="form-input" id="gp-cap"></div></div>
+      <div class="form-group"><label class="form-label">Sistema</label><input type="text" class="form-input" id="gp-sis" placeholder="Piso · cama / Jaula automatizada"></div>
     </div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-user')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-user');toast('Invitación enviada por email','success')"><i class="ti ti-mail"></i> Enviar invitación</button></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-galpon')">Cancelar</button><button class="btn btn-primary" onclick="guardarGalpon()"><i class="ti ti-check"></i> Guardar</button></div>
   </div>
 </div>
 
-<script src="shared.js"></script>
+<div class="modal-overlay" id="modal-usuario">
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-head"><div><div class="modal-ttl" id="us-modal-ttl">Nuevo usuario</div></div><button class="modal-close" onclick="closeModal('modal-usuario')"><i class="ti ti-x"></i></button></div>
+    <div class="modal-body">
+      <input type="hidden" id="us-id">
+      <div class="form-group"><label class="form-label">Nombre</label><input type="text" class="form-input" id="us-nombre"></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="us-email"></div><div class="form-group"><label class="form-label">Rol</label><select class="form-input" id="us-rol"><option value="admin">Admin</option><option value="encargado">Encargado</option><option value="vendedor">Vendedor</option></select></div></div>
+      <div class="form-group"><label class="form-label">Contraseña</label><input type="password" class="form-input" id="us-pass" placeholder="Mín 6 caracteres"></div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-usuario')">Cancelar</button><button class="btn btn-primary" onclick="guardarUsuario()"><i class="ti ti-check"></i> Guardar</button></div>
+  </div>
+</div>
+
+<script src="db.js"></script><script src="standards.js"></script><script src="calc.js"></script>
+<script src="auth.js"></script><script src="seed.js"></script><script src="shared.js"></script>
 <script>
-document.querySelectorAll('.settings-nav-item').forEach(it => it.addEventListener('click', function(){
-  document.querySelectorAll('.settings-nav-item').forEach(n => n.classList.remove('active'));
-  this.classList.add('active');
-}));
+function renderPage() {
+  // Granja
+  const g = store.getDoc('granja');
+  document.getElementById('g-nombre').value = g.nombre||'';
+  document.getElementById('g-prop').value = g.propietario||'';
+  document.getElementById('g-rfc').value = g.rfc||'';
+  document.getElementById('g-tel').value = g.telefono||'';
+  document.getElementById('g-dir').value = g.direccion||'';
+  document.getElementById('g-folio').value = g.folioSenasica||'';
+  document.getElementById('g-tipo').value = g.tipo||'mixta';
+
+  // Galpones
+  const galpones = store.list('galpones');
+  document.getElementById('galp-sub').textContent = `${galpones.length} galpones registrados`;
+  document.getElementById('galp-list').innerHTML = galpones.map(gp => {
+    const lotesEnGp = store.list('lotes', l => l.galponId===gp.id && l.estado==='activo').length;
+    const tipoColor = gp.tipo==='broiler'?'pill-br':'pill-po';
+    return `<div class="user-row">
+      <div class="toggle-icon" style="background:var(--primary-l);color:var(--primary);"><i class="ti ti-building-warehouse"></i></div>
+      <div style="flex:1;"><div style="font-weight:700;font-size:14px;">${escapeHTML(gp.nombre)}</div><div style="font-size:12px;color:var(--text-3);font-weight:500;margin-top:2px;">${num(gp.capacidad)} aves · ${escapeHTML(gp.sistema||'')} · ${lotesEnGp} lote${lotesEnGp===1?'':'s'} activo${lotesEnGp===1?'':'s'}</div></div>
+      <span class="pill ${tipoColor}"><i class="ti ti-${gp.tipo==='broiler'?'burger':'egg'}"></i> ${gp.tipo}</span>
+      <button class="btn btn-ghost btn-sm" onclick="editarGalpon('${gp.id}')"><i class="ti ti-pencil"></i></button>
+      <button class="btn btn-ghost btn-sm" onclick="eliminarGalpon('${gp.id}')"><i class="ti ti-trash"></i></button>
+    </div>`;
+  }).join('') || '<div class="empty"><div class="empty-sub">Sin galpones</div></div>';
+
+  // Usuarios
+  const usuarios = store.list('usuarios');
+  document.getElementById('user-sub').textContent = `${usuarios.length} usuarios con acceso`;
+  const colors = ['linear-gradient(135deg,var(--primary),var(--primary-d))','linear-gradient(135deg,var(--info),#1d2d4d)','linear-gradient(135deg,var(--amber),var(--amber-d))','linear-gradient(135deg,var(--terracotta),#8a2828)'];
+  document.getElementById('user-list').innerHTML = usuarios.map((u,i) => {
+    const ini = u.nombre.split(' ').slice(0,2).map(p=>p[0]).join('').toUpperCase();
+    return `<div class="user-row">
+      <div class="user-av" style="background:${colors[i%4]}">${ini}</div>
+      <div style="flex:1;"><div style="font-weight:700;font-size:14px;">${escapeHTML(u.nombre)}</div><div style="font-size:12px;color:var(--text-3);font-weight:500;margin-top:2px;">${escapeHTML(u.email)} · Última conexión: ${u.ultimaConexion?timeAgo(u.ultimaConexion):'nunca'}</div></div>
+      <span class="role-tag role-${u.rol}">${u.rol.toUpperCase()}</span>
+      <button class="btn btn-ghost btn-sm" onclick="editarUsuario('${u.id}')"><i class="ti ti-pencil"></i></button>
+      ${u.id !== auth.current()?.id ? `<button class="btn btn-ghost btn-sm" onclick="eliminarUsuario('${u.id}')"><i class="ti ti-trash"></i></button>` : ''}
+    </div>`;
+  }).join('');
+
+  // Alertas
+  const cfg = store.getDoc('config');
+  const alertas = cfg.alertas || {};
+  const alertList = [
+    { k:'mortalidadAlta', icon:'alert-circle', color:'r', n:'Mortalidad alta', d:'Aviso si supera 3% acumulado' },
+    { k:'vacunaPendiente', icon:'vaccine', color:'g', n:'Vacuna pendiente', d:'Recordatorio del calendario sanitario' },
+    { k:'alimentoBajo', icon:'grain', color:'a', n:'Alimento bajo', d:'Cuando queden <3 días en bodega' },
+    { k:'tempAlta', icon:'temperature', color:'r', n:'Temperatura alta', d:'Galpón ≥28°C estrés térmico' },
+    { k:'reporteDiario', icon:'file-text', color:'b', n:'Reporte diario', d:'Resumen automático cada noche · 9 PM' }
+  ];
+  const colMap = {r:'var(--terracotta-l);color:var(--terracotta)', g:'var(--primary-l);color:var(--primary)', a:'var(--amber-l);color:var(--amber-d)', b:'var(--info-l);color:var(--info)'};
+  document.getElementById('alert-toggles').innerHTML = alertList.map(a =>
+    `<div class="toggle-row"><div class="toggle-icon" style="background:${colMap[a.color]}"><i class="ti ti-${a.icon}"></i></div><div class="toggle-info"><div class="toggle-name">${a.n}</div><div class="toggle-desc">${a.d}</div></div><div class="toggle-sw ${alertas[a.k]?'on':''}" data-k="${a.k}" onclick="this.classList.toggle('on')"></div></div>`
+  ).join('');
+
+  // Licencia
+  const lic = cfg.licencia || {};
+  document.getElementById('lic-info').innerHTML = `
+    <div style="background:linear-gradient(135deg,var(--primary) 0%, var(--primary-d) 100%);color:#fff;padding:24px;border-radius:14px;margin-bottom:14px;position:relative;overflow:hidden;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;opacity:.8;margin-bottom:6px;">Plan ${escapeHTML(lic.plan||'—')}</div>
+      <div style="font-family:var(--font-display);font-size:32px;font-weight:700;letter-spacing:-1px;line-height:1;">${mxn(lic.precio||0)} <span style="font-size:14px;font-weight:500;opacity:.7;">${escapeHTML(lic.moneda||'')} · pago único</span></div>
+      <div style="margin-top:10px;font-size:13px;opacity:.95;">Activa desde: <strong>${fmtFecha(lic.fechaCompra||new Date())}</strong> · Estado: <strong style="color:#F2D8A0;">${lic.activa?'✓ ACTIVA':'INACTIVA'}</strong></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;">
+      <div style="padding:14px;border:1px solid var(--border);border-radius:11px;"><div style="font-size:11px;color:var(--text-3);font-weight:700;text-transform:uppercase;margin-bottom:4px;">Granjas incluidas</div><div style="font-family:var(--font-display);font-size:18px;font-weight:700;">Ilimitadas</div></div>
+      <div style="padding:14px;border:1px solid var(--border);border-radius:11px;"><div style="font-size:11px;color:var(--text-3);font-weight:700;text-transform:uppercase;margin-bottom:4px;">Usuarios</div><div style="font-family:var(--font-display);font-size:18px;font-weight:700;">Hasta 10</div></div>
+      <div style="padding:14px;border:1px solid var(--border);border-radius:11px;"><div style="font-size:11px;color:var(--text-3);font-weight:700;text-transform:uppercase;margin-bottom:4px;">Soporte</div><div style="font-family:var(--font-display);font-size:18px;font-weight:700;">WhatsApp 24/7</div></div>
+      <div style="padding:14px;border:1px solid var(--border);border-radius:11px;"><div style="font-size:11px;color:var(--text-3);font-weight:700;text-transform:uppercase;margin-bottom:4px;">Actualizaciones</div><div style="font-family:var(--font-display);font-size:18px;font-weight:700;">De por vida</div></div>
+    </div>`;
+}
+
+function scrollTo(id, e) {
+  document.querySelectorAll('.cfg-link').forEach(l => l.classList.remove('active'));
+  e.currentTarget.classList.add('active');
+  document.getElementById(id).scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function guardarGranja() {
+  const data = {
+    nombre: document.getElementById('g-nombre').value.trim(),
+    propietario: document.getElementById('g-prop').value.trim(),
+    rfc: document.getElementById('g-rfc').value.trim(),
+    telefono: document.getElementById('g-tel').value.trim(),
+    direccion: document.getElementById('g-dir').value.trim(),
+    folioSenasica: document.getElementById('g-folio').value.trim(),
+    tipo: document.getElementById('g-tipo').value
+  };
+  store.setDoc('granja', data);
+  toast('Datos de granja guardados','success');
+}
+
+function abrirGalpon() {
+  ['gp-id','gp-nombre','gp-cap','gp-sis'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('gp-modal-ttl').textContent = 'Nuevo galpón';
+  openModal('modal-galpon');
+}
+
+function editarGalpon(id) {
+  const g = store.get('galpones', id);
+  document.getElementById('gp-id').value = id;
+  document.getElementById('gp-nombre').value = g.nombre;
+  document.getElementById('gp-tipo').value = g.tipo;
+  document.getElementById('gp-cap').value = g.capacidad;
+  document.getElementById('gp-sis').value = g.sistema||'';
+  document.getElementById('gp-modal-ttl').textContent = 'Editar galpón';
+  openModal('modal-galpon');
+}
+
+function guardarGalpon() {
+  const id = document.getElementById('gp-id').value;
+  const data = {
+    nombre: document.getElementById('gp-nombre').value.trim(),
+    tipo: document.getElementById('gp-tipo').value,
+    capacidad: Number(document.getElementById('gp-cap').value)||0,
+    sistema: document.getElementById('gp-sis').value.trim(),
+    activo: true
+  };
+  if (!data.nombre) { toast('Nombre requerido','danger'); return; }
+  if (id) store.update('galpones', id, data);
+  else store.create('galpones', data);
+  closeModal('modal-galpon'); toast('Galpón guardado','success'); renderPage();
+}
+
+function eliminarGalpon(id) {
+  const lotesEnGp = store.list('lotes', l => l.galponId===id);
+  if (lotesEnGp.length) { toast('No se puede eliminar: tiene lotes asociados','danger'); return; }
+  if (!confirm('¿Eliminar galpón?')) return;
+  store.delete('galpones', id); toast('Galpón eliminado','info'); renderPage();
+}
+
+function abrirUsuario() {
+  ['us-id','us-nombre','us-email','us-pass'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('us-rol').value = 'encargado';
+  document.getElementById('us-modal-ttl').textContent = 'Nuevo usuario';
+  openModal('modal-usuario');
+}
+
+function editarUsuario(id) {
+  const u = store.get('usuarios', id);
+  document.getElementById('us-id').value = id;
+  document.getElementById('us-nombre').value = u.nombre;
+  document.getElementById('us-email').value = u.email;
+  document.getElementById('us-rol').value = u.rol;
+  document.getElementById('us-pass').value = '';
+  document.getElementById('us-pass').placeholder = 'Dejar vacío para no cambiar';
+  document.getElementById('us-modal-ttl').textContent = 'Editar usuario';
+  openModal('modal-usuario');
+}
+
+function guardarUsuario() {
+  const id = document.getElementById('us-id').value;
+  const data = {
+    nombre: document.getElementById('us-nombre').value.trim(),
+    email: document.getElementById('us-email').value.trim(),
+    rol: document.getElementById('us-rol').value
+  };
+  const pass = document.getElementById('us-pass').value;
+  if (!data.nombre || !data.email) { toast('Nombre y email requeridos','danger'); return; }
+  if (id) {
+    if (pass) data.password = pass;
+    store.update('usuarios', id, data);
+  } else {
+    if (!pass) { toast('Contraseña requerida','danger'); return; }
+    data.password = pass;
+    data.galponesAsignados = 'todos';
+    store.create('usuarios', data);
+  }
+  closeModal('modal-usuario'); toast('Usuario guardado','success'); renderPage();
+}
+
+function eliminarUsuario(id) {
+  if (!confirm('¿Eliminar usuario?')) return;
+  store.delete('usuarios', id); toast('Usuario eliminado','info'); renderPage();
+}
+
+function guardarAlertas() {
+  const alertas = {};
+  document.querySelectorAll('#alert-toggles .toggle-sw').forEach(sw => {
+    alertas[sw.dataset.k] = sw.classList.contains('on');
+  });
+  const cfg = store.getDoc('config');
+  store.setDoc('config', { ...cfg, alertas });
+  toast('Preferencias de alertas guardadas','success');
+}
+
+function exportarDB() {
+  const json = store.exportJSON();
+  const blob = new Blob([json], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `aviges-backup-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  toast('Respaldo descargado','success');
+}
+
+function importarDB(input) {
+  const f = input.files[0];
+  if (!f) return;
+  const r = new FileReader();
+  r.onload = e => {
+    if (confirm('¿Reemplazar todos los datos actuales?')) {
+      if (store.importJSON(e.target.result)) { toast('Respaldo importado','success'); setTimeout(()=>location.reload(),800); }
+      else toast('Archivo inválido','danger');
+    }
+  };
+  r.readAsText(f);
+}
+
+function resetDB() {
+  if (!confirm('¿Resetear toda la información a la demo? Esta acción no se puede deshacer.')) return;
+  store.reset(); toast('Reseteando...','info'); setTimeout(()=>location.reload(),600);
+}
+
+setTimeout(renderPage, 50);
 </script>
 </body>
 </html>

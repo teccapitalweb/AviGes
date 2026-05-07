@@ -4,25 +4,6 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AviGes — Sanidad</title>
 <link rel="stylesheet" href="shared.css">
-<style>
-.vacuna-card {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-  padding: 14px 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 14px;
-  animation: fadeUp .4s cubic-bezier(.2,.8,.4,1) forwards; opacity: 0; transition: all .15s;
-}
-.vacuna-card:hover { border-color: var(--primary-m); transform: translateX(2px); box-shadow: var(--shadow-xs); }
-.vac-status { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.vac-status.ok { background: var(--primary-l); color: var(--primary); }
-.vac-status.pend { background: var(--warn-l); color: var(--warn); }
-.vac-info { flex: 1; min-width: 0; }
-.vac-name { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--text); letter-spacing: -.2px; }
-.vac-det { font-size: 12px; color: var(--text-3); margin-top: 3px; font-weight: 500; }
-.vac-right { text-align: right; flex-shrink: 0; }
-.vac-fecha { font-size: 13px; font-weight: 700; }
-.vac-dias { font-size: 11px; color: var(--text-3); margin-top: 2px; font-weight: 500; }
-.trat-row { padding: 14px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-.trat-row:last-child { border-bottom: none; }
-</style>
 </head>
 <body>
 <div id="sidebar-mount"></div>
@@ -30,112 +11,244 @@
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:12px;">
       <button class="hamburger" onclick="toggleSB()"><i class="ti ti-menu-2"></i></button>
-      <div><div class="page-ttl">Sanidad & Vacunación</div><div class="page-sub">2 alertas · Plan sanitario al día</div></div>
+      <div><div class="page-ttl">Sanidad</div><div class="page-sub">Vacunas · tratamientos · inventario</div></div>
     </div>
     <div class="topbar-right">
-      <div class="icon-btn"><i class="ti ti-bell"></i><div class="notif-dot"></div></div>
+      <div class="icon-btn"><i class="ti ti-bell"></i></div>
       <button class="btn btn-secondary btn-sm" onclick="openModal('modal-trat')"><i class="ti ti-pill"></i> Tratamiento</button>
-      <button class="btn btn-primary" onclick="openModal('modal-vac')"><i class="ti ti-vaccine"></i> Vacuna</button>
+      <button class="btn btn-primary" onclick="openModal('modal-vac')"><i class="ti ti-vaccine"></i> Aplicar vacuna</button>
     </div>
   </div>
   <div class="content">
-
-    <div class="g4">
-      <div class="kpi green delay-1"><div class="kpi-top"><div class="kpi-label">Vacunas aplicadas</div><div class="kpi-chip g"><i class="ti ti-vaccine"></i></div></div><div class="kpi-num">8<span class="kpi-unit"> ciclo</span></div><div class="kpi-footer up"><i class="ti ti-circle-check trend-icon"></i> Plan al día</div></div>
-      <div class="kpi warn delay-2"><div class="kpi-top"><div class="kpi-label">Próxima vacuna</div><div class="kpi-chip w"><i class="ti ti-clock"></i></div></div><div class="kpi-num">1<span class="kpi-unit"> día</span></div><div class="kpi-footer mid"><i class="ti ti-alert-triangle trend-icon"></i> Newcastle Lote 24-C</div></div>
-      <div class="kpi blue delay-3"><div class="kpi-top"><div class="kpi-label">Tratamientos activos</div><div class="kpi-chip b"><i class="ti ti-pill"></i></div></div><div class="kpi-num">2<span class="kpi-unit"> lotes</span></div><div class="kpi-footer mid"><i class="ti ti-activity trend-icon"></i> Lote 24-B en tratamiento</div></div>
-      <div class="kpi green delay-4"><div class="kpi-top"><div class="kpi-label">Productos en stock</div><div class="kpi-chip g"><i class="ti ti-package"></i></div></div><div class="kpi-num">12<span class="kpi-unit"> ítems</span></div><div class="kpi-footer up"><i class="ti ti-circle-check trend-icon"></i> Inventario actualizado</div></div>
-    </div>
-
+    <div class="g4" id="kpi-row"></div>
     <div class="g2">
-      <div class="card mb16">
-        <div class="card-head">
-          <div><div class="card-ttl">Plan de vacunación</div><div class="card-sub">Lote 24-A · Broiler Ross 308 · Día 35</div></div>
-          <a class="card-link" onclick="openModal('modal-vac')"><i class="ti ti-plus"></i> Aplicar</a>
-        </div>
-        <div class="card-body" style="padding:14px 16px;">
-          <div class="vacuna-card delay-1"><div class="vac-status ok"><i class="ti ti-circle-check"></i></div><div class="vac-info"><div class="vac-name">Marek (día 1)</div><div class="vac-det">0.2mL/ave · subcutánea · Lote MK-2024-B</div></div><div class="vac-right"><div class="vac-fecha" style="color:var(--primary)">Aplicada</div><div class="vac-dias">01/04/2026</div></div></div>
-          <div class="vacuna-card delay-2"><div class="vac-status ok"><i class="ti ti-circle-check"></i></div><div class="vac-info"><div class="vac-name">Newcastle + Bronquitis (día 7)</div><div class="vac-det">1 dosis/ave · ocular · La Sota</div></div><div class="vac-right"><div class="vac-fecha" style="color:var(--primary)">Aplicada</div><div class="vac-dias">08/04/2026</div></div></div>
-          <div class="vacuna-card delay-3"><div class="vac-status ok"><i class="ti ti-circle-check"></i></div><div class="vac-info"><div class="vac-name">Gumboro (día 14)</div><div class="vac-det">1 dosis/ave · agua · Cepa G-97</div></div><div class="vac-right"><div class="vac-fecha" style="color:var(--primary)">Aplicada</div><div class="vac-dias">15/04/2026</div></div></div>
-          <div class="vacuna-card delay-4"><div class="vac-status ok"><i class="ti ti-circle-check"></i></div><div class="vac-info"><div class="vac-name">Newcastle refuerzo (día 21)</div><div class="vac-det">1 dosis/ave · agua de bebida</div></div><div class="vac-right"><div class="vac-fecha" style="color:var(--primary)">Aplicada</div><div class="vac-dias">22/04/2026</div></div></div>
-          <div class="vacuna-card delay-5" style="border-color:#FBDFA9;background:var(--warn-l);"><div class="vac-status pend"><i class="ti ti-clock-hour-4"></i></div><div class="vac-info"><div class="vac-name">Coccidiosis refuerzo (día 28)</div><div class="vac-det">1mL/L agua · Baycox</div></div><div class="vac-right"><div class="vac-fecha" style="color:var(--warn)">Pendiente</div><div class="vac-dias">Vencida hace 7 días</div></div></div>
-        </div>
+      <div class="card delay-5">
+        <div class="card-head"><div><div class="card-ttl">Plan sanitario</div><div class="card-sub" id="plan-sub">—</div></div></div>
+        <div style="overflow-x:auto;"><table class="tbl" id="tbl-vac"><thead><tr><th>Fecha</th><th>Lote</th><th>Vacuna</th><th>Vía</th><th>Aplicador</th><th>Estado</th><th></th></tr></thead><tbody></tbody></table></div>
       </div>
-
-      <div style="display:flex;flex-direction:column;gap:16px;">
-        <div class="card" style="animation-delay:.18s;">
-          <div class="card-head"><div><div class="card-ttl">Alertas sanitarias</div><div class="card-sub">4 activas</div></div></div>
-          <div class="card-body">
-            <div class="alerts">
-              <div class="alert-item d"><div class="alert-icon"><i class="ti ti-alert-circle"></i></div><div><div class="alert-msg"><strong>Lote 24-B Galpón 2</strong><br>Mortalidad 3.1% día 18. Síntomas respiratorios.</div><div class="alert-time">Alta prioridad</div></div></div>
-              <div class="alert-item w"><div class="alert-icon"><i class="ti ti-vaccine"></i></div><div><div class="alert-msg"><strong>Newcastle — Lote 24-C</strong><br>Refuerzo pendiente · Aplicar mañana 6am.</div><div class="alert-time">Vence mañana</div></div></div>
-              <div class="alert-item w"><div class="alert-icon"><i class="ti ti-package"></i></div><div><div class="alert-msg"><strong>Inventario bajo</strong><br>La Sota queda para 1 aplicación.</div><div class="alert-time">Calculado</div></div></div>
-              <div class="alert-item i"><div class="alert-icon"><i class="ti ti-spray"></i></div><div><div class="alert-msg"><strong>Fumigación programada</strong><br>Galpón 1 y 2 · 10 mayo.</div><div class="alert-time">Recordatorio</div></div></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="animation-delay:.22s;">
-          <div class="card-head"><div><div class="card-ttl">Tratamientos activos</div><div class="card-sub">2 en curso</div></div><a class="card-link" onclick="openModal('modal-trat')"><i class="ti ti-plus"></i></a></div>
-          <div class="card-body" style="padding:0 20px;">
-            <div class="trat-row">
-              <div><div style="font-size:13.5px;font-weight:700;font-family:var(--font-display);">Enrofloxacina · Lote 24-B</div><div style="font-size:12px;color:var(--text-3);margin-top:3px;">1mL/L agua · 5 días · Inicio 05/05</div></div>
-              <div style="text-align:right;"><span class="pill pill-warn"><span class="sdot w"></span> Día 2/5</span><div style="font-size:11px;color:var(--text-3);margin-top:3px;">Termina 10/05</div></div>
-            </div>
-            <div class="trat-row">
-              <div><div style="font-size:13.5px;font-weight:700;font-family:var(--font-display);">Vitaminas ADE · Lote 24-A</div><div style="font-size:12px;color:var(--text-3);margin-top:3px;">0.5mL/L agua · 3 días · Inicio 06/05</div></div>
-              <div style="text-align:right;"><span class="pill pill-ok"><span class="sdot g"></span> Día 1/3</span><div style="font-size:11px;color:var(--text-3);margin-top:3px;">Termina 09/05</div></div>
-            </div>
-          </div>
-        </div>
+      <div class="card delay-6">
+        <div class="card-head"><div><div class="card-ttl">Tratamientos activos</div><div class="card-sub" id="trat-sub">—</div></div></div>
+        <div class="card-body" id="trat-body"></div>
       </div>
     </div>
-
-    <div class="card" style="animation-delay:.3s;">
-      <div class="card-head"><div><div class="card-ttl">Inventario de medicamentos</div><div class="card-sub">12 productos · 1 stock crítico</div></div><a class="card-link"><i class="ti ti-plus"></i> Producto</a></div>
-      <div style="overflow-x:auto;">
-        <table class="tbl">
-          <thead><tr><th>Producto</th><th>Tipo</th><th>Presentación</th><th>Stock</th><th>Mín</th><th>Vencimiento</th><th>Estado</th></tr></thead>
-          <tbody>
-            <tr><td style="font-weight:700">La Sota (Newcastle)</td><td><span class="badge badge-purple">Vacuna</span></td><td>1,000 dosis/frasco</td><td><strong>2</strong> frascos</td><td>3</td><td style="color:var(--text-3)">15/08/2026</td><td><span class="pill pill-warn"><span class="sdot w"></span> Bajo</span></td></tr>
-            <tr><td style="font-weight:700">Gumboro G-97</td><td><span class="badge badge-purple">Vacuna</span></td><td>500 dosis/frasco</td><td><strong>8</strong> frascos</td><td>3</td><td style="color:var(--text-3)">20/11/2026</td><td><span class="pill pill-ok"><span class="sdot g"></span> OK</span></td></tr>
-            <tr><td style="font-weight:700">Enrofloxacina 10%</td><td><span class="badge badge-blue">Antibiótico</span></td><td>1L frasco</td><td><strong>4</strong> frascos</td><td>2</td><td style="color:var(--text-3)">10/02/2027</td><td><span class="pill pill-ok"><span class="sdot g"></span> OK</span></td></tr>
-            <tr><td style="font-weight:700">Baycox</td><td><span class="badge badge-warn">Antiparasitario</span></td><td>1L frasco</td><td style="color:var(--danger);font-weight:700"><strong>1</strong> frasco</td><td>2</td><td style="color:var(--text-3)">30/06/2026</td><td><span class="pill pill-danger"><span class="sdot d"></span> Crítico</span></td></tr>
-            <tr><td style="font-weight:700">Vitaminas ADE</td><td><span class="badge badge-green">Vitamina</span></td><td>500mL frasco</td><td><strong>6</strong> frascos</td><td>2</td><td style="color:var(--text-3)">01/12/2026</td><td><span class="pill pill-ok"><span class="sdot g"></span> OK</span></td></tr>
-          </tbody>
-        </table>
+    <div class="card mb16">
+      <div class="card-head"><div><div class="card-ttl">Inventario sanitario</div><div class="card-sub" id="inv-sub">—</div></div>
+        <button class="btn btn-secondary btn-sm" onclick="openModal('modal-inv')"><i class="ti ti-plus"></i> Producto</button>
       </div>
+      <div style="overflow-x:auto;"><table class="tbl" id="tbl-inv"><thead><tr><th>Producto</th><th>Tipo</th><th>Presentación</th><th>Stock</th><th>Mínimo</th><th>Vencimiento</th><th>Estado</th></tr></thead><tbody></tbody></table></div>
     </div>
-
   </div>
 </main>
 
 <div class="modal-overlay" id="modal-vac">
-  <div class="modal">
-    <div class="modal-head"><div><div class="modal-ttl">Registrar vacuna aplicada</div><div class="card-sub">Datos de la aplicación</div></div><button class="modal-close" onclick="closeModal('modal-vac')"><i class="ti ti-x"></i></button></div>
+  <div class="modal" style="max-width:560px;">
+    <div class="modal-head"><div><div class="modal-ttl">Aplicar vacuna</div></div><button class="modal-close" onclick="closeModal('modal-vac')"><i class="ti ti-x"></i></button></div>
     <div class="modal-body">
-      <div class="form-row"><div class="form-group"><label class="form-label">Lote</label><select class="form-input"><option>Lote 24-A · Galpón 1</option><option>Lote 24-B · Galpón 2</option><option>Lote 24-C · Galpón 3</option><option>Lote 24-D · Galpón 4</option></select></div><div class="form-group"><label class="form-label">Fecha</label><input type="date" class="form-input"></div></div>
-      <div class="form-group"><label class="form-label">Vacuna</label><select class="form-input"><option>Newcastle (La Sota)</option><option>Gumboro</option><option>Marek</option><option>Bronquitis Infecciosa</option><option>Coccidiosis</option></select></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Vía</label><select class="form-input"><option>Agua de bebida</option><option>Ocular</option><option>Nasal</option><option>Subcutánea</option></select></div><div class="form-group"><label class="form-label">Dosis</label><input type="text" class="form-input" placeholder="1 dosis/ave"></div></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Lote del producto</label><input type="text" class="form-input" placeholder="VN-2024-A"></div><div class="form-group"><label class="form-label">Quién aplicó</label><input type="text" class="form-input" placeholder="Nombre"></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Fecha</label><input type="date" class="form-input" id="vc-fecha"></div><div class="form-group"><label class="form-label">Lote</label><select class="form-input" id="vc-lote"></select></div></div>
+      <div class="form-group"><label class="form-label">Vacuna</label><input type="text" class="form-input" id="vc-vacuna" placeholder="Newcastle La Sota"></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Vía</label><select class="form-input" id="vc-via"><option>ocular</option><option>agua</option><option>subcutánea</option><option>aerosol</option><option>spray</option></select></div><div class="form-group"><label class="form-label">Dosis</label><input type="text" class="form-input" id="vc-dosis" placeholder="1 dosis/ave"></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Lote vacuna</label><input type="text" class="form-input" id="vc-lotev"></div><div class="form-group"><label class="form-label">Aplicador</label><input type="text" class="form-input" id="vc-aplic"></div></div>
+      <div class="form-group"><label class="form-label">Estado</label><select class="form-input" id="vc-estado"><option value="aplicada">Aplicada</option><option value="pendiente">Pendiente · programada</option></select></div>
     </div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-vac')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-vac');toast('Vacuna registrada','success')"><i class="ti ti-check"></i> Guardar</button></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-vac')">Cancelar</button><button class="btn btn-primary" onclick="guardarVac()"><i class="ti ti-check"></i> Guardar</button></div>
   </div>
 </div>
 
 <div class="modal-overlay" id="modal-trat">
-  <div class="modal">
-    <div class="modal-head"><div><div class="modal-ttl">Registrar tratamiento</div></div><button class="modal-close" onclick="closeModal('modal-trat')"><i class="ti ti-x"></i></button></div>
+  <div class="modal" style="max-width:560px;">
+    <div class="modal-head"><div><div class="modal-ttl">Nuevo tratamiento</div></div><button class="modal-close" onclick="closeModal('modal-trat')"><i class="ti ti-x"></i></button></div>
     <div class="modal-body">
-      <div class="form-row"><div class="form-group"><label class="form-label">Lote</label><select class="form-input"><option>Lote 24-A</option><option>Lote 24-B</option></select></div><div class="form-group"><label class="form-label">Fecha inicio</label><input type="date" class="form-input"></div></div>
-      <div class="form-group"><label class="form-label">Medicamento</label><input type="text" class="form-input" placeholder="Nombre del producto"></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Dosis y vía</label><input type="text" class="form-input" placeholder="1mL/L agua"></div><div class="form-group"><label class="form-label">Días</label><input type="number" class="form-input" placeholder="5"></div></div>
-      <div class="form-group"><label class="form-label">Diagnóstico</label><textarea class="form-input" rows="2" placeholder="¿Por qué se aplica?"></textarea></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Fecha inicio</label><input type="date" class="form-input" id="t-fecha"></div><div class="form-group"><label class="form-label">Lote</label><select class="form-input" id="t-lote"></select></div></div>
+      <div class="form-group"><label class="form-label">Medicamento</label><input type="text" class="form-input" id="t-med" placeholder="Enrofloxacina 10%"></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Dosis</label><input type="text" class="form-input" id="t-dosis" placeholder="1mL/L agua"></div><div class="form-group"><label class="form-label">Días tratamiento</label><input type="number" class="form-input" id="t-dias" value="5"></div></div>
+      <div class="form-group"><label class="form-label">Diagnóstico/motivo</label><textarea class="form-input" id="t-diag" rows="2"></textarea></div>
     </div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-trat')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-trat');toast('Tratamiento registrado','success')"><i class="ti ti-check"></i> Guardar</button></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-trat')">Cancelar</button><button class="btn btn-primary" onclick="guardarTrat()"><i class="ti ti-check"></i> Guardar</button></div>
   </div>
 </div>
 
-<script src="shared.js"></script>
+<div class="modal-overlay" id="modal-inv">
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-head"><div><div class="modal-ttl">Producto al inventario</div></div><button class="modal-close" onclick="closeModal('modal-inv')"><i class="ti ti-x"></i></button></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Producto</label><input type="text" class="form-input" id="i-prod"></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Tipo</label><select class="form-input" id="i-tipo"><option>Vacuna</option><option>Antibiótico</option><option>Antiparasitario</option><option>Vitamina</option><option>Desinfectante</option><option>Otro</option></select></div><div class="form-group"><label class="form-label">Presentación</label><input type="text" class="form-input" id="i-pres" placeholder="1L frasco"></div></div>
+      <div class="form-row-3">
+        <div class="form-group"><label class="form-label">Stock</label><input type="number" class="form-input" id="i-stock"></div>
+        <div class="form-group"><label class="form-label">Mínimo</label><input type="number" class="form-input" id="i-min" value="2"></div>
+        <div class="form-group"><label class="form-label">Vencimiento</label><input type="date" class="form-input" id="i-venc"></div>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-inv')">Cancelar</button><button class="btn btn-primary" onclick="guardarInv()"><i class="ti ti-check"></i> Guardar</button></div>
+  </div>
+</div>
+
+<script src="db.js"></script><script src="standards.js"></script><script src="calc.js"></script>
+<script src="auth.js"></script><script src="seed.js"></script><script src="shared.js"></script>
+<script>
+function renderPage() {
+  const vac = store.list('vacunas');
+  const tratamientos = store.list('tratamientos', { estado: 'activo' });
+  const inv = store.list('inventarioSanidad');
+  const pendientes = vac.filter(v => v.estado === 'pendiente').length;
+  const aplicadas = vac.filter(v => v.estado === 'aplicada').length;
+  const stockBajo = inv.filter(i => i.stock <= i.minimo).length;
+
+  document.getElementById('kpi-row').innerHTML = `
+    <div class="kpi-modern delay-1"><div class="ki-top"><div class="ki-icon-bg g"><i class="ti ti-vaccine"></i></div><span class="ki-trend up"><i class="ti ti-check"></i></span></div><div class="ki-label">Vacunas aplicadas</div><div class="ki-num num-mono">${aplicadas}<span></span></div><div class="ki-context">Total registradas</div></div>
+    <div class="kpi-modern delay-2"><div class="ki-top"><div class="ki-icon-bg ${pendientes?'w':'g'}"><i class="ti ti-clock"></i></div></div><div class="ki-label">Pendientes</div><div class="ki-num num-mono">${pendientes}<span></span></div><div class="ki-context">${pendientes?'Requieren aplicación':'Todas aplicadas'}</div></div>
+    <div class="kpi-modern delay-3"><div class="ki-top"><div class="ki-icon-bg b"><i class="ti ti-pill"></i></div></div><div class="ki-label">Tratamientos activos</div><div class="ki-num num-mono">${tratamientos.length}<span></span></div><div class="ki-context">${tratamientos.length?'En curso':'Sin tratamientos'}</div></div>
+    <div class="kpi-modern delay-4"><div class="ki-top"><div class="ki-icon-bg ${stockBajo?'r':'g'}"><i class="ti ti-package"></i></div></div><div class="ki-label">Inventario</div><div class="ki-num num-mono">${inv.length}<span>items</span></div><div class="ki-context">${stockBajo?stockBajo+' bajo mínimo':'Stock óptimo'}</div></div>`;
+
+  // Plan sanitario
+  document.getElementById('plan-sub').textContent = `${vac.length} aplicaciones registradas`;
+  const tbody = document.querySelector('#tbl-vac tbody');
+  if (!vac.length) tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-3);padding:40px;">Sin vacunas registradas</td></tr>';
+  else tbody.innerHTML = vac.sort((a,b)=>new Date(b.fecha)-new Date(a.fecha)).map(v => {
+    const lote = store.get('lotes', v.loteId);
+    const isPend = v.estado === 'pendiente';
+    return `<tr>
+      <td class="num-mono" style="color:${isPend?'var(--amber-d)':'var(--text-3)'};font-weight:${isPend?700:500}">${fmtFecha(v.fecha,{short:true})}</td>
+      <td style="font-weight:600">${escapeHTML(lote?.nombre||'?')}</td>
+      <td>${escapeHTML(v.vacuna||'')}</td>
+      <td><span class="pill" style="background:var(--surface-3)">${escapeHTML(v.via||'—')}</span></td>
+      <td>${escapeHTML(v.aplicador||'—')}</td>
+      <td><span class="pill ${isPend?'pill-warn':'pill-ok'}"><span class="sdot ${isPend?'w':'g'}"></span> ${isPend?'Pendiente':'Aplicada'}</span></td>
+      <td>${isPend?`<button class="btn btn-ghost btn-sm" onclick="aplicarVac('${v.id}')"><i class="ti ti-check"></i></button>`:''}<button class="btn btn-ghost btn-sm" onclick="eliminarVac('${v.id}')"><i class="ti ti-trash"></i></button></td>
+    </tr>`;
+  }).join('');
+
+  // Tratamientos
+  document.getElementById('trat-sub').textContent = `${tratamientos.length} en curso`;
+  document.getElementById('trat-body').innerHTML = tratamientos.length ? tratamientos.map(t => {
+    const lote = store.get('lotes', t.loteId);
+    const dias = Math.floor((new Date() - new Date(t.fechaInicio))/(1000*60*60*24)) + 1;
+    const pct = Math.min(100, dias/t.dias*100);
+    return `<div style="padding:14px;background:var(--surface-2);border:1px solid var(--border);border-radius:11px;margin-bottom:10px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+        <div><div style="font-weight:700;font-size:14px;font-family:var(--font-display);">${escapeHTML(t.medicamento)}</div><div style="font-size:12px;color:var(--text-3);font-weight:500;margin-top:2px;">${escapeHTML(lote?.nombre||'?')} · ${escapeHTML(t.dosis||'')}</div></div>
+        <span class="pill pill-warn"><span class="sdot w"></span> Día ${dias}/${t.dias}</span>
+      </div>
+      <div class="bar"><div class="bar-fill" style="width:${pct}%;background:var(--amber);"></div></div>
+      ${t.diagnostico?`<div style="font-size:11.5px;color:var(--text-3);margin-top:8px;font-weight:500;font-style:italic;">${escapeHTML(t.diagnostico)}</div>`:''}
+      <div style="margin-top:10px;display:flex;gap:6px;"><button class="btn btn-ghost btn-sm" onclick="finalizarTrat('${t.id}')"><i class="ti ti-check"></i> Finalizar</button></div>
+    </div>`;
+  }).join('') : '<div class="empty"><div class="empty-sub">Sin tratamientos activos</div></div>';
+
+  // Inventario
+  document.getElementById('inv-sub').textContent = `${inv.length} productos · ${stockBajo} bajo mínimo`;
+  const tbodyI = document.querySelector('#tbl-inv tbody');
+  if (!inv.length) tbodyI.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-3);padding:40px;">Sin inventario</td></tr>';
+  else tbodyI.innerHTML = inv.map(i => {
+    const isBajo = i.stock <= i.minimo;
+    const venc = new Date(i.vencimiento);
+    const diasVenc = Math.floor((venc - new Date())/(1000*60*60*24));
+    const isPorVencer = diasVenc < 60;
+    return `<tr>
+      <td style="font-weight:600">${escapeHTML(i.producto)}</td>
+      <td><span class="pill" style="background:var(--surface-3)">${escapeHTML(i.tipo)}</span></td>
+      <td>${escapeHTML(i.presentacion||'')}</td>
+      <td class="num-mono" style="font-weight:700;color:${isBajo?'var(--terracotta)':'var(--text)'}">${i.stock}</td>
+      <td class="num-mono" style="color:var(--text-3)">${i.minimo}</td>
+      <td class="num-mono" style="color:${isPorVencer?'var(--amber-d)':'var(--text-3)'}">${fmtFecha(i.vencimiento,{short:true})} ${isPorVencer?'<i class="ti ti-alert-triangle" style="font-size:13px"></i>':''}</td>
+      <td><span class="pill ${isBajo?'pill-warn':'pill-ok'}"><span class="sdot ${isBajo?'w':'g'}"></span> ${isBajo?'Stock bajo':'OK'}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function abrirModalVac() {
+  document.getElementById('vc-fecha').value = new Date().toISOString().slice(0,10);
+  document.getElementById('vc-lote').innerHTML = store.list('lotes',{estado:'activo'}).map(l=>`<option value="${l.id}">${l.nombre}</option>`).join('');
+  ['vc-vacuna','vc-dosis','vc-lotev','vc-aplic'].forEach(id=>document.getElementById(id).value='');
+}
+function abrirModalTrat() {
+  document.getElementById('t-fecha').value = new Date().toISOString().slice(0,10);
+  document.getElementById('t-lote').innerHTML = store.list('lotes',{estado:'activo'}).map(l=>`<option value="${l.id}">${l.nombre}</option>`).join('');
+  ['t-med','t-dosis','t-diag'].forEach(id=>document.getElementById(id).value='');
+}
+function abrirModalInv() {
+  ['i-prod','i-pres','i-stock'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('i-min').value = '2';
+}
+
+document.getElementById('modal-vac').addEventListener('click', e => { if(e.target.classList.contains('modal-overlay')) {} });
+['modal-vac','modal-trat','modal-inv'].forEach(id=>{
+  const ob = document.getElementById(id);
+  ob._origOpen = ob.classList.add;
+});
+
+// Override openModal para llenar antes
+const _orig = openModal;
+window.openModal = function(id) {
+  if (id==='modal-vac') abrirModalVac();
+  else if (id==='modal-trat') abrirModalTrat();
+  else if (id==='modal-inv') abrirModalInv();
+  _orig(id);
+};
+
+function guardarVac() {
+  const data = {
+    fecha: document.getElementById('vc-fecha').value,
+    loteId: document.getElementById('vc-lote').value,
+    vacuna: document.getElementById('vc-vacuna').value.trim(),
+    via: document.getElementById('vc-via').value,
+    dosis: document.getElementById('vc-dosis').value.trim(),
+    loteVacuna: document.getElementById('vc-lotev').value.trim(),
+    aplicador: document.getElementById('vc-aplic').value.trim() || auth.current()?.nombre || '',
+    estado: document.getElementById('vc-estado').value
+  };
+  if (!data.vacuna || !data.loteId) { toast('Vacuna y lote requeridos','danger'); return; }
+  store.create('vacunas', data);
+  logActivity({ texto:`<strong>${data.aplicador}</strong> ${data.estado==='aplicada'?'aplicó':'programó'} vacuna <strong>${escapeHTML(data.vacuna)}</strong>`, tipo:'g', icono:'vaccine' });
+  closeModal('modal-vac'); toast('Vacuna registrada','success'); renderPage();
+}
+
+function aplicarVac(id) {
+  store.update('vacunas', id, { estado:'aplicada' });
+  toast('Marcada como aplicada','success'); renderPage();
+}
+
+function eliminarVac(id) {
+  if (!confirm('¿Eliminar?')) return;
+  store.delete('vacunas', id); toast('Eliminada','info'); renderPage();
+}
+
+function guardarTrat() {
+  const data = {
+    fechaInicio: document.getElementById('t-fecha').value,
+    loteId: document.getElementById('t-lote').value,
+    medicamento: document.getElementById('t-med').value.trim(),
+    dosis: document.getElementById('t-dosis').value.trim(),
+    dias: Number(document.getElementById('t-dias').value)||5,
+    diagnostico: document.getElementById('t-diag').value.trim(),
+    estado: 'activo'
+  };
+  if (!data.medicamento || !data.loteId) { toast('Medicamento y lote requeridos','danger'); return; }
+  store.create('tratamientos', data);
+  closeModal('modal-trat'); toast('Tratamiento iniciado','success'); renderPage();
+}
+
+function finalizarTrat(id) {
+  if (!confirm('¿Finalizar tratamiento?')) return;
+  store.update('tratamientos', id, { estado:'finalizado' });
+  toast('Finalizado','success'); renderPage();
+}
+
+function guardarInv() {
+  const data = {
+    producto: document.getElementById('i-prod').value.trim(),
+    tipo: document.getElementById('i-tipo').value,
+    presentacion: document.getElementById('i-pres').value.trim(),
+    stock: Number(document.getElementById('i-stock').value)||0,
+    minimo: Number(document.getElementById('i-min').value)||2,
+    vencimiento: document.getElementById('i-venc').value
+  };
+  if (!data.producto) { toast('Producto requerido','danger'); return; }
+  store.create('inventarioSanidad', data);
+  closeModal('modal-inv'); toast('Producto agregado','success'); renderPage();
+}
+
+setTimeout(renderPage, 50);
+</script>
 </body>
 </html>

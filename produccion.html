@@ -5,26 +5,6 @@
 <title>AviGes — Producción</title>
 <link rel="stylesheet" href="shared.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<style>
-.prod-hero {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-d) 100%);
-  border-radius: var(--r-xl); padding: 28px 32px; margin-bottom: 22px;
-  color: #fff; position: relative; overflow: hidden;
-  box-shadow: 0 8px 32px rgba(31,107,71,.20);
-  animation: fadeUp .5s cubic-bezier(.2,.8,.4,1);
-}
-.prod-hero::before { content:''; position: absolute; inset: 0; background: radial-gradient(circle at 95% 20%, rgba(200,130,31,.18) 0%, transparent 35%); pointer-events: none; }
-.ph-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px; position: relative; z-index: 1; }
-.ph-cell { padding: 0 20px; border-left: 1px solid rgba(255,255,255,.18); }
-.ph-cell:first-child { border-left: none; padding-left: 0; }
-.ph-cell-lbl { font-size: 11px; font-weight: 700; opacity: .85; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px; }
-.ph-cell-num { font-family: var(--font-display); font-size: 30px; font-weight: 700; letter-spacing: -.9px; line-height: 1; font-feature-settings: 'tnum'; }
-.ph-cell-num span { font-size: 14px; opacity: .65; font-weight: 500; }
-.ph-cell-trend { font-size: 12px; opacity: .85; margin-top: 6px; display: inline-flex; align-items: center; gap: 4px; font-weight: 500; }
-.ph-cell-trend i { font-size: 13px; }
-
-@media(max-width:900px){ .ph-grid { grid-template-columns: 1fr 1fr; gap: 16px; } .ph-cell { border-left: none; padding-left: 0; padding-right: 0; } }
-</style>
 </head>
 <body>
 <div id="sidebar-mount"></div>
@@ -32,140 +12,157 @@
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:12px;">
       <button class="hamburger" onclick="toggleSB()"><i class="ti ti-menu-2"></i></button>
-      <div><div class="page-ttl">Producción</div><div class="page-sub">Vista panorámica · broilers + ponedoras</div></div>
+      <div><div class="page-ttl">Producción</div><div class="page-sub">Vista panorámica de la granja</div></div>
     </div>
     <div class="topbar-right">
       <div class="icon-btn"><i class="ti ti-bell"></i></div>
-      <button class="btn btn-secondary btn-sm"><i class="ti ti-calendar"></i> Mayo 2026</button>
-      <button class="btn btn-primary"><i class="ti ti-cloud-download"></i> Exportar</button>
+      <button class="btn btn-secondary btn-sm" onclick="window.location='reportes.html'"><i class="ti ti-file-text"></i> Reporte</button>
+      <button class="btn btn-primary" onclick="window.location='lotes.html'"><i class="ti ti-paw"></i> Ver lotes</button>
     </div>
   </div>
   <div class="content">
-
-    <section class="prod-hero">
-      <div class="ph-grid">
-        <div class="ph-cell">
-          <div class="ph-cell-lbl"><i class="ti ti-paw" style="font-size:13px;"></i> Broilers</div>
-          <div class="ph-cell-num num-mono">38,500 <span>aves</span></div>
-          <div class="ph-cell-trend"><i class="ti ti-trending-up"></i> +1,200 kg producidos hoy</div>
-        </div>
-        <div class="ph-cell">
-          <div class="ph-cell-lbl"><i class="ti ti-egg" style="font-size:13px;"></i> Ponedoras</div>
-          <div class="ph-cell-num num-mono">24,000 <span>aves</span></div>
-          <div class="ph-cell-trend"><i class="ti ti-trending-up"></i> +21,865 huevos hoy</div>
-        </div>
-        <div class="ph-cell">
-          <div class="ph-cell-lbl"><i class="ti ti-cash" style="font-size:13px;"></i> Ingreso mes</div>
-          <div class="ph-cell-num num-mono">$542K <span>MXN</span></div>
-          <div class="ph-cell-trend"><i class="ti ti-trending-up"></i> +12% vs abril</div>
-        </div>
-        <div class="ph-cell">
-          <div class="ph-cell-lbl"><i class="ti ti-trophy" style="font-size:13px;"></i> Eficiencia global</div>
-          <div class="ph-cell-num num-mono">94 <span>/100</span></div>
-          <div class="ph-cell-trend"><i class="ti ti-trending-up"></i> Sobre estándar</div>
-        </div>
-      </div>
-    </section>
-
-    <div class="g4">
-      <div class="kpi-modern delay-1"><div class="ki-top"><div class="ki-icon-bg g"><i class="ti ti-burger"></i></div><span class="ki-trend up"><i class="ti ti-trending-up"></i> +5%</span></div><div class="ki-label">Pollo en pie hoy</div><div class="ki-num num-mono">42,500<span>kg</span></div><div class="ki-context">2 lotes broilers</div></div>
-      <div class="kpi-modern delay-2"><div class="ki-top"><div class="ki-icon-bg b"><i class="ti ti-egg"></i></div><span class="ki-trend up"><i class="ti ti-trending-up"></i> +8%</span></div><div class="ki-label">Huevos hoy</div><div class="ki-num num-mono">21,865<span>pzas</span></div><div class="ki-context">1,830 cartones · 91% postura</div></div>
-      <div class="kpi-modern delay-3"><div class="ki-top"><div class="ki-icon-bg w"><i class="ti ti-grain"></i></div><span class="ki-trend mid"><i class="ti ti-info-circle"></i> Normal</span></div><div class="ki-label">Conv. global</div><div class="ki-num num-mono">1.92<span>kg/kg</span></div><div class="ki-context">Promedio ponderado</div></div>
-      <div class="kpi-modern delay-4"><div class="ki-top"><div class="ki-icon-bg p"><i class="ti ti-package"></i></div><span class="ki-trend up"><i class="ti ti-trending-up"></i> Activo</span></div><div class="ki-label">Inventario huevo</div><div class="ki-num num-mono">4,820<span>ctn</span></div><div class="ki-context">~$328K en piso</div></div>
-    </div>
+    <div class="g4" id="kpi-row"></div>
 
     <div class="g2">
       <div class="card delay-5">
-        <div class="card-head"><div><div class="card-ttl">Producción últimos 30 días</div><div class="card-sub">Pollo (kg) y huevo (cartones)</div></div><a class="card-link"><i class="ti ti-download"></i> Exportar</a></div>
-        <div class="card-body"><div class="chart-wrap" style="height:240px;"><canvas id="chartProd"></canvas></div></div>
+        <div class="card-head"><div><div class="card-ttl">Distribución por línea genética</div><div class="card-sub" id="dist-sub">—</div></div></div>
+        <div class="card-body" id="dist-body"></div>
       </div>
       <div class="card delay-6">
-        <div class="card-head"><div><div class="card-ttl">Distribución por línea</div><div class="card-sub">Aves por genética</div></div></div>
-        <div class="card-body">
-          <div class="chart-wrap" style="height:200px;"><canvas id="chartDist"></canvas></div>
-          <div style="margin-top:18px;display:flex;flex-direction:column;gap:8px;">
-            <div style="display:flex;justify-content:space-between;font-size:12.5px;"><span style="display:flex;align-items:center;gap:6px;color:var(--text-2);"><span style="width:10px;height:10px;border-radius:50%;background:var(--primary);"></span> Ross 308 · 18,400 aves</span><span class="num-mono" style="font-weight:700;">29.4%</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:12.5px;"><span style="display:flex;align-items:center;gap:6px;color:var(--text-2);"><span style="width:10px;height:10px;border-radius:50%;background:var(--amber);"></span> Cobb 500 · 20,100 aves</span><span class="num-mono" style="font-weight:700;">32.2%</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:12.5px;"><span style="display:flex;align-items:center;gap:6px;color:var(--text-2);"><span style="width:10px;height:10px;border-radius:50%;background:var(--info);"></span> Hy-Line W-36 · 12,800 aves</span><span class="num-mono" style="font-weight:700;">20.5%</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:12.5px;"><span style="display:flex;align-items:center;gap:6px;color:var(--text-2);"><span style="width:10px;height:10px;border-radius:50%;background:var(--plum);"></span> Bovans White · 11,200 aves</span><span class="num-mono" style="font-weight:700;">17.9%</span></div>
-          </div>
-        </div>
+        <div class="card-head"><div><div class="card-ttl">Producción total</div><div class="card-sub">Acumulado por tipo</div></div></div>
+        <div class="card-body"><div class="chart-wrap" style="height:240px;"><canvas id="chartProd"></canvas></div></div>
       </div>
     </div>
 
     <div class="card mb16">
-      <div class="card-head"><div><div class="card-ttl">Producción acumulada por lote</div><div class="card-sub">Mes en curso</div></div></div>
-      <div style="overflow-x:auto;">
-        <table class="tbl">
-          <thead><tr><th>Lote</th><th>Tipo</th><th>Aves</th><th>Producido</th><th>Vendido</th><th>Inventario</th><th>Ingreso</th><th>Costo</th><th>Margen</th></tr></thead>
-          <tbody>
-            <tr><td><span class="badge badge-green"><i class="ti ti-paw"></i> 24-A</span></td><td><span class="pill pill-br">Broiler</span></td><td class="num-mono" style="font-weight:600">18,400</td><td class="num-mono">42,500 kg</td><td class="num-mono">35,000 kg</td><td class="num-mono">7,500 kg</td><td class="num-mono g" style="color:var(--primary);font-weight:700">$1,260,000</td><td class="num-mono r" style="color:var(--terracotta);font-weight:600">−$994K</td><td class="num-mono g" style="color:var(--primary);font-weight:700;font-family:var(--font-display);">+$266K</td></tr>
-            <tr><td><span class="badge badge-warn"><i class="ti ti-paw"></i> 24-B</span></td><td><span class="pill pill-br">Broiler</span></td><td class="num-mono" style="font-weight:600">20,100</td><td class="num-mono">17,890 kg</td><td class="num-mono">—</td><td class="num-mono">17,890 kg</td><td class="num-mono g">—</td><td class="num-mono r" style="color:var(--terracotta);font-weight:600">−$508K</td><td style="color:var(--text-3);font-style:italic;">En curso</td></tr>
-            <tr><td><span class="badge badge-blue"><i class="ti ti-egg"></i> 24-C</span></td><td><span class="pill pill-po">Ponedora</span></td><td class="num-mono" style="font-weight:600">12,800</td><td class="num-mono">359,420 huevos</td><td class="num-mono">240,000 huevos</td><td class="num-mono">119,420 huevos</td><td class="num-mono g" style="color:var(--primary);font-weight:700">$408,000</td><td class="num-mono r" style="color:var(--terracotta);font-weight:600">−$245K</td><td class="num-mono g" style="color:var(--primary);font-weight:700;font-family:var(--font-display);">+$163K</td></tr>
-            <tr><td><span class="badge badge-blue"><i class="ti ti-egg"></i> 24-D</span></td><td><span class="pill pill-po">Ponedora</span></td><td class="num-mono" style="font-weight:600">11,200</td><td class="num-mono">309,600 huevos</td><td class="num-mono">180,000 huevos</td><td class="num-mono">129,600 huevos</td><td class="num-mono g" style="color:var(--primary);font-weight:700">$306,000</td><td class="num-mono r" style="color:var(--terracotta);font-weight:600">−$185K</td><td class="num-mono g" style="color:var(--primary);font-weight:700;font-family:var(--font-display);">+$121K</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <div class="card-head"><div><div class="card-ttl">Producción acumulada por lote</div><div class="card-sub" id="acum-sub">—</div></div></div>
+      <div style="overflow-x:auto;"><table class="tbl" id="tbl-acum"><thead><tr><th>Lote</th><th>Tipo</th><th>Día</th><th>Aves vivas</th><th>Producción</th><th>CA / Postura</th><th>Costo</th><th>Ingreso</th><th>Margen</th></tr></thead><tbody></tbody></table></div>
     </div>
 
-    <div class="g3">
-      <div class="card delay-1"><div class="card-head"><div><div class="card-ttl">Top productos vendidos</div><div class="card-sub">Mayo 2026</div></div></div>
-        <div class="card-body">
-          <div style="display:flex;flex-direction:column;gap:14px;">
-            <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span style="font-weight:600;">Pollo en pie</span><span class="num-mono" style="font-weight:700;color:var(--primary);">35,000 kg</span></div><div class="bar"><div class="bar-fill" style="width:88%"></div></div></div>
-            <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span style="font-weight:600;">Huevo extra (60-69g)</span><span class="num-mono" style="font-weight:700;color:var(--primary);">12,400 ctn</span></div><div class="bar"><div class="bar-fill" style="width:72%"></div></div></div>
-            <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span style="font-weight:600;">Huevo grande (50-59g)</span><span class="num-mono" style="font-weight:700;color:var(--info);">8,200 ctn</span></div><div class="bar"><div class="bar-fill b" style="width:48%"></div></div></div>
-            <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span style="font-weight:600;">Huevo jumbo (+70g)</span><span class="num-mono" style="font-weight:700;color:var(--amber-d);">3,800 ctn</span></div><div class="bar"><div class="bar-fill a" style="width:22%"></div></div></div>
-          </div>
-        </div>
+    <div class="g2 mb16">
+      <div class="card delay-6">
+        <div class="card-head"><div><div class="card-ttl">Próximas salidas</div><div class="card-sub">Broilers cerca del ciclo</div></div></div>
+        <div class="card-body" id="salidas-body"></div>
       </div>
-      <div class="card delay-2"><div class="card-head"><div><div class="card-ttl">Próximas salidas</div><div class="card-sub">Lotes a punto de cerrar</div></div></div>
-        <div class="card-body">
-          <div style="display:flex;flex-direction:column;gap:12px;">
-            <div style="padding:14px;border-radius:11px;background:var(--primary-l);border:1px solid var(--primary-m);"><div style="display:flex;justify-content:space-between;align-items:center;"><div><div style="font-weight:700;font-family:var(--font-display);font-size:14px;">Lote 24-A · Galpón 1</div><div style="font-size:11.5px;color:var(--primary);font-weight:600;margin-top:2px;">42 días · Ross 308</div></div><div style="text-align:right;"><div class="num-mono" style="font-family:var(--font-display);font-weight:700;color:var(--primary);font-size:16px;">12 may</div><div style="font-size:11px;color:var(--primary);font-weight:600;">en 5 días</div></div></div></div>
-            <div style="padding:14px;border-radius:11px;background:var(--surface-2);border:1px solid var(--border);"><div style="display:flex;justify-content:space-between;align-items:center;"><div><div style="font-weight:700;font-family:var(--font-display);font-size:14px;">Lote 24-B · Galpón 2</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;margin-top:2px;">42 días · Cobb 500</div></div><div style="text-align:right;"><div class="num-mono" style="font-family:var(--font-display);font-weight:700;color:var(--text);font-size:16px;">29 may</div><div style="font-size:11px;color:var(--text-3);font-weight:500;">en 22 días</div></div></div></div>
-          </div>
-        </div>
-      </div>
-      <div class="card delay-3"><div class="card-head"><div><div class="card-ttl">Calidad de huevo</div><div class="card-sub">% por tamaño · semana</div></div></div>
-        <div class="card-body">
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div class="mrow"><span class="mrow-l">Jumbo +70g</span><span class="mrow-r num-mono">18%</span></div>
-            <div class="mrow"><span class="mrow-l">Extra 60-69g</span><span class="mrow-r g num-mono">42%</span></div>
-            <div class="mrow"><span class="mrow-l">Grande 50-59g</span><span class="mrow-r b num-mono">28%</span></div>
-            <div class="mrow"><span class="mrow-l">Mediano −50g</span><span class="mrow-r num-mono">8%</span></div>
-            <div class="mrow"><span class="mrow-l">Roto / 2ª</span><span class="mrow-r r num-mono">4%</span></div>
-          </div>
-        </div>
+      <div class="card delay-6">
+        <div class="card-head"><div><div class="card-ttl">Top productos vendidos</div><div class="card-sub">Mes en curso</div></div></div>
+        <div class="card-body" id="top-prod"></div>
       </div>
     </div>
-
   </div>
 </main>
 
-<script src="shared.js"></script>
+<script src="db.js"></script><script src="standards.js"></script><script src="calc.js"></script>
+<script src="auth.js"></script><script src="seed.js"></script><script src="shared.js"></script>
 <script>
-const dias=Array.from({length:30},(_,i)=>(i+1));
-new Chart(document.getElementById('chartProd').getContext('2d'),{
-  data:{ labels:dias, datasets:[
-    { type:'bar', label:'Pollo (kg)', data:[1100,1140,1180,1200,1220,1240,1180,1200,1230,1250,1260,1240,1220,1250,1280,1290,1280,1300,1320,1340,1330,1350,1360,1380,1390,1380,1400,1410,1420,1430], backgroundColor:'rgba(31,107,71,.85)', borderRadius:6, yAxisID:'y1', barPercentage:.55 },
-    { type:'line', label:'Huevo (ctn)', data:[1750,1770,1780,1790,1800,1810,1810,1820,1820,1830,1830,1830,1830,1830,1830,1830,1830,1830,1830,1820,1820,1820,1820,1820,1830,1830,1830,1830,1830,1830], borderColor:'#C8821F', backgroundColor:'rgba(200,130,31,.10)', borderWidth:3, pointRadius:0, pointHoverRadius:5, tension:.35, fill:true, yAxisID:'y2' }
-  ]},
-  options:{ responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
-    plugins:{legend:{position:'top',align:'end',labels:{color:'#7A6F62',font:{family:'Inter Tight',size:12,weight:'500'},boxWidth:14,boxHeight:8,usePointStyle:true,padding:14}},tooltip:{backgroundColor:'#1A1612',padding:14,cornerRadius:10}},
-    scales:{
-      x:{ticks:{color:'#7A6F62',font:{size:10,weight:'600'},maxTicksLimit:10},grid:{color:'#E8DFD0'},border:{display:false}},
-      y1:{type:'linear',position:'left',ticks:{color:'#7A6F62',font:{size:11},callback:v=>v+'kg'},grid:{color:'#E8DFD0'},border:{display:false}},
-      y2:{type:'linear',position:'right',ticks:{color:'#7A6F62',font:{size:11},callback:v=>v},grid:{display:false},border:{display:false}}
-    }
-  }
-});
+function renderPage() {
+  const lotes = store.list('lotes', { estado: 'activo' });
+  const broilers = lotes.filter(l => l.tipo === 'broiler');
+  const ponedoras = lotes.filter(l => l.tipo === 'ponedora');
+  const totalAvesBroiler = broilers.reduce((s,l)=>s+calc.avesVivas(l), 0);
+  const totalAvesPon = ponedoras.reduce((s,l)=>s+calc.avesVivas(l), 0);
+  // Kg producidos hoy = aves vivas * peso ult / 1000
+  const kgHoy = broilers.reduce((s,l)=>{const p=calc.ultimoPeso(l.id);return s + (p>0 ? calc.avesVivas(l)*p/1000 : 0);}, 0);
+  const huevosHoy = ponedoras.reduce((s,l)=>s+calc.huevosHoy(l.id),0);
+  const ventasMes = store.list('ventas').filter(v=>{const f=new Date(v.fecha);const a=new Date();return f.getMonth()===a.getMonth()&&f.getFullYear()===a.getFullYear();});
+  const ingresoMes = ventasMes.reduce((s,v)=>s+v.total,0);
+  const eficiencia = lotes.length ? Math.round(lotes.reduce((s,l)=>s+(l.tipo==='broiler'?calc.iep(l):calc.pctPosturaHoy(l)*4),0)/lotes.length) : 0;
 
-new Chart(document.getElementById('chartDist').getContext('2d'),{
-  type:'doughnut',
-  data:{ labels:['Ross 308','Cobb 500','Hy-Line','Bovans'], datasets:[{ data:[18400,20100,12800,11200], backgroundColor:['#1F6B47','#C8821F','#344473','#6B3F5F'], borderColor:'#fff', borderWidth:3 }]},
-  options:{ responsive:true, maintainAspectRatio:false, cutout:'72%', plugins:{legend:{display:false},tooltip:{backgroundColor:'#1A1612',padding:12,cornerRadius:8}}}
-});
+  document.getElementById('kpi-row').innerHTML = `
+    <div class="kpi-modern delay-1"><div class="ki-top"><div class="ki-icon-bg g"><i class="ti ti-paw"></i></div></div><div class="ki-label">Pollo en pie</div><div class="ki-num num-mono">${num(Math.round(kgHoy))}<span>kg</span></div><div class="ki-context">${num(totalAvesBroiler)} aves · ${broilers.length} lotes</div></div>
+    <div class="kpi-modern delay-2"><div class="ki-top"><div class="ki-icon-bg a"><i class="ti ti-egg"></i></div></div><div class="ki-label">Huevos hoy</div><div class="ki-num num-mono">${num(huevosHoy)}<span>pzas</span></div><div class="ki-context">${num(totalAvesPon)} ponedoras</div></div>
+    <div class="kpi-modern delay-3"><div class="ki-top"><div class="ki-icon-bg b"><i class="ti ti-cash"></i></div></div><div class="ki-label">Ingreso mes</div><div class="ki-num num-mono">${mxn(ingresoMes)}<span></span></div><div class="ki-context">${ventasMes.length} ventas</div></div>
+    <div class="kpi-modern delay-4"><div class="ki-top"><div class="ki-icon-bg p"><i class="ti ti-trophy"></i></div></div><div class="ki-label">Eficiencia global</div><div class="ki-num num-mono">${eficiencia}<span>pts</span></div><div class="ki-context">${lotes.length} lotes activos</div></div>`;
+
+  // Distribución por línea
+  const lineas = {};
+  lotes.forEach(l => {
+    if (!lineas[l.linea]) lineas[l.linea] = { aves:0, count:0, tipo:l.tipo };
+    lineas[l.linea].aves += calc.avesVivas(l);
+    lineas[l.linea].count++;
+  });
+  const totalAves = Object.values(lineas).reduce((s,x)=>s+x.aves,0);
+  document.getElementById('dist-sub').textContent = `${Object.keys(lineas).length} líneas activas`;
+  const colors = ['var(--primary)','#C8821F','#344473','#6B3F5F','#B85738'];
+  document.getElementById('dist-body').innerHTML = Object.entries(lineas).map(([l,d],i)=>{
+    const pct = totalAves?(d.aves/totalAves*100).toFixed(0):0;
+    return `<div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px;align-items:center;"><span style="font-weight:600;display:flex;align-items:center;gap:6px;"><i class="ti ti-${d.tipo==='broiler'?'burger':'egg'}" style="color:${colors[i%5]};font-size:14px;"></i> ${escapeHTML(l)} <span style="font-size:11px;color:var(--text-3);font-weight:500;">· ${d.count} lote${d.count===1?'':'s'}</span></span><span class="num-mono" style="font-weight:700;">${num(d.aves)} <span style="color:var(--text-3);font-weight:500;">(${pct}%)</span></span></div><div class="bar"><div class="bar-fill" style="width:${pct}%;background:${colors[i%5]};"></div></div></div>`;
+  }).join('') || '<div class="empty"><div class="empty-sub">Sin lotes activos</div></div>';
+
+  // Producción total chart - últimos 7 días
+  const labels = [], dPollo = [], dHuevo = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(); d.setDate(d.getDate()-i);
+    const fStr = d.toISOString().slice(0,10);
+    labels.push(d.getDate());
+    const huv = store.list('huevos').filter(h=>h.fecha?.slice(0,10)===fStr).reduce((s,h)=>s+h.total,0);
+    dHuevo.push(huv);
+    // Aproximación: pollo entregado en ventas
+    const ventasPollo = store.list('ventas').filter(v=>v.fecha?.slice(0,10)===fStr && v.tipo?.includes('Pollo')).reduce((s,v)=>s+v.cantidad,0);
+    dPollo.push(ventasPollo);
+  }
+  if (window._chPP) window._chPP.destroy();
+  window._chPP = new Chart(document.getElementById('chartProd').getContext('2d'),{
+    type:'bar', data:{ labels, datasets:[
+      { label:'Pollo (kg vendidos)', data:dPollo, backgroundColor:'rgba(31,107,71,.85)', borderRadius:5, barPercentage:.6 },
+      { label:'Huevos (pzas)', data:dHuevo, backgroundColor:'rgba(200,130,31,.85)', borderRadius:5, barPercentage:.6, yAxisID:'y2' }]},
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{position:'top',align:'end',labels:{font:{family:'Inter Tight',size:12,weight:'500'},usePointStyle:true,padding:14,boxWidth:12,boxHeight:8}}, tooltip:{backgroundColor:'#1A1612',padding:12,cornerRadius:10}},
+      scales:{ x:{grid:{display:false},border:{display:false}}, y:{grid:{color:'#E8DFD0'},border:{display:false},ticks:{callback:v=>num(v)+'kg'}}, y2:{position:'right',grid:{display:false},border:{display:false},ticks:{callback:v=>num(v)}}}}
+  });
+
+  // Tabla acumulada
+  document.getElementById('acum-sub').textContent = `${lotes.length} lotes activos`;
+  const tbody = document.querySelector('#tbl-acum tbody');
+  if (!lotes.length) tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--text-3);padding:40px;">Sin lotes activos</td></tr>';
+  else tbody.innerHTML = lotes.map(l=>{
+    const r = calc.resumenLote(l);
+    const esBroiler = l.tipo==='broiler';
+    const peso = r.ultimoPeso/1000;
+    const prod = esBroiler ? num(Math.round(r.avesVivas*peso))+' kg' : num(r.huevosTotales)+' huevos';
+    const eficiencia = esBroiler ? `CA ${r.ca||'—'}` : `${r.pctPostura||0}% postura`;
+    return `<tr>
+      <td><span class="badge badge-${esBroiler?'green':'blue'}"><i class="ti ti-paw"></i> ${escapeHTML(l.nombre.replace('Lote ',''))}</span></td>
+      <td><span class="pill ${esBroiler?'pill-br':'pill-po'}"><i class="ti ti-${esBroiler?'burger':'egg'}"></i> ${esBroiler?'Broiler':'Ponedora'}</span></td>
+      <td style="color:var(--text-3);font-weight:600">${r.dias}/${l.duracion}</td>
+      <td class="num-mono" style="font-weight:700">${num(r.avesVivas)}</td>
+      <td class="num-mono" style="font-weight:600">${prod}</td>
+      <td>${eficiencia}</td>
+      <td class="num-mono" style="color:var(--terracotta)">−${mxn(r.costoTotal)}</td>
+      <td class="num-mono" style="color:var(--primary)">+${mxn(r.ingresoTotal)}</td>
+      <td class="num-mono" style="font-weight:700;color:${r.margen>=0?'var(--primary)':'var(--terracotta)'};">${r.margen>=0?'+':''}${mxn(r.margen)}</td>
+    </tr>`;
+  }).join('');
+
+  // Próximas salidas
+  const salidas = broilers.map(l=>{
+    const restante = l.duracion - calc.diasLote(l);
+    const fecha = new Date(l.fechaInicio); fecha.setDate(fecha.getDate()+l.duracion);
+    return { lote:l, restante, fecha };
+  }).filter(s=>s.restante>0).sort((a,b)=>a.restante-b.restante).slice(0,4);
+  document.getElementById('salidas-body').innerHTML = salidas.length ? salidas.map(s=>{
+    const galpon = store.get('galpones',s.lote.galponId)?.nombre||'';
+    const aves = calc.avesVivas(s.lote);
+    const peso = calc.ultimoPeso(s.lote.id)/1000 || 2.7;
+    const kg = Math.round(aves*peso);
+    return `<div style="padding:14px 16px;background:var(--surface-2);border:1px solid var(--border);border-radius:11px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;">
+      <div><div style="font-weight:700;font-size:14px;">${escapeHTML(s.lote.nombre)} · ${escapeHTML(galpon)}</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;margin-top:2px;">${num(aves)} aves · ~${num(kg)} kg estimados</div></div>
+      <div style="text-align:right;"><div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--primary);">${s.restante} días</div><div style="font-size:11px;color:var(--text-3);font-weight:500;">${fmtFecha(s.fecha,{short:true})}</div></div>
+    </div>`;
+  }).join('') : '<div class="empty"><div class="empty-sub">Sin broilers próximos a salir</div></div>';
+
+  // Top productos
+  const prods = {};
+  ventasMes.forEach(v => { prods[v.tipo] = (prods[v.tipo]||0)+v.total; });
+  const top = Object.entries(prods).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  document.getElementById('top-prod').innerHTML = top.length ? top.map(([t,total],i)=>{
+    const cant = ventasMes.filter(v=>v.tipo===t).reduce((s,v)=>s+v.cantidad,0);
+    const unidad = t.includes('Pollo')?'kg':'cartones';
+    return `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);"><div style="width:30px;height:30px;border-radius:50%;background:${colors[i]};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;">${i+1}</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">${escapeHTML(t)}</div><div style="font-size:11px;color:var(--text-3);font-weight:500;">${num(cant)} ${unidad} vendidos</div></div><div class="num-mono" style="font-weight:700;color:var(--primary);">${mxn(total)}</div></div>`;
+  }).join('') : '<div class="empty"><div class="empty-sub">Sin ventas este mes</div></div>';
+}
+
+setTimeout(renderPage, 50);
 </script>
 </body>
 </html>

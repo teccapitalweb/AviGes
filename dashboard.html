@@ -6,76 +6,29 @@
 <link rel="stylesheet" href="shared.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-/* ── PAGE HEADER (editorial) ── */
-.page-header {
-  margin-bottom: 28px; animation: fadeUp .5s cubic-bezier(.2,.8,.4,1);
-  display: flex; align-items: flex-end; justify-content: space-between; gap: 32px;
-  padding-bottom: 24px; border-bottom: 1px solid var(--border);
-}
-.ph-eyebrow {
-  display: inline-flex; align-items: center; gap: 7px;
-  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em;
-  color: var(--amber-d); margin-bottom: 12px;
-  padding: 5px 12px; background: var(--amber-l); border-radius: 20px;
-  border: 1px solid #EAD6A8;
-}
+.page-header { margin-bottom: 28px; animation: fadeUp .5s cubic-bezier(.2,.8,.4,1); display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+.ph-eyebrow { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--amber-d); margin-bottom: 12px; padding: 5px 12px; background: var(--amber-l); border-radius: 20px; border: 1px solid #EAD6A8; }
 .ph-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); animation: shimmer 2s ease infinite; }
-.ph-title {
-  font-family: var(--font-display); font-size: 42px; font-weight: 700;
-  letter-spacing: -1.4px; line-height: 1.05; color: var(--text); margin-bottom: 10px;
-}
+.ph-title { font-family: var(--font-display); font-size: 42px; font-weight: 700; letter-spacing: -1.4px; line-height: 1.05; color: var(--text); margin-bottom: 10px; }
 .ph-title em { font-family: var(--font-serif); font-style: italic; font-weight: 400; color: var(--amber); letter-spacing: -.5px; }
 .ph-lead { font-size: 14.5px; color: var(--text-2); line-height: 1.55; max-width: 540px; font-weight: 400; }
 .ph-lead strong { color: var(--text); font-weight: 600; }
 .ph-actions { display: flex; gap: 10px; flex-shrink: 0; }
 
-/* ── HEADLINE STAT (the wow) ── */
-.headline-card {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-d) 100%);
-  border-radius: var(--r-2xl); padding: 36px 40px;
-  margin-bottom: 24px; color: #fff; position: relative; overflow: hidden;
-  box-shadow: 0 12px 36px rgba(31,107,71,.25);
-  animation: fadeUp .55s cubic-bezier(.2,.8,.4,1);
-}
-.headline-card::before {
-  content:''; position: absolute; inset: 0; pointer-events: none;
-  background:
-    radial-gradient(circle at 100% 0%, rgba(200,130,31,.25) 0%, transparent 45%),
-    radial-gradient(circle at 0% 100%, rgba(255,255,255,.08) 0%, transparent 50%);
-}
-/* Pollito SVG silhouette decoration */
-.headline-card .chick-illus {
-  position: absolute; right: 32px; bottom: -20px; width: 240px; opacity: .12; pointer-events: none;
-}
+.headline-card { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-d) 100%); border-radius: var(--r-2xl); padding: 36px 40px; margin-bottom: 24px; color: #fff; position: relative; overflow: hidden; box-shadow: 0 12px 36px rgba(31,107,71,.25); animation: fadeUp .55s cubic-bezier(.2,.8,.4,1); }
+.headline-card::before { content:''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 100% 0%, rgba(200,130,31,.25) 0%, transparent 45%), radial-gradient(circle at 0% 100%, rgba(255,255,255,.08) 0%, transparent 50%); }
+.headline-card .chick-illus { position: absolute; right: 32px; bottom: -20px; width: 240px; opacity: .12; pointer-events: none; }
 .hl-grid { display: grid; grid-template-columns: 1.4fr 1.6fr; gap: 36px; align-items: end; position: relative; z-index: 1; }
-.hl-eyebrow {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .15em;
-  color: rgba(255,255,255,.85); padding: 5px 12px; background: rgba(255,255,255,.12);
-  border-radius: 20px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.18);
-  margin-bottom: 16px;
-}
-.hl-headline {
-  font-family: var(--font-display); font-size: 30px; font-weight: 700;
-  letter-spacing: -.9px; line-height: 1.15; margin-bottom: 8px;
-}
+.hl-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .15em; color: rgba(255,255,255,.85); padding: 5px 12px; background: rgba(255,255,255,.12); border-radius: 20px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.18); margin-bottom: 16px; }
+.hl-headline { font-family: var(--font-display); font-size: 30px; font-weight: 700; letter-spacing: -.9px; line-height: 1.15; margin-bottom: 8px; }
 .hl-headline em { font-family: var(--font-serif); font-style: italic; font-weight: 400; color: #F2D8A0; }
 .hl-sub { font-size: 14px; opacity: .92; line-height: 1.55; max-width: 440px; }
 .hl-sub strong { color: #F2D8A0; font-weight: 700; }
 
 .hl-stats { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
-.hl-stat {
-  padding: 18px 20px; background: rgba(255,255,255,.10); border-radius: 14px;
-  backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.16);
-  transition: all .2s; position: relative; overflow: hidden;
-}
+.hl-stat { padding: 18px 20px; background: rgba(255,255,255,.10); border-radius: 14px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.16); transition: all .2s; position: relative; overflow: hidden; }
 .hl-stat:hover { background: rgba(255,255,255,.15); transform: translateY(-2px); }
-.hl-stat-trend {
-  position: absolute; top: 16px; right: 16px;
-  font-size: 10.5px; font-weight: 700; padding: 3px 8px; border-radius: 16px;
-  background: rgba(255,255,255,.14); color: #C8E5D2; letter-spacing: -.1px;
-  display: inline-flex; align-items: center; gap: 3px;
-}
+.hl-stat-trend { position: absolute; top: 16px; right: 16px; font-size: 10.5px; font-weight: 700; padding: 3px 8px; border-radius: 16px; background: rgba(255,255,255,.14); color: #C8E5D2; letter-spacing: -.1px; display: inline-flex; align-items: center; gap: 3px; }
 .hl-stat-trend i { font-size: 11px; }
 .hl-stat-icon { width: 32px; height: 32px; background: rgba(255,255,255,.16); border-radius: 9px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
 .hl-stat-icon i { font-size: 16px; color: #fff; }
@@ -84,88 +37,44 @@
 .hl-stat-lbl { font-size: 11px; font-weight: 600; opacity: .85; text-transform: uppercase; letter-spacing: .08em; margin-top: 5px; }
 
 .hl-cta { margin-top: 22px; display: flex; gap: 10px; flex-wrap: wrap; }
-.btn-hero {
-  padding: 11px 20px; background: rgba(255,255,255,.95); color: var(--primary-d);
-  border: none; border-radius: 11px; font-family: var(--font); font-size: 13px;
-  font-weight: 700; cursor: pointer; transition: all .15s; letter-spacing: -.15px;
-  display: inline-flex; align-items: center; gap: 7px;
-}
+.btn-hero { padding: 11px 20px; background: rgba(255,255,255,.95); color: var(--primary-d); border: none; border-radius: 11px; font-family: var(--font); font-size: 13px; font-weight: 700; cursor: pointer; transition: all .15s; letter-spacing: -.15px; display: inline-flex; align-items: center; gap: 7px; text-decoration: none; }
 .btn-hero:hover { background: #fff; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(0,0,0,.2); }
 .btn-hero.ghost { background: rgba(255,255,255,.10); color: #fff; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.22); }
 .btn-hero.ghost:hover { background: rgba(255,255,255,.18); }
 
-/* ── INSIGHT (quote-style, editorial) ── */
-.insight {
-  background: var(--amber-ll); border: 1px solid #EAD6A8;
-  border-left: 4px solid var(--amber);
-  border-radius: var(--r-lg); padding: 22px 26px;
-  margin-bottom: 20px; display: flex; gap: 18px;
-  animation: fadeUp .55s cubic-bezier(.2,.8,.4,1);
-}
-.insight-mark {
-  font-family: var(--font-serif); font-style: italic;
-  font-size: 64px; color: var(--amber); line-height: .8;
-  flex-shrink: 0; opacity: .6;
-}
+.insight { background: var(--amber-ll); border: 1px solid #EAD6A8; border-left: 4px solid var(--amber); border-radius: var(--r-lg); padding: 22px 26px; margin-bottom: 20px; display: flex; gap: 18px; animation: fadeUp .55s cubic-bezier(.2,.8,.4,1); }
+.insight-mark { font-family: var(--font-serif); font-style: italic; font-size: 64px; color: var(--amber); line-height: .8; flex-shrink: 0; opacity: .6; }
 .insight-content { flex: 1; }
 .insight-eyebrow { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--amber-d); margin-bottom: 6px; }
 .insight-text { font-size: 14.5px; color: var(--text); line-height: 1.6; font-weight: 500; }
 .insight-text em { font-family: var(--font-serif); font-style: italic; font-weight: 400; color: var(--amber-d); }
 .insight-text strong { font-weight: 700; }
 .insight-actions { margin-top: 14px; display: flex; gap: 8px; }
-.insight-btn {
-  padding: 7px 14px; background: var(--amber); color: #fff; border: none;
-  border-radius: 8px; font-family: var(--font); font-size: 12.5px; font-weight: 600;
-  cursor: pointer; transition: all .15s; letter-spacing: -.1px;
-  display: inline-flex; align-items: center; gap: 5px;
-}
+.insight-btn { padding: 7px 14px; background: var(--amber); color: #fff; border: none; border-radius: 8px; font-family: var(--font); font-size: 12.5px; font-weight: 600; cursor: pointer; transition: all .15s; letter-spacing: -.1px; display: inline-flex; align-items: center; gap: 5px; text-decoration: none; }
 .insight-btn:hover { background: var(--amber-d); }
 .insight-btn-ghost { background: transparent; color: var(--amber-d); border: 1px solid #EAD6A8; }
 .insight-btn-ghost:hover { background: var(--amber-l); }
 
-/* ── KPI cards (refined) ── */
-.kpi-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--r-lg); padding: 20px 22px;
-  box-shadow: var(--shadow-xs);
-  animation: fadeUp .5s cubic-bezier(.2,.8,.4,1) forwards; opacity: 0;
-  transition: all .2s ease; position: relative; overflow: hidden;
-}
+.kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 20px 22px; box-shadow: var(--shadow-xs); animation: fadeUp .5s cubic-bezier(.2,.8,.4,1) forwards; opacity: 0; transition: all .2s ease; position: relative; overflow: hidden; cursor: pointer; }
 .kpi-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--border-d); }
-.kpi-card .ki-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
-.kpi-card .ki-icon {
-  width: 36px; height: 36px; border-radius: 9px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px;
-}
-.kpi-card .ki-icon.g { background: var(--primary-l); color: var(--primary); }
-.kpi-card .ki-icon.b { background: var(--info-l); color: var(--info); }
-.kpi-card .ki-icon.a { background: var(--amber-l); color: var(--amber-d); }
-.kpi-card .ki-icon.r { background: var(--terracotta-l); color: var(--terracotta); }
-.kpi-card .ki-icon.p { background: var(--plum-l); color: var(--plum); }
-.kpi-card .ki-trend {
-  font-size: 11px; font-weight: 700; padding: 4px 9px; border-radius: 16px;
-  display: inline-flex; align-items: center; gap: 3px; letter-spacing: -.1px;
-}
-.kpi-card .ki-trend i { font-size: 11px; }
-.kpi-card .ki-trend.up { background: var(--primary-l); color: var(--primary); }
-.kpi-card .ki-trend.dn { background: var(--terracotta-l); color: var(--terracotta); }
-.kpi-card .ki-trend.md { background: var(--amber-l); color: var(--amber-d); }
-.kpi-card .ki-label {
-  font-size: 11px; color: var(--text-3); font-weight: 600;
-  text-transform: uppercase; letter-spacing: .1em; margin-bottom: 6px;
-}
-.kpi-card .ki-num {
-  font-family: var(--font-display); font-size: 32px; font-weight: 700;
-  letter-spacing: -1.3px; line-height: 1; color: var(--text);
-  font-feature-settings: 'tnum';
-}
-.kpi-card .ki-num span { font-size: 13px; color: var(--text-3); font-weight: 500; letter-spacing: 0; margin-left: 3px; }
-.kpi-card .ki-context { font-size: 12px; color: var(--text-3); font-weight: 500; margin-top: 8px; line-height: 1.4; letter-spacing: -.1px; }
-.kpi-card .ki-context strong { color: var(--text-2); font-weight: 600; }
-.kpi-card .ki-spark { margin-top: 14px; height: 32px; }
+.ki-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+.ki-icon { width: 36px; height: 36px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.ki-icon.g { background: var(--primary-l); color: var(--primary); }
+.ki-icon.b { background: var(--info-l); color: var(--info); }
+.ki-icon.a { background: var(--amber-l); color: var(--amber-d); }
+.ki-icon.r { background: var(--terracotta-l); color: var(--terracotta); }
+.ki-trend { font-size: 11px; font-weight: 700; padding: 4px 9px; border-radius: 16px; display: inline-flex; align-items: center; gap: 3px; letter-spacing: -.1px; }
+.ki-trend i { font-size: 11px; }
+.ki-trend.up { background: var(--primary-l); color: var(--primary); }
+.ki-trend.dn { background: var(--terracotta-l); color: var(--terracotta); }
+.ki-trend.md { background: var(--amber-l); color: var(--amber-d); }
+.ki-label { font-size: 11px; color: var(--text-3); font-weight: 600; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 6px; }
+.ki-num { font-family: var(--font-display); font-size: 32px; font-weight: 700; letter-spacing: -1.3px; line-height: 1; color: var(--text); font-feature-settings: 'tnum'; }
+.ki-num span { font-size: 13px; color: var(--text-3); font-weight: 500; letter-spacing: 0; margin-left: 3px; }
+.ki-context { font-size: 12px; color: var(--text-3); font-weight: 500; margin-top: 8px; line-height: 1.4; letter-spacing: -.1px; }
+.ki-context strong { color: var(--text-2); font-weight: 600; }
+.ki-spark { margin-top: 14px; height: 32px; }
 
-/* ── Chart stats inline ── */
 .chart-stats { display: flex; gap: 28px; margin-bottom: 20px; padding-bottom: 18px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
 .cs-block { display: flex; flex-direction: column; gap: 4px; }
 .cs-block + .cs-block { border-left: 1px solid var(--border); padding-left: 28px; }
@@ -176,7 +85,6 @@
 .cs-value.a { color: var(--amber-d); }
 .cs-value span { font-size: 12px; color: var(--text-3); font-weight: 500; letter-spacing: 0; margin-left: 2px; }
 
-/* ── Tasks ── */
 .task-list { display: flex; flex-direction: column; }
 .task-item { display: flex; align-items: flex-start; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--border); }
 .task-item:last-child { border-bottom: none; }
@@ -194,7 +102,6 @@
 .task-priority.med { background: var(--warn-l); color: var(--warn); }
 .task-priority.low { background: var(--primary-l); color: var(--primary); }
 
-/* ── Activity ── */
 .activity-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
 .activity-item:last-child { border-bottom: none; }
 .activity-dot { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
@@ -206,27 +113,14 @@
 .activity-text strong { font-weight: 700; }
 .activity-time { font-size: 11px; color: var(--text-3); margin-top: 2px; font-weight: 500; }
 
-/* ── Search ── */
 .searchbar { position: relative; width: 280px; }
 .searchbar input { width: 100%; padding: 9px 14px 9px 36px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); font-family: var(--font); font-size: 13px; color: var(--text); outline: none; transition: all .15s; letter-spacing: -.1px; }
 .searchbar input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(31,107,71,.10); }
-.searchbar input::placeholder { color: var(--text-4); }
 .searchbar > i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-3); font-size: 16px; pointer-events: none; }
 .kbd-hint { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-family: var(--font-mono); font-size: 10px; color: var(--text-4); background: var(--surface-3); padding: 2px 6px; border-radius: 4px; border: 1px solid var(--border); pointer-events: none; }
 
-@media(max-width:1100px){
-  .hl-grid { grid-template-columns: 1fr; gap: 24px; }
-  .ph-title { font-size: 32px; }
-  .page-header { flex-direction: column; align-items: stretch; }
-}
-@media(max-width:768px){
-  .ph-title { font-size: 28px; }
-  .headline-card { padding: 24px 22px; border-radius: var(--r-xl); }
-  .hl-stats { grid-template-columns: 1fr; }
-  .searchbar { display: none; }
-  .chart-stats { gap: 14px; }
-  .cs-block + .cs-block { border-left: none; padding-left: 0; }
-}
+@media(max-width:1100px){ .hl-grid { grid-template-columns: 1fr; gap: 24px; } .ph-title { font-size: 32px; } .page-header { flex-direction: column; align-items: stretch; } }
+@media(max-width:768px){ .ph-title { font-size: 28px; } .headline-card { padding: 24px 22px; border-radius: var(--r-xl); } .hl-stats { grid-template-columns: 1fr; } .searchbar { display: none; } .chart-stats { gap: 14px; } .cs-block + .cs-block { border-left: none; padding-left: 0; } }
 </style>
 </head>
 <body>
@@ -235,27 +129,22 @@
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:14px;">
       <button class="hamburger" onclick="toggleSB()"><i class="ti ti-menu-2"></i></button>
-      <div class="searchbar">
-        <i class="ti ti-search"></i>
-        <input type="text" placeholder="Buscar lote, registro, gasto..." />
-        <span class="kbd-hint">⌘K</span>
-      </div>
+      <div class="searchbar"><i class="ti ti-search"></i><input type="text" placeholder="Buscar lote, registro, gasto..." /><span class="kbd-hint">⌘K</span></div>
     </div>
     <div class="topbar-right">
-      <div class="icon-btn" title="Notificaciones"><i class="ti ti-bell"></i><div class="notif-dot"></div></div>
+      <div class="icon-btn" title="Notificaciones"><i class="ti ti-bell"></i><div class="notif-dot" id="notif-dot" style="display:none;"></div></div>
       <div class="icon-btn" title="Modo campo" onclick="window.location='registro.html'"><i class="ti ti-device-mobile"></i></div>
-      <button class="btn btn-secondary btn-sm"><i class="ti ti-cloud-download"></i> Exportar</button>
+      <button class="btn btn-secondary btn-sm" onclick="exportarDB()"><i class="ti ti-cloud-download"></i> Exportar</button>
       <button class="btn btn-primary" onclick="window.location='lotes.html'"><i class="ti ti-plus"></i> Nuevo lote</button>
     </div>
   </div>
   <div class="content">
 
-    <!-- PAGE HEADER editorial -->
     <header class="page-header">
       <div>
-        <div class="ph-eyebrow"><span class="dot"></span> Hoy · 7 de mayo · Granja El Progreso</div>
-        <h1 class="ph-title">Buenos días, <em>Jorge</em>.</h1>
-        <p class="ph-lead">Hoy tu granja produjo <strong>21,865 huevos</strong> y los broilers crecieron <strong>+130g sobre el estándar Ross</strong>. Hay <strong>2 alertas</strong> pendientes que requieren tu mirada antes de mediodía.</p>
+        <div class="ph-eyebrow"><span class="dot"></span> <span id="ph-eyebrow-txt">Hoy · Granja</span></div>
+        <h1 class="ph-title">Buenos días, <em id="ph-nombre">Jorge</em>.</h1>
+        <p class="ph-lead" id="ph-lead">Cargando datos…</p>
       </div>
       <div class="ph-actions">
         <button class="btn btn-secondary" onclick="window.location='reportes.html'"><i class="ti ti-file-text"></i> Reporte</button>
@@ -263,136 +152,37 @@
       </div>
     </header>
 
-    <!-- HEADLINE STAT (mexican identity) -->
     <section class="headline-card">
-      <svg class="chick-illus" viewBox="0 0 200 200" fill="white" xmlns="http://www.w3.org/2000/svg">
-        <path d="M100 30 C75 30 55 50 55 80 C55 95 60 108 70 118 L60 130 C58 132 58 135 60 137 L65 142 C67 144 70 144 72 142 L82 132 C87 134 93 135 100 135 C107 135 113 134 118 132 L128 142 C130 144 133 144 135 142 L140 137 C142 135 142 132 140 130 L130 118 C140 108 145 95 145 80 C145 50 125 30 100 30 Z M85 70 C81 70 78 73 78 77 C78 81 81 84 85 84 C89 84 92 81 92 77 C92 73 89 70 85 70 Z M115 70 C111 70 108 73 108 77 C108 81 111 84 115 84 C119 84 122 81 122 77 C122 73 119 70 115 70 Z M100 90 L95 95 L100 100 L105 95 Z M100 145 L95 165 L100 175 L105 165 Z"/>
-      </svg>
+      <svg class="chick-illus" viewBox="0 0 200 200" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M100 30 C75 30 55 50 55 80 C55 95 60 108 70 118 L60 130 C58 132 58 135 60 137 L65 142 C67 144 70 144 72 142 L82 132 C87 134 93 135 100 135 C107 135 113 134 118 132 L128 142 C130 144 133 144 135 142 L140 137 C142 135 142 132 140 130 L130 118 C140 108 145 95 145 80 C145 50 125 30 100 30 Z M85 70 C81 70 78 73 78 77 C78 81 81 84 85 84 C89 84 92 81 92 77 C92 73 89 70 85 70 Z M115 70 C111 70 108 73 108 77 C108 81 111 84 115 84 C119 84 122 81 122 77 C122 73 119 70 115 70 Z M100 90 L95 95 L100 100 L105 95 Z M100 145 L95 165 L100 175 L105 165 Z"/></svg>
       <div class="hl-grid">
         <div>
-          <div class="hl-eyebrow">📊 Resumen general · 4 lotes activos</div>
-          <h2 class="hl-headline">Tu granja va <em>por buen camino</em>.</h2>
-          <p class="hl-sub">Con <strong>62,500 aves</strong> bajo manejo y un IEP promedio de <strong>312 puntos</strong>, estás en el <strong>top 15%</strong> de granjas avícolas mexicanas de tu tamaño.</p>
+          <div class="hl-eyebrow" id="hl-eyebrow">📊 Resumen general</div>
+          <h2 class="hl-headline" id="hl-headline">Tu granja va <em>por buen camino</em>.</h2>
+          <p class="hl-sub" id="hl-sub"></p>
           <div class="hl-cta">
-            <button class="btn-hero" onclick="window.location='lotes.html'"><i class="ti ti-paw"></i> Ver mis lotes</button>
-            <button class="btn-hero ghost" onclick="window.location='reportes.html'"><i class="ti ti-printer"></i> Reporte SENASICA</button>
+            <a class="btn-hero" href="lotes.html"><i class="ti ti-paw"></i> Ver mis lotes</a>
+            <a class="btn-hero ghost" href="reportes.html"><i class="ti ti-printer"></i> Reporte SENASICA</a>
           </div>
         </div>
-        <div class="hl-stats">
-          <div class="hl-stat">
-            <span class="hl-stat-trend"><i class="ti ti-trending-up"></i> +5.2%</span>
-            <div class="hl-stat-icon"><i class="ti ti-paw"></i></div>
-            <div class="hl-stat-num num-mono">62,500 <span>aves</span></div>
-            <div class="hl-stat-lbl">Población activa</div>
-          </div>
-          <div class="hl-stat">
-            <span class="hl-stat-trend"><i class="ti ti-trending-up"></i> +8.1%</span>
-            <div class="hl-stat-icon"><i class="ti ti-egg"></i></div>
-            <div class="hl-stat-num num-mono">21,865 <span>hoy</span></div>
-            <div class="hl-stat-lbl">Huevos producidos</div>
-          </div>
-          <div class="hl-stat">
-            <span class="hl-stat-trend"><i class="ti ti-trending-up"></i> +12%</span>
-            <div class="hl-stat-icon"><i class="ti ti-cash"></i></div>
-            <div class="hl-stat-num num-mono">$98.4K <span>MXN</span></div>
-            <div class="hl-stat-lbl">Utilidad mes</div>
-          </div>
-          <div class="hl-stat">
-            <span class="hl-stat-trend"><i class="ti ti-trending-up"></i> +18 pts</span>
-            <div class="hl-stat-icon"><i class="ti ti-trophy"></i></div>
-            <div class="hl-stat-num num-mono">312 <span>pts</span></div>
-            <div class="hl-stat-lbl">IEP promedio</div>
-          </div>
-        </div>
+        <div class="hl-stats" id="hl-stats"></div>
       </div>
     </section>
 
-    <!-- INSIGHT editorial -->
-    <div class="insight">
-      <div class="insight-mark">"</div>
-      <div class="insight-content">
-        <div class="insight-eyebrow">Recomendación del día · IA AviGes</div>
-        <p class="insight-text">Tu <em>Galpón 2</em> necesita atención hoy. La mortalidad subió a <strong>3.1% en día 18</strong> — por encima del límite de 3%. Combinado con la temperatura de <strong>29°C</strong>, podría indicar estrés térmico o un problema sanitario emergente. Te recomiendo <strong>necropsia + revisión de ventilación</strong> antes de las 4 PM.</p>
-        <div class="insight-actions">
-          <button class="insight-btn"><i class="ti ti-arrow-right"></i> Ir al lote 24-B</button>
-          <button class="insight-btn insight-btn-ghost"><i class="ti ti-bell-off"></i> Marcar como visto</button>
-        </div>
-      </div>
-    </div>
+    <div id="insight-box"></div>
 
-    <!-- KPIs detalle -->
-    <div class="g4 mb16">
-      <div class="kpi-card delay-1">
-        <div class="ki-head">
-          <div class="ki-icon g"><i class="ti ti-trophy"></i></div>
-          <span class="ki-trend up"><i class="ti ti-trending-up"></i> +18pts</span>
-        </div>
-        <div class="ki-label">IEP Promedio</div>
-        <div class="ki-num num-mono">312<span>pts</span></div>
-        <div class="ki-context">Vs lote anterior · <strong>Excelente</strong></div>
-        <div class="ki-spark"><canvas id="sk1"></canvas></div>
-      </div>
-      <div class="kpi-card delay-2">
-        <div class="ki-head">
-          <div class="ki-icon b"><i class="ti ti-grain"></i></div>
-          <span class="ki-trend up"><i class="ti ti-trending-down"></i> mejor</span>
-        </div>
-        <div class="ki-label">Conv. Alimenticia</div>
-        <div class="ki-num num-mono">1.78<span>kg/kg</span></div>
-        <div class="ki-context">Estándar Ross 308: <strong>1.82</strong></div>
-        <div class="ki-spark"><canvas id="sk2"></canvas></div>
-      </div>
-      <div class="kpi-card delay-3">
-        <div class="ki-head">
-          <div class="ki-icon a"><i class="ti ti-alert-triangle"></i></div>
-          <span class="ki-trend md"><i class="ti ti-trending-up"></i> En umbral</span>
-        </div>
-        <div class="ki-label">Mortalidad acum.</div>
-        <div class="ki-num num-mono">2.4<span>%</span></div>
-        <div class="ki-context"><strong>Galpón 2</strong> requiere revisión</div>
-        <div class="ki-spark"><canvas id="sk3"></canvas></div>
-      </div>
-      <div class="kpi-card delay-4">
-        <div class="ki-head">
-          <div class="ki-icon g"><i class="ti ti-egg"></i></div>
-          <span class="ki-trend up"><i class="ti ti-trending-up"></i> +2.1%</span>
-        </div>
-        <div class="ki-label">% Postura hoy</div>
-        <div class="ki-num num-mono">91.3<span>%</span></div>
-        <div class="ki-context">Curva Hy-Line: <strong>89.2%</strong></div>
-        <div class="ki-spark"><canvas id="sk4"></canvas></div>
-      </div>
-    </div>
+    <div class="g4 mb16" id="kpi-row"></div>
 
-    <!-- Chart + Tasks -->
     <div class="g2">
       <div class="card delay-5">
         <div class="card-head">
           <div>
-            <div class="card-ttl">Curva de crecimiento <span class="serif" style="font-size:13px;color:var(--text-3);">— Lote 24-A</span></div>
-            <div class="card-sub">Galpón 1 · Ross 308 · Día 35 de 42</div>
+            <div class="card-ttl">Curva de crecimiento <span class="serif" style="font-size:13px;color:var(--text-3);" id="curva-lote-name">— —</span></div>
+            <div class="card-sub" id="curva-lote-sub">—</div>
           </div>
           <a href="lotes.html" class="card-link">Detalles <i class="ti ti-arrow-right"></i></a>
         </div>
         <div class="card-body">
-          <div class="chart-stats">
-            <div class="cs-block">
-              <div class="cs-label">Peso actual</div>
-              <div class="cs-value g num-mono">2,310<span>g</span></div>
-            </div>
-            <div class="cs-block">
-              <div class="cs-label">Estándar Ross</div>
-              <div class="cs-value b num-mono">2,180<span>g</span></div>
-            </div>
-            <div class="cs-block">
-              <div class="cs-label">Diferencia</div>
-              <div class="cs-value g num-mono">+130<span>g</span></div>
-            </div>
-            <div class="cs-block" style="margin-left:auto;">
-              <div class="cs-label">Salida estimada</div>
-              <div class="cs-value a" style="font-size:18px;">12 may<span> · 7 días</span></div>
-            </div>
-          </div>
+          <div class="chart-stats" id="chart-stats"></div>
           <div class="chart-wrap" style="height:220px;"><canvas id="chartPeso"></canvas></div>
         </div>
       </div>
@@ -400,318 +190,493 @@
       <div style="display:flex;flex-direction:column;gap:16px;">
         <div class="card delay-5">
           <div class="card-head">
-            <div>
-              <div class="card-ttl">Tareas para hoy</div>
-              <div class="card-sub">3 pendientes · 1 completada</div>
-            </div>
-            <a class="card-link"><i class="ti ti-plus"></i></a>
+            <div><div class="card-ttl">Tareas para hoy</div><div class="card-sub" id="tasks-sub">—</div></div>
+            <a class="card-link" onclick="addTask()"><i class="ti ti-plus"></i></a>
           </div>
           <div class="card-body" style="padding:8px 20px;">
-            <div class="task-list">
-              <div class="task-item">
-                <div class="task-checkbox" onclick="toggleTask(this)"><i class="ti ti-check"></i></div>
-                <div class="task-content">
-                  <div class="task-title">Aplicar Newcastle refuerzo</div>
-                  <div class="task-meta"><i class="ti ti-vaccine"></i> Lote 24-C · 6:00 AM</div>
-                </div>
-                <span class="task-priority high">Urgente</span>
-              </div>
-              <div class="task-item">
-                <div class="task-checkbox" onclick="toggleTask(this)"><i class="ti ti-check"></i></div>
-                <div class="task-content">
-                  <div class="task-title">Necropsia aves Galpón 2</div>
-                  <div class="task-meta"><i class="ti ti-stethoscope"></i> Lote 24-B · Antes 4 PM</div>
-                </div>
-                <span class="task-priority high">Urgente</span>
-              </div>
-              <div class="task-item">
-                <div class="task-checkbox" onclick="toggleTask(this)"><i class="ti ti-check"></i></div>
-                <div class="task-content">
-                  <div class="task-title">Pedir alimento finalizador</div>
-                  <div class="task-meta"><i class="ti ti-truck"></i> Galpón 1 · 3 días stock</div>
-                </div>
-                <span class="task-priority med">Media</span>
-              </div>
-              <div class="task-item">
-                <div class="task-checkbox done" onclick="toggleTask(this)"><i class="ti ti-check"></i></div>
-                <div class="task-content">
-                  <div class="task-title" style="text-decoration:line-through;color:var(--text-3);">Pesaje semanal Lote 24-A</div>
-                  <div class="task-meta"><i class="ti ti-circle-check" style="color:var(--primary);"></i> Completado · 7:30 AM</div>
-                </div>
-                <span class="task-priority low">Hecho</span>
-              </div>
-            </div>
+            <div class="task-list" id="task-list"></div>
           </div>
         </div>
 
         <div class="card delay-6">
           <div class="card-head">
-            <div>
-              <div class="card-ttl">Alertas activas</div>
-              <div class="card-sub">2 críticas</div>
-            </div>
+            <div><div class="card-ttl">Alertas activas</div><div class="card-sub" id="alerts-sub">—</div></div>
             <a href="sanidad.html" class="card-link">Ver todas</a>
           </div>
-          <div class="card-body">
-            <div class="alerts">
-              <div class="alert-item d">
-                <div class="alert-icon"><i class="ti ti-alert-circle"></i></div>
-                <div>
-                  <div class="alert-msg"><strong>Mortalidad alta</strong> en Galpón 2 (3.1% día 18). Síntomas respiratorios.</div>
-                  <div class="alert-time">Hace 2 h · Lote 24-B</div>
-                </div>
-              </div>
-              <div class="alert-item w">
-                <div class="alert-icon"><i class="ti ti-grain"></i></div>
-                <div>
-                  <div class="alert-msg"><strong>Alimento bajo</strong> en Galpón 1. Stock para 3 días.</div>
-                  <div class="alert-time">Calculado automático</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div class="card-body"><div class="alerts" id="alerts-list"></div></div>
         </div>
       </div>
     </div>
 
-    <!-- LOTES TABLE -->
     <div class="card mb16" style="animation-delay:.32s;">
       <div class="card-head">
-        <div>
-          <div class="card-ttl">Lotes activos</div>
-          <div class="card-sub">4 en producción · Total: 62,500 aves</div>
-        </div>
+        <div><div class="card-ttl">Lotes activos</div><div class="card-sub" id="lotes-sub">—</div></div>
         <a href="lotes.html" class="card-link">Ver todos <i class="ti ti-arrow-right"></i></a>
       </div>
-      <div style="overflow-x:auto;">
-        <table class="tbl">
-          <thead><tr><th>Lote</th><th>Galpón</th><th>Tipo</th><th>Aves</th><th>Día</th><th>Avance</th><th>CA</th><th>IEP</th><th>Mortalidad</th><th>Estado</th></tr></thead>
-          <tbody>
-            <tr onclick="window.location='lotes.html'">
-              <td><span class="badge badge-green"><i class="ti ti-paw"></i> 24-A</span></td>
-              <td style="color:var(--text-2);font-weight:500">Galpón 1</td>
-              <td><span class="pill pill-br"><i class="ti ti-burger"></i> Broiler</span></td>
-              <td class="num-mono" style="font-weight:700">18,400</td>
-              <td style="color:var(--text-3);font-weight:600">35/42</td>
-              <td><div class="bar"><div class="bar-fill" style="width:83%"></div></div></td>
-              <td class="num-mono" style="font-weight:700">1.76</td>
-              <td><span class="iep ex">324</span></td>
-              <td style="color:var(--primary);font-weight:700" class="num-mono">1.8%</td>
-              <td><span class="pill pill-ok"><span class="sdot g"></span> Activo</span></td>
-            </tr>
-            <tr onclick="window.location='lotes.html'">
-              <td><span class="badge badge-warn"><i class="ti ti-paw"></i> 24-B</span></td>
-              <td style="color:var(--text-2);font-weight:500">Galpón 2</td>
-              <td><span class="pill pill-br"><i class="ti ti-burger"></i> Broiler</span></td>
-              <td class="num-mono" style="font-weight:700">20,100</td>
-              <td style="color:var(--text-3);font-weight:600">18/42</td>
-              <td><div class="bar"><div class="bar-fill w" style="width:43%"></div></div></td>
-              <td class="num-mono" style="font-weight:700">1.89</td>
-              <td><span class="iep rg">278</span></td>
-              <td style="color:var(--danger);font-weight:700" class="num-mono">3.1% <i class="ti ti-alert-triangle" style="font-size:13px"></i></td>
-              <td><span class="pill pill-warn"><span class="sdot w"></span> Revisar</span></td>
-            </tr>
-            <tr onclick="window.location='lotes.html'">
-              <td><span class="badge badge-blue"><i class="ti ti-egg"></i> 24-C</span></td>
-              <td style="color:var(--text-2);font-weight:500">Galpón 3</td>
-              <td><span class="pill pill-po"><i class="ti ti-egg"></i> Ponedora</span></td>
-              <td class="num-mono" style="font-weight:700">12,800</td>
-              <td style="color:var(--text-3);font-weight:600">156/360</td>
-              <td><div class="bar"><div class="bar-fill" style="width:43%"></div></div></td>
-              <td class="num-mono" style="font-weight:700">2.10</td>
-              <td><span class="iep bk">295</span></td>
-              <td style="color:var(--primary);font-weight:700" class="num-mono">0.9%</td>
-              <td><span class="pill pill-ok"><span class="sdot g"></span> Activo</span></td>
-            </tr>
-            <tr onclick="window.location='lotes.html'">
-              <td><span class="badge badge-blue"><i class="ti ti-egg"></i> 24-D</span></td>
-              <td style="color:var(--text-2);font-weight:500">Galpón 4</td>
-              <td><span class="pill pill-po"><i class="ti ti-egg"></i> Ponedora</span></td>
-              <td class="num-mono" style="font-weight:700">11,200</td>
-              <td style="color:var(--text-3);font-weight:600">89/360</td>
-              <td><div class="bar"><div class="bar-fill" style="width:25%"></div></div></td>
-              <td class="num-mono" style="font-weight:700">2.08</td>
-              <td><span class="iep bk">301</span></td>
-              <td style="color:var(--primary);font-weight:700" class="num-mono">1.1%</td>
-              <td><span class="pill pill-ok"><span class="sdot g"></span> Activo</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <div style="overflow-x:auto;"><table class="tbl" id="lotes-tbl"><thead><tr><th>Lote</th><th>Galpón</th><th>Tipo</th><th>Aves</th><th>Día</th><th>Avance</th><th>CA</th><th>IEP</th><th>Mortalidad</th><th>Estado</th></tr></thead><tbody></tbody></table></div>
     </div>
 
-    <!-- BOTTOM ROW -->
     <div class="g3">
       <div class="card delay-1">
         <div class="card-head">
-          <div>
-            <div class="card-ttl">Resumen económico</div>
-            <div class="card-sub">Mayo 2026 · Lote 24-A</div>
-          </div>
+          <div><div class="card-ttl">Resumen económico</div><div class="card-sub" id="eco-sub">—</div></div>
           <a href="costos.html" class="card-link">Detalles <i class="ti ti-arrow-right"></i></a>
         </div>
-        <div class="card-body">
-          <div class="mrow"><span class="mrow-l">Costo/kg producido</span><span class="mrow-r num-mono">$28.40</span></div>
-          <div class="mrow"><span class="mrow-l">Precio venta/kg</span><span class="mrow-r g num-mono">$36.00</span></div>
-          <div class="mrow"><span class="mrow-l">Margen/kg</span><span class="mrow-r g num-mono">$7.60</span></div>
-          <div class="mrow"><span class="mrow-l">Gasto alimento</span><span class="mrow-r r num-mono">−$184,200</span></div>
-          <div class="mrow"><span class="mrow-l">Otros costos</span><span class="mrow-r r num-mono">−$42,800</span></div>
-          <div style="margin-top:14px;padding:14px 16px;background:linear-gradient(135deg,var(--primary-l) 0%, var(--primary-ll) 100%);border:1px solid var(--primary-m);border-radius:11px;display:flex;justify-content:space-between;align-items:center;">
-            <span style="font-weight:700;font-size:13px;color:var(--primary);">Utilidad estimada</span>
-            <span style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--primary);letter-spacing:-.5px;">+$98,400</span>
-          </div>
-        </div>
+        <div class="card-body" id="eco-body"></div>
       </div>
 
       <div class="card delay-2">
-        <div class="card-head">
-          <div>
-            <div class="card-ttl">Actividad reciente</div>
-            <div class="card-sub">Últimas 24 horas</div>
-          </div>
-          <a class="card-link">Ver más</a>
-        </div>
-        <div class="card-body" style="padding:8px 20px;">
-          <div class="activity-item">
-            <div class="activity-dot g"><i class="ti ti-vaccine"></i></div>
-            <div>
-              <div class="activity-text"><strong>Carlos Pérez</strong> aplicó vacuna Coccidiosis a <strong>Lote 24-A</strong></div>
-              <div class="activity-time">Hace 30 min</div>
-            </div>
-          </div>
-          <div class="activity-item">
-            <div class="activity-dot b"><i class="ti ti-edit"></i></div>
-            <div>
-              <div class="activity-text"><strong>Ana García</strong> registró <strong>11,673 huevos</strong> en Galpón 3</div>
-              <div class="activity-time">Hace 2 h</div>
-            </div>
-          </div>
-          <div class="activity-item">
-            <div class="activity-dot r"><i class="ti ti-alert-circle"></i></div>
-            <div>
-              <div class="activity-text">Alerta automática: <strong>Mortalidad superó 3%</strong> en Galpón 2</div>
-              <div class="activity-time">Hace 4 h</div>
-            </div>
-          </div>
-          <div class="activity-item">
-            <div class="activity-dot g"><i class="ti ti-cash"></i></div>
-            <div>
-              <div class="activity-text"><strong>Tú</strong> registraste venta · <strong>+$54,400 MXN</strong></div>
-              <div class="activity-time">Hoy 9:15 AM</div>
-            </div>
-          </div>
-          <div class="activity-item">
-            <div class="activity-dot a"><i class="ti ti-truck"></i></div>
-            <div>
-              <div class="activity-text"><strong>Entrada</strong> · 520 sacos finalizador · Galpón 1</div>
-              <div class="activity-time">Ayer 4:30 PM</div>
-            </div>
-          </div>
-        </div>
+        <div class="card-head"><div><div class="card-ttl">Actividad reciente</div><div class="card-sub">Últimos eventos</div></div><a class="card-link">Ver más</a></div>
+        <div class="card-body" style="padding:8px 20px;" id="activity-feed"></div>
       </div>
 
       <div class="card delay-3">
-        <div class="card-head">
-          <div>
-            <div class="card-ttl">Clima galpones</div>
-            <div class="card-sub">Última lectura: hace 1 h</div>
-          </div>
-          <a href="clima.html" class="card-link">Detalles</a>
-        </div>
-        <div class="card-body">
-          <div style="display:flex;flex-direction:column;gap:14px;">
-            <div>
-              <div style="display:flex;justify-content:space-between;align-items:center;font-size:12.5px;margin-bottom:6px;">
-                <span style="color:var(--text-2);font-weight:600;display:flex;align-items:center;gap:6px;"><i class="ti ti-paw" style="color:var(--amber-d);font-size:14px;"></i> Galpón 1</span>
-                <span class="num-mono" style="font-weight:700;color:var(--primary)">22°C / 68%</span>
-              </div>
-              <div class="bar"><div class="bar-fill" style="width:55%"></div></div>
-            </div>
-            <div>
-              <div style="display:flex;justify-content:space-between;align-items:center;font-size:12.5px;margin-bottom:6px;">
-                <span style="color:var(--text-2);font-weight:600;display:flex;align-items:center;gap:6px;"><i class="ti ti-paw" style="color:var(--amber-d);font-size:14px;"></i> Galpón 2</span>
-                <span class="num-mono" style="font-weight:700;color:var(--warn)">29°C / 74% <i class="ti ti-alert-triangle" style="font-size:12px;"></i></span>
-              </div>
-              <div class="bar"><div class="bar-fill w" style="width:73%"></div></div>
-            </div>
-            <div>
-              <div style="display:flex;justify-content:space-between;align-items:center;font-size:12.5px;margin-bottom:6px;">
-                <span style="color:var(--text-2);font-weight:600;display:flex;align-items:center;gap:6px;"><i class="ti ti-egg" style="color:var(--info);font-size:14px;"></i> Galpón 3</span>
-                <span class="num-mono" style="font-weight:700;color:var(--primary)">20°C / 65%</span>
-              </div>
-              <div class="bar"><div class="bar-fill" style="width:50%"></div></div>
-            </div>
-            <div>
-              <div style="display:flex;justify-content:space-between;align-items:center;font-size:12.5px;margin-bottom:6px;">
-                <span style="color:var(--text-2);font-weight:600;display:flex;align-items:center;gap:6px;"><i class="ti ti-egg" style="color:var(--info);font-size:14px;"></i> Galpón 4</span>
-                <span class="num-mono" style="font-weight:700;color:var(--primary)">21°C / 66%</span>
-              </div>
-              <div class="bar"><div class="bar-fill" style="width:52%"></div></div>
-            </div>
-          </div>
-          <div style="margin-top:18px;padding:12px 14px;background:var(--surface-2);border-radius:10px;border:1px solid var(--border);font-size:12px;color:var(--text-3);line-height:1.5;display:flex;align-items:flex-start;gap:8px;">
-            <i class="ti ti-info-circle" style="color:var(--info);font-size:15px;flex-shrink:0;"></i>
-            <span>Rango óptimo broilers (día 35): <strong style="color:var(--text-2);">18-24°C / 60-75%HR</strong></span>
-          </div>
-        </div>
+        <div class="card-head"><div><div class="card-ttl">Clima galpones</div><div class="card-sub">Última lectura</div></div><a href="clima.html" class="card-link">Detalles</a></div>
+        <div class="card-body" id="clima-body"></div>
       </div>
     </div>
 
   </div>
 </main>
 
+<script src="db.js"></script>
+<script src="standards.js"></script>
+<script src="calc.js"></script>
+<script src="auth.js"></script>
+<script src="seed.js"></script>
 <script src="shared.js"></script>
 <script>
-const sparkOpts = { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{enabled:false}}, scales:{x:{display:false},y:{display:false}}, elements:{point:{radius:0}}, animation:{duration:1200,easing:'easeOutQuart'} };
-function spark(id, data, color) {
-  new Chart(document.getElementById(id).getContext('2d'),{
-    type:'line',
-    data:{labels:data.map((_,i)=>i),datasets:[{data,borderColor:color,backgroundColor:color+'18',borderWidth:2.5,fill:true,tension:.4}]},
-    options: sparkOpts
+// Render dashboard con datos reales
+function renderDashboard() {
+  const session = auth.current();
+  const granja = store.getDoc('granja');
+  const lotes = store.list('lotes', l => l.estado === 'activo');
+  const totalAves = lotes.reduce((s,l) => s + calc.avesVivas(l), 0);
+
+  // Header
+  const hora = new Date().getHours();
+  const saludo = hora < 12 ? 'Buenos días' : hora < 19 ? 'Buenas tardes' : 'Buenas noches';
+  document.querySelector('.ph-title').innerHTML = `${saludo}, <em>${session?.nombre?.split(' ')[0] || 'Jorge'}</em>.`;
+  document.getElementById('ph-eyebrow-txt').textContent = `Hoy · ${fmtFecha(new Date(),{full:true})} · ${granja.nombre || 'Granja'}`;
+
+  // Insights & alertas
+  const lotesAlerta = lotes.filter(l => calc.pctMortalidad(l) > 3);
+  const vacunasPendientes = store.list('vacunas', { estado: 'pendiente' }).length;
+  const galponesAltaTemp = lotesAlerta.length;
+  const numAlertas = lotesAlerta.length + (vacunasPendientes ? 1 : 0);
+
+  const huevosHoy = lotes
+    .filter(l => l.tipo === 'ponedora')
+    .reduce((s,l) => s + calc.huevosHoy(l.id), 0);
+
+  document.getElementById('ph-lead').innerHTML =
+    `Hoy tu granja produjo <strong>${num(huevosHoy)} huevos</strong> y manejas <strong>${num(totalAves)} aves activas</strong>. ` +
+    (numAlertas ? `Hay <strong>${numAlertas} alertas</strong> que requieren tu atención.` : 'Sin alertas críticas hoy.');
+
+  // Notif dot
+  if (numAlertas > 0) document.getElementById('notif-dot').style.display = 'block';
+
+  // Hero stats
+  const utilidad = lotes.reduce((s,l) => s + calc.margenLote(l.id), 0);
+  const iepPromedio = lotes.length ? Math.round(lotes.reduce((s,l) => s + calc.iep(l), 0) / lotes.length) : 0;
+
+  const eyebrow = `📊 Resumen general · ${lotes.length} lote${lotes.length===1?'':'s'} activo${lotes.length===1?'':'s'}`;
+  document.getElementById('hl-eyebrow').textContent = eyebrow;
+  document.getElementById('hl-sub').innerHTML =
+    `Con <strong>${num(totalAves)} aves</strong> bajo manejo y un IEP promedio de <strong>${iepPromedio} puntos</strong>, ` +
+    (iepPromedio > 300 ? 'estás por encima del estándar de la industria.' : 'estás dentro del estándar.');
+
+  document.getElementById('hl-stats').innerHTML = `
+    <div class="hl-stat">
+      <span class="hl-stat-trend"><i class="ti ti-trending-up" style="font-size:11px;"></i> ${lotes.length} activos</span>
+      <div class="hl-stat-icon"><i class="ti ti-paw"></i></div>
+      <div class="hl-stat-num num-mono">${num(totalAves)} <span>aves</span></div>
+      <div class="hl-stat-lbl">Población activa</div>
+    </div>
+    <div class="hl-stat">
+      <span class="hl-stat-trend"><i class="ti ti-trending-up" style="font-size:11px;"></i> hoy</span>
+      <div class="hl-stat-icon"><i class="ti ti-egg"></i></div>
+      <div class="hl-stat-num num-mono">${num(huevosHoy)} <span>hoy</span></div>
+      <div class="hl-stat-lbl">Huevos producidos</div>
+    </div>
+    <div class="hl-stat">
+      <span class="hl-stat-trend"><i class="ti ti-${utilidad>=0?'trending-up':'trending-down'}" style="font-size:11px;"></i> mes</span>
+      <div class="hl-stat-icon"><i class="ti ti-cash"></i></div>
+      <div class="hl-stat-num num-mono">${utilidad>=0?'+':''}$${Math.abs(utilidad)>=1000?(utilidad/1000).toFixed(1)+'K':utilidad.toFixed(0)} <span>MXN</span></div>
+      <div class="hl-stat-lbl">Margen estimado</div>
+    </div>
+    <div class="hl-stat">
+      <span class="hl-stat-trend"><i class="ti ti-trophy" style="font-size:11px;"></i> prom</span>
+      <div class="hl-stat-icon"><i class="ti ti-trophy"></i></div>
+      <div class="hl-stat-num num-mono">${iepPromedio} <span>pts</span></div>
+      <div class="hl-stat-lbl">IEP promedio</div>
+    </div>`;
+
+  // Insight: si hay un lote con mortalidad alta, mostrar
+  const insightBox = document.getElementById('insight-box');
+  if (lotesAlerta.length > 0) {
+    const l = lotesAlerta[0];
+    const galpon = store.get('galpones', l.galponId)?.nombre || '';
+    const dias = calc.diasLote(l);
+    const mort = calc.pctMortalidad(l);
+    const climaUlt = store.list('clima', { galponId: l.galponId })
+      .sort((a,b) => new Date(b.fecha) - new Date(a.fecha))[0];
+    const temp = climaUlt?.tempMax || '—';
+    insightBox.innerHTML = `
+      <div class="insight">
+        <div class="insight-mark">"</div>
+        <div class="insight-content">
+          <div class="insight-eyebrow">Recomendación del día · IA AviGes</div>
+          <p class="insight-text">Tu <em>${galpon}</em> necesita atención hoy. La mortalidad subió a <strong>${mort.toFixed(1)}% en día ${dias}</strong> — por encima del límite de 3%. ${temp >= 28 ? `Combinado con la temperatura de <strong>${temp}°C</strong>, podría indicar estrés térmico o problema sanitario emergente.` : ''} Te recomiendo <strong>necropsia + revisión de ventilación</strong> antes de las 4 PM.</p>
+          <div class="insight-actions">
+            <a class="insight-btn" href="lotes.html"><i class="ti ti-arrow-right"></i> Ir al ${l.nombre}</a>
+            <button class="insight-btn insight-btn-ghost" onclick="dismissInsight()"><i class="ti ti-bell-off"></i> Marcar visto</button>
+          </div>
+        </div>
+      </div>`;
+  } else {
+    insightBox.innerHTML = '';
+  }
+
+  // KPIs
+  const broilers = lotes.filter(l => l.tipo === 'broiler');
+  const ponedoras = lotes.filter(l => l.tipo === 'ponedora');
+  const ieps = broilers.map(l => calc.iep(l));
+  const cas = broilers.map(l => calc.ca(l)).filter(c=>c>0);
+  const morts = lotes.map(l => calc.pctMortalidad(l));
+  const posturas = ponedoras.map(l => calc.pctPosturaHoy(l));
+
+  const iepProm = ieps.length ? Math.round(ieps.reduce((a,b)=>a+b,0)/ieps.length) : 0;
+  const caProm  = cas.length  ? (cas.reduce((a,b)=>a+b,0)/cas.length).toFixed(2) : '—';
+  const mortProm = morts.length ? (morts.reduce((a,b)=>a+b,0)/morts.length).toFixed(1) : '—';
+  const postProm = posturas.length ? (posturas.reduce((a,b)=>a+b,0)/posturas.length).toFixed(1) : '—';
+
+  document.getElementById('kpi-row').innerHTML = `
+    <div class="kpi-card delay-1" onclick="window.location='lotes.html'">
+      <div class="ki-head"><div class="ki-icon g"><i class="ti ti-trophy"></i></div><span class="ki-trend ${iepProm>300?'up':'md'}"><i class="ti ti-trending-up"></i> ${iepProm>300?'Bueno':'Normal'}</span></div>
+      <div class="ki-label">IEP Promedio</div>
+      <div class="ki-num num-mono">${iepProm}<span>pts</span></div>
+      <div class="ki-context">${broilers.length} lote${broilers.length===1?'':'s'} broiler · <strong>${iepProm>300?'Excelente':iepProm>250?'Bueno':'Mejorar'}</strong></div>
+      <div class="ki-spark"><canvas id="sk1"></canvas></div>
+    </div>
+    <div class="kpi-card delay-2" onclick="window.location='alimento.html'">
+      <div class="ki-head"><div class="ki-icon b"><i class="ti ti-grain"></i></div><span class="ki-trend ${parseFloat(caProm)<1.85?'up':'md'}"><i class="ti ti-trending-down"></i> ${parseFloat(caProm)<1.85?'mejor':'normal'}</span></div>
+      <div class="ki-label">Conv. Alimenticia</div>
+      <div class="ki-num num-mono">${caProm}<span>kg/kg</span></div>
+      <div class="ki-context">Estándar Ross 308: <strong>1.82</strong></div>
+      <div class="ki-spark"><canvas id="sk2"></canvas></div>
+    </div>
+    <div class="kpi-card delay-3" onclick="window.location='lotes.html'">
+      <div class="ki-head"><div class="ki-icon ${parseFloat(mortProm)>3?'r':'a'}"><i class="ti ti-alert-triangle"></i></div><span class="ki-trend ${parseFloat(mortProm)>3?'dn':'md'}"><i class="ti ti-trending-up"></i> ${parseFloat(mortProm)>3?'Alta':'Normal'}</span></div>
+      <div class="ki-label">Mortalidad acum.</div>
+      <div class="ki-num num-mono">${mortProm}<span>%</span></div>
+      <div class="ki-context">${lotesAlerta.length ? `<strong>${lotesAlerta.length} lote${lotesAlerta.length===1?'':'s'}</strong> requiere${lotesAlerta.length===1?'':'n'} revisión` : 'Dentro del rango'}</div>
+      <div class="ki-spark"><canvas id="sk3"></canvas></div>
+    </div>
+    <div class="kpi-card delay-4" onclick="window.location='huevo.html'">
+      <div class="ki-head"><div class="ki-icon g"><i class="ti ti-egg"></i></div><span class="ki-trend up"><i class="ti ti-trending-up"></i> hoy</span></div>
+      <div class="ki-label">% Postura hoy</div>
+      <div class="ki-num num-mono">${postProm}<span>%</span></div>
+      <div class="ki-context">${ponedoras.length} lote${ponedoras.length===1?'':'s'} ponedora${ponedoras.length===1?'':'s'}</div>
+      <div class="ki-spark"><canvas id="sk4"></canvas></div>
+    </div>`;
+
+  // Sparklines (simulated for now)
+  setTimeout(() => {
+    const sparkOpts = { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{enabled:false}}, scales:{x:{display:false},y:{display:false}}, elements:{point:{radius:0}}, animation:{duration:1200,easing:'easeOutQuart'} };
+    function spark(id, data, color) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      new Chart(el.getContext('2d'),{ type:'line', data:{labels:data.map((_,i)=>i),datasets:[{data,borderColor:color,backgroundColor:color+'18',borderWidth:2.5,fill:true,tension:.4}]}, options: sparkOpts });
+    }
+    spark('sk1',[280,290,295,302,308,310,iepProm],'#1F6B47');
+    spark('sk2',[1.92,1.88,1.85,1.82,1.80,1.79,parseFloat(caProm)||1.78],'#344473');
+    spark('sk3',[1.5,1.7,1.9,2.0,2.2,2.3,parseFloat(mortProm)||2.4],'#C8821F');
+    spark('sk4',[88.2,89.0,89.5,90.1,90.8,91.0,parseFloat(postProm)||91.3],'#1F6B47');
+  }, 100);
+
+  // Curva crecimiento del primer broiler activo
+  const broilerActivo = broilers[0];
+  if (broilerActivo) renderCurvaCrecimiento(broilerActivo);
+
+  // Tareas
+  renderTasks();
+
+  // Alertas
+  renderAlerts(lotesAlerta);
+
+  // Tabla lotes
+  renderLotesTable(lotes);
+  document.getElementById('lotes-sub').textContent = `${lotes.length} lotes en producción · Total: ${num(totalAves)} aves`;
+
+  // Bottom: Económico
+  renderEconomico(broilerActivo);
+
+  // Actividad
+  renderActividad();
+
+  // Clima
+  renderClima();
+}
+
+function renderCurvaCrecimiento(lote) {
+  const galpon = store.get('galpones', lote.galponId)?.nombre || '';
+  document.getElementById('curva-lote-name').textContent = `— ${lote.nombre}`;
+  document.getElementById('curva-lote-sub').textContent = `${galpon} · ${lote.linea} · Día ${calc.diasLote(lote)} de ${lote.duracion}`;
+
+  const dias = calc.diasLote(lote);
+  const peso = calc.ultimoPeso(lote.id);
+  const pesoStd = std.pesoEsperado(lote.linea, dias);
+  const dif = peso - pesoStd;
+  const fechaSalida = new Date(lote.fechaInicio);
+  fechaSalida.setDate(fechaSalida.getDate() + lote.duracion);
+  const diasRestantes = Math.ceil((fechaSalida - new Date()) / (1000*60*60*24));
+
+  document.getElementById('chart-stats').innerHTML = `
+    <div class="cs-block"><div class="cs-label">Peso actual</div><div class="cs-value g num-mono">${num(peso)}<span>g</span></div></div>
+    <div class="cs-block"><div class="cs-label">Estándar ${lote.linea}</div><div class="cs-value b num-mono">${num(pesoStd)}<span>g</span></div></div>
+    <div class="cs-block"><div class="cs-label">Diferencia</div><div class="cs-value ${dif>=0?'g':'a'} num-mono">${dif>=0?'+':''}${num(dif)}<span>g</span></div></div>
+    <div class="cs-block" style="margin-left:auto;"><div class="cs-label">Salida</div><div class="cs-value a" style="font-size:18px;">${fmtFecha(fechaSalida,{short:true})}<span> · ${diasRestantes>0?diasRestantes+'d':'hoy'}</span></div></div>`;
+
+  // Datos para la gráfica
+  const regs = store.list('registros', { loteId: lote.id })
+    .filter(r => r.peso > 0)
+    .sort((a,b) => new Date(a.fecha) - new Date(b.fecha));
+
+  const labels = [], pesoReal = [], pesoStdArr = [];
+  const inicio = new Date(lote.fechaInicio);
+  for (let d = 1; d <= lote.duracion; d += 7) {
+    const fecha = new Date(inicio); fecha.setDate(fecha.getDate() + d);
+    labels.push(`Día ${d}`);
+    if (d <= dias) {
+      const reg = regs.find(r => Math.abs(Math.floor((new Date(r.fecha) - inicio)/(1000*60*60*24)) - d) < 4);
+      pesoReal.push(reg?.peso || null);
+    } else {
+      pesoReal.push(null);
+    }
+    pesoStdArr.push(std.pesoEsperado(lote.linea, d));
+  }
+  // Asegurar que el último real esté
+  if (peso > 0 && pesoReal.indexOf(peso) === -1) {
+    const idx = Math.floor(dias / 7);
+    if (idx < pesoReal.length) pesoReal[idx] = peso;
+  }
+
+  const ctx = document.getElementById('chartPeso').getContext('2d');
+  if (window._chartPeso) window._chartPeso.destroy();
+  window._chartPeso = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label:'Peso real', data:pesoReal, borderColor:'#1F6B47', backgroundColor:'rgba(31,107,71,.10)', borderWidth:3, pointBackgroundColor:'#1F6B47', pointBorderColor:'#fff', pointBorderWidth:2.5, pointRadius:5, pointHoverRadius:8, tension:.4, fill:true, spanGaps: true },
+        { label:`Estándar ${lote.linea}`, data:pesoStdArr, borderColor:'#344473', backgroundColor:'transparent', borderWidth:2, borderDash:[6,4], pointRadius:3, pointBackgroundColor:'#344473', tension:.4 }
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false, interaction: { mode: 'index', intersect: false },
+      plugins:{
+        legend:{ position:'top', align:'end', labels:{ color:'#7A6F62', font:{family:'Inter Tight',size:12,weight:'500'}, boxWidth:14, boxHeight:8, padding:14, usePointStyle:true, pointStyle:'circle' }},
+        tooltip:{ backgroundColor:'#1A1612', padding:14, cornerRadius:10, titleFont:{family:'Inter Tight',weight:'700',size:13}, bodyFont:{family:'Inter Tight',size:12,weight:'500'}, displayColors:true, boxPadding:6, callbacks:{ label:(ctx)=>` ${ctx.dataset.label}: ${ctx.parsed.y}g` }}
+      },
+      scales:{
+        x:{ ticks:{ color:'#7A6F62', font:{family:'Inter Tight',size:11,weight:'600'}}, grid:{ color:'#E8DFD0'}, border:{display:false} },
+        y:{ ticks:{ color:'#7A6F62', font:{family:'Inter Tight',size:11,weight:'500'}, callback: v=>v?v+'g':''}, grid:{ color:'#E8DFD0'}, border:{display:false} }
+      }
+    }
   });
 }
-spark('sk1',[280,290,295,302,308,310,312],'#1F6B47');
-spark('sk2',[1.92,1.88,1.85,1.82,1.80,1.79,1.78],'#344473');
-spark('sk3',[1.5,1.7,1.9,2.0,2.2,2.3,2.4],'#C8821F');
-spark('sk4',[88.2,89.0,89.5,90.1,90.8,91.0,91.3],'#1F6B47');
 
-new Chart(document.getElementById('chartPeso').getContext('2d'), {
-  type: 'line',
-  data: {
-    labels: ['Día 1','Día 7','Día 14','Día 21','Día 28','Día 35','Día 42'],
-    datasets: [
-      { label:'Peso real', data:[42,188,410,790,1480,2310,null], borderColor:'#1F6B47', backgroundColor:'rgba(31,107,71,.10)', borderWidth:3, pointBackgroundColor:'#1F6B47', pointBorderColor:'#fff', pointBorderWidth:2.5, pointRadius:5, pointHoverRadius:8, tension:.4, fill:true },
-      { label:'Proyección', data:[null,null,null,null,null,2310,2890], borderColor:'#1F6B47', backgroundColor:'transparent', borderWidth:2.5, borderDash:[5,4], pointBackgroundColor:'#1F6B47', pointBorderColor:'#fff', pointBorderWidth:2, pointRadius:[0,0,0,0,0,0,5], tension:.4 },
-      { label:'Estándar Ross 308', data:[42,180,400,770,1450,2180,2680], borderColor:'#344473', backgroundColor:'transparent', borderWidth:2, borderDash:[6,4], pointRadius:3, pointBackgroundColor:'#344473', tension:.4 }
-    ]
-  },
-  options: {
-    responsive:true, maintainAspectRatio:false,
-    interaction: { mode: 'index', intersect: false },
-    plugins:{
-      legend:{ position:'top', align:'end', labels:{ color:'#7A6F62', font:{family:'Inter Tight',size:12,weight:'500'}, boxWidth:14, boxHeight:8, padding:14, usePointStyle:true, pointStyle:'circle' }},
-      tooltip:{ backgroundColor:'#1A1612', padding:14, cornerRadius:10, titleFont:{family:'Inter Tight',weight:'700',size:13}, bodyFont:{family:'Inter Tight',size:12,weight:'500'}, displayColors:true, boxPadding:6, callbacks:{ label:(ctx)=>` ${ctx.dataset.label}: ${ctx.parsed.y}g` }}
-    },
-    scales:{
-      x:{ ticks:{ color:'#7A6F62', font:{family:'Inter Tight',size:11,weight:'600'}}, grid:{ color:'#E8DFD0'}, border:{display:false} },
-      y:{ ticks:{ color:'#7A6F62', font:{family:'Inter Tight',size:11,weight:'500'}, callback: v=>v?v+'g':''}, grid:{ color:'#E8DFD0'}, border:{display:false} }
-    }
-  }
-});
+function renderTasks() {
+  const hoy = new Date().toISOString().slice(0,10);
+  const tareas = store.list('tareas', t => t.fecha?.slice(0,10) === hoy);
+  const pendientes = tareas.filter(t => !t.completada).length;
+  const hechas = tareas.length - pendientes;
+  document.getElementById('tasks-sub').textContent = `${pendientes} pendiente${pendientes===1?'':'s'} · ${hechas} completada${hechas===1?'':'s'}`;
+  const list = document.getElementById('task-list');
+  if (!tareas.length) { list.innerHTML = '<div class="empty"><div class="empty-icon"><i class="ti ti-checklist"></i></div><div class="empty-sub">No hay tareas para hoy</div></div>'; return; }
 
-function toggleTask(el) {
-  el.classList.toggle('done');
-  const item = el.closest('.task-item');
-  const title = item.querySelector('.task-title');
-  if (el.classList.contains('done')) {
-    title.style.textDecoration = 'line-through';
-    title.style.color = 'var(--text-3)';
-    toast('Tarea completada', 'success');
-  } else {
-    title.style.textDecoration = 'none';
-    title.style.color = 'var(--text)';
-  }
+  list.innerHTML = tareas.map(t => `
+    <div class="task-item">
+      <div class="task-checkbox ${t.completada?'done':''}" onclick="toggleTask('${t.id}')"><i class="ti ti-check"></i></div>
+      <div class="task-content">
+        <div class="task-title" style="${t.completada?'text-decoration:line-through;color:var(--text-3);':''}">${escapeHTML(t.titulo)}</div>
+        <div class="task-meta"><i class="ti ti-${t.icono||'circle'}"></i> ${escapeHTML(t.loteNombre||'')}${t.hora?' · '+escapeHTML(t.hora):''}</div>
+      </div>
+      <span class="task-priority ${t.prioridad}">${t.prioridad==='high'?'Urgente':t.prioridad==='med'?'Media':'Baja'}</span>
+    </div>`).join('');
 }
+
+function toggleTask(id) {
+  const t = store.get('tareas', id);
+  if (!t) return;
+  store.update('tareas', id, { completada: !t.completada });
+  if (!t.completada) toast('Tarea completada · ¡Buen trabajo!', 'success');
+  renderTasks();
+}
+
+function addTask() {
+  const titulo = prompt('¿Qué tarea quieres añadir?');
+  if (!titulo) return;
+  store.create('tareas', {
+    fecha: new Date().toISOString(),
+    titulo, loteNombre: '', icono: 'circle',
+    prioridad: 'med', completada: false, hora: ''
+  });
+  renderTasks();
+  toast('Tarea agregada', 'success');
+}
+
+function renderAlerts(lotesAlerta) {
+  const alertsEl = document.getElementById('alerts-list');
+  const alerts = [];
+  lotesAlerta.forEach(l => {
+    const galpon = store.get('galpones', l.galponId)?.nombre || '';
+    alerts.push({ tipo:'d', icon:'alert-circle', html:`<strong>Mortalidad alta</strong> en ${galpon} (${calc.pctMortalidad(l).toFixed(1)}% día ${calc.diasLote(l)})`, time:`${l.nombre}` });
+  });
+  // Stock alimento bajo
+  store.list('galpones').forEach(g => {
+    const d = calc.diasStockGalpon(g.id);
+    if (d !== null && d <= 3) {
+      alerts.push({ tipo:'w', icon:'grain', html:`<strong>Alimento bajo</strong> en ${g.nombre}. Stock para ${d} día${d===1?'':'s'}.`, time:'Calculado automático' });
+    }
+  });
+  // Vacunas pendientes
+  const vacPend = store.list('vacunas', { estado: 'pendiente' });
+  vacPend.forEach(v => {
+    const lote = store.get('lotes', v.loteId);
+    alerts.push({ tipo:'w', icon:'vaccine', html:`<strong>${escapeHTML(v.vacuna)}</strong> pendiente · ${lote?.nombre||''}`, time:`Programada` });
+  });
+
+  document.getElementById('alerts-sub').textContent = `${alerts.length} alerta${alerts.length===1?'':'s'} activa${alerts.length===1?'':'s'}`;
+  if (!alerts.length) { alertsEl.innerHTML = '<div class="empty"><div class="empty-icon"><i class="ti ti-bell-off"></i></div><div class="empty-sub">Sin alertas activas</div></div>'; return; }
+  alertsEl.innerHTML = alerts.map(a => `
+    <div class="alert-item ${a.tipo}">
+      <div class="alert-icon"><i class="ti ti-${a.icon}"></i></div>
+      <div><div class="alert-msg">${a.html}</div><div class="alert-time">${escapeHTML(a.time)}</div></div>
+    </div>`).join('');
+}
+
+function renderLotesTable(lotes) {
+  const tbody = document.querySelector('#lotes-tbl tbody');
+  if (!lotes.length) { tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--text-3);padding:40px;">No hay lotes activos. <a href="lotes.html" style="color:var(--primary);font-weight:600;">Crear el primero</a></td></tr>'; return; }
+  tbody.innerHTML = lotes.map(l => {
+    const galpon = store.get('galpones', l.galponId)?.nombre || '—';
+    const dias = calc.diasLote(l);
+    const avance = (dias / l.duracion) * 100;
+    const ca = calc.ca(l) || '—';
+    const iep = calc.iep(l) || '—';
+    const mort = calc.pctMortalidad(l);
+    const aves = calc.avesVivas(l);
+    const isMortAlta = mort > 3;
+    const tipoLabel = l.tipo === 'broiler' ? 'Broiler' : 'Ponedora';
+    const tipoIcon = l.tipo === 'broiler' ? 'burger' : 'egg';
+    const tipoPill = l.tipo === 'broiler' ? 'pill-br' : 'pill-po';
+    const badgeColor = l.tipo === 'broiler' ? (isMortAlta?'badge-warn':'badge-green') : 'badge-blue';
+    const iepClass = iep === '—' ? 'rg' : (iep > 320 ? 'ex' : iep > 280 ? 'bk' : iep > 240 ? 'rg' : 'bd');
+    const estado = isMortAlta ? '<span class="pill pill-warn"><span class="sdot w"></span> Revisar</span>' : '<span class="pill pill-ok"><span class="sdot g"></span> Activo</span>';
+    return `<tr onclick="window.location='lotes.html?id=${l.id}'">
+      <td><span class="badge ${badgeColor}"><i class="ti ti-paw"></i> ${escapeHTML(l.nombre.replace('Lote ',''))}</span></td>
+      <td style="color:var(--text-2);font-weight:500">${escapeHTML(galpon)}</td>
+      <td><span class="pill ${tipoPill}"><i class="ti ti-${tipoIcon}"></i> ${tipoLabel}</span></td>
+      <td class="num-mono" style="font-weight:700">${num(aves)}</td>
+      <td style="color:var(--text-3);font-weight:600">${dias}/${l.duracion}</td>
+      <td><div class="bar"><div class="bar-fill ${isMortAlta?'w':''}" style="width:${avance}%"></div></div></td>
+      <td class="num-mono" style="font-weight:700">${ca}</td>
+      <td><span class="iep ${iepClass}">${iep}</span></td>
+      <td style="color:${isMortAlta?'var(--danger)':'var(--primary)'};font-weight:700" class="num-mono">${mort.toFixed(1)}%${isMortAlta?' <i class="ti ti-alert-triangle" style="font-size:13px"></i>':''}</td>
+      <td>${estado}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderEconomico(lote) {
+  const ecoBody = document.getElementById('eco-body');
+  const ecoSub = document.getElementById('eco-sub');
+  if (!lote) { ecoBody.innerHTML = '<div class="empty">No hay lotes activos</div>'; return; }
+  ecoSub.textContent = `${new Date().toLocaleDateString('es-MX',{month:'long',year:'numeric'})} · ${lote.nombre}`;
+  const costo = calc.costoTotal(lote.id);
+  const ingreso = calc.ingresoTotal(lote.id);
+  const margen = ingreso - costo;
+  const costoKg = calc.costoPorKg(lote);
+  const aves = calc.avesVivas(lote);
+  const peso = calc.ultimoPeso(lote.id) / 1000;
+  const kgProducidos = aves * peso;
+  const precioKg = 36; // referencia mercado
+  const gastosLote = store.list('gastos', { loteId: lote.id });
+  const gastoAlim = gastosLote.filter(g => g.categoria === 'Alimento').reduce((s,g)=>s+g.monto,0);
+  const otros = costo - gastoAlim;
+
+  ecoBody.innerHTML = `
+    <div class="mrow"><span class="mrow-l">Costo/kg producido</span><span class="mrow-r num-mono">${costoKg ? mxnDec(costoKg) : '—'}</span></div>
+    <div class="mrow"><span class="mrow-l">Precio venta/kg ref.</span><span class="mrow-r g num-mono">${mxnDec(precioKg)}</span></div>
+    <div class="mrow"><span class="mrow-l">Margen/kg</span><span class="mrow-r ${precioKg-costoKg>=0?'g':'r'} num-mono">${costoKg?mxnDec(precioKg-costoKg):'—'}</span></div>
+    <div class="mrow"><span class="mrow-l">Gasto alimento</span><span class="mrow-r r num-mono">${gastoAlim?'−'+mxn(gastoAlim):'$0'}</span></div>
+    <div class="mrow"><span class="mrow-l">Otros costos</span><span class="mrow-r r num-mono">${otros?'−'+mxn(otros):'$0'}</span></div>
+    <div style="margin-top:14px;padding:14px 16px;background:linear-gradient(135deg,var(--primary-l) 0%, var(--primary-ll) 100%);border:1px solid var(--primary-m);border-radius:11px;display:flex;justify-content:space-between;align-items:center;">
+      <span style="font-weight:700;font-size:13px;color:var(--primary);">Ingreso este lote</span>
+      <span style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--primary);letter-spacing:-.5px;">${mxn(ingreso)}</span>
+    </div>`;
+}
+
+function renderActividad() {
+  const acts = store.list('actividad').sort((a,b) => new Date(b.fecha) - new Date(a.fecha)).slice(0,5);
+  const feed = document.getElementById('activity-feed');
+  if (!acts.length) { feed.innerHTML = '<div class="empty"><div class="empty-sub">Sin actividad reciente</div></div>'; return; }
+  feed.innerHTML = acts.map(a => `
+    <div class="activity-item">
+      <div class="activity-dot ${a.tipo||'b'}"><i class="ti ti-${a.icono||'circle'}"></i></div>
+      <div><div class="activity-text">${a.texto}</div><div class="activity-time">${timeAgo(a.fecha)}</div></div>
+    </div>`).join('');
+}
+
+function renderClima() {
+  const galpones = store.list('galpones');
+  const climaBody = document.getElementById('clima-body');
+  const items = galpones.map(g => {
+    const lect = store.list('clima', { galponId: g.id }).sort((a,b)=>new Date(b.fecha)-new Date(a.fecha))[0];
+    if (!lect) return null;
+    const tempColor = lect.tempMax >= 28 ? 'var(--warn)' : 'var(--primary)';
+    const fillClass = lect.tempMax >= 28 ? 'w' : '';
+    const pct = Math.min(100, (lect.tempMax / 35) * 100);
+    const icon = g.tipo === 'broiler' ? 'paw' : 'egg';
+    const iconColor = g.tipo === 'broiler' ? 'var(--amber-d)' : 'var(--info)';
+    return `
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:12.5px;margin-bottom:6px;">
+          <span style="color:var(--text-2);font-weight:600;display:flex;align-items:center;gap:6px;"><i class="ti ti-${icon}" style="color:${iconColor};font-size:14px;"></i> ${g.nombre}</span>
+          <span class="num-mono" style="font-weight:700;color:${tempColor}">${lect.tempMax}°C / ${lect.humedad}%${lect.tempMax>=28?' <i class="ti ti-alert-triangle" style="font-size:12px;"></i>':''}</span>
+        </div>
+        <div class="bar"><div class="bar-fill ${fillClass}" style="width:${pct}%"></div></div>
+      </div>`;
+  }).filter(Boolean).join('');
+  climaBody.innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:14px;">${items}</div>
+    <div style="margin-top:18px;padding:12px 14px;background:var(--surface-2);border-radius:10px;border:1px solid var(--border);font-size:12px;color:var(--text-3);line-height:1.5;display:flex;align-items:flex-start;gap:8px;">
+      <i class="ti ti-info-circle" style="color:var(--info);font-size:15px;flex-shrink:0;"></i>
+      <span>Rango óptimo broilers (día 30+): <strong style="color:var(--text-2);">18-24°C / 60-75%HR</strong></span>
+    </div>`;
+}
+
+function dismissInsight() {
+  document.getElementById('insight-box').innerHTML = '';
+  toast('Recomendación marcada como vista', 'info');
+}
+
+function exportarDB() {
+  const json = store.exportJSON();
+  const blob = new Blob([json], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `aviges-backup-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('Backup descargado', 'success');
+}
+
+// Render al cargar
+renderDashboard();
 </script>
 </body>
 </html>

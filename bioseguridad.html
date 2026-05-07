@@ -4,28 +4,6 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AviGes — Bioseguridad</title>
 <link rel="stylesheet" href="shared.css">
-<style>
-.protocol-card {
-  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg);
-  padding: 18px 20px; cursor: pointer; transition: all .2s;
-  display: flex; align-items: flex-start; gap: 14px;
-  animation: fadeUp .45s cubic-bezier(.2,.8,.4,1) forwards; opacity: 0;
-}
-.protocol-card:hover { border-color: var(--primary-m); box-shadow: var(--shadow-sm); transform: translateY(-2px); }
-.proto-icon {
-  width: 44px; height: 44px; border-radius: 11px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center; font-size: 22px;
-}
-.proto-icon.g { background: var(--primary-l); color: var(--primary); }
-.proto-icon.b { background: var(--info-l); color: var(--info); }
-.proto-icon.a { background: var(--amber-l); color: var(--amber-d); }
-.proto-icon.r { background: var(--terracotta-l); color: var(--terracotta); }
-.proto-name { font-family: var(--font-display); font-size: 14.5px; font-weight: 700; letter-spacing: -.2px; }
-.proto-desc { font-size: 12.5px; color: var(--text-3); margin-top: 4px; line-height: 1.45; font-weight: 500; }
-.proto-stats { font-size: 11.5px; color: var(--text-2); margin-top: 8px; display: flex; gap: 14px; font-weight: 500; }
-.proto-stats span { display: inline-flex; align-items: center; gap: 4px; }
-.proto-stats i { font-size: 13px; }
-</style>
 </head>
 <body>
 <div id="sidebar-mount"></div>
@@ -33,192 +11,168 @@
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:12px;">
       <button class="hamburger" onclick="toggleSB()"><i class="ti ti-menu-2"></i></button>
-      <div><div class="page-ttl">Bioseguridad</div><div class="page-sub">Protocolos · accesos · bitácora</div></div>
+      <div><div class="page-ttl">Bioseguridad</div><div class="page-sub">Bitácora · visitas · protocolos</div></div>
     </div>
     <div class="topbar-right">
       <div class="icon-btn"><i class="ti ti-bell"></i></div>
-      <button class="btn btn-secondary btn-sm"><i class="ti ti-file-text"></i> Manual</button>
-      <button class="btn btn-primary" onclick="openModal('modal-evento')"><i class="ti ti-plus"></i> Registrar evento</button>
+      <button class="btn btn-secondary btn-sm" onclick="abrirVisita()"><i class="ti ti-user-plus"></i> Visita</button>
+      <button class="btn btn-primary" onclick="abrirEvento()"><i class="ti ti-plus"></i> Evento</button>
     </div>
   </div>
   <div class="content">
+    <div class="g4" id="kpi-row"></div>
 
-    <div class="g4">
-      <div class="kpi-modern delay-1"><div class="ki-top"><div class="ki-icon-bg g"><i class="ti ti-shield-check"></i></div><span class="ki-trend up"><i class="ti ti-circle-check"></i> Limpio</span></div><div class="ki-label">Sin incidencias</div><div class="ki-num num-mono">12<span>días</span></div><div class="ki-context">Última: 25 abril</div></div>
-      <div class="kpi-modern delay-2"><div class="ki-top"><div class="ki-icon-bg b"><i class="ti ti-user-check"></i></div><span class="ki-trend up"><i class="ti ti-check"></i> Registrados</span></div><div class="ki-label">Visitas mes</div><div class="ki-num num-mono">8<span>visitas</span></div><div class="ki-context">Todas con bitácora</div></div>
-      <div class="kpi-modern delay-3"><div class="ki-top"><div class="ki-icon-bg a"><i class="ti ti-spray"></i></div><span class="ki-trend up"><i class="ti ti-check"></i> Al día</span></div><div class="ki-label">Fumigaciones</div><div class="ki-num num-mono">6<span>aplicadas</span></div><div class="ki-context">Próxima: 10 mayo</div></div>
-      <div class="kpi-modern delay-4"><div class="ki-top"><div class="ki-icon-bg p"><i class="ti ti-bug-off"></i></div><span class="ki-trend up"><i class="ti ti-check"></i> Bajo</span></div><div class="ki-label">Control plagas</div><div class="ki-num num-mono">4<span>revisiones</span></div><div class="ki-context">Roedores: cero</div></div>
-    </div>
-
-    <h3 style="font-family:var(--font-display);font-size:16px;font-weight:700;letter-spacing:-.3px;margin:24px 0 14px;">Protocolos activos</h3>
-
-    <div class="g3">
-
-      <div class="protocol-card delay-1" onclick="openModal('modal-acceso')">
-        <div class="proto-icon g"><i class="ti ti-door"></i></div>
-        <div style="flex:1;">
-          <div class="proto-name">Control de acceso</div>
-          <div class="proto-desc">Pediluvio + arco sanitario en entrada. Cambio de ropa obligatorio.</div>
-          <div class="proto-stats">
-            <span><i class="ti ti-circle-check" style="color:var(--primary)"></i> Activo</span>
-            <span><i class="ti ti-clock"></i> 24/7</span>
-          </div>
-        </div>
+    <div class="g2">
+      <div class="card delay-5">
+        <div class="card-head"><div><div class="card-ttl">Bitácora</div><div class="card-sub" id="bio-sub">—</div></div></div>
+        <div style="overflow-x:auto;"><table class="tbl" id="tbl-bio"><thead><tr><th>Fecha</th><th>Tipo</th><th>Galpones</th><th>Responsable</th><th>Producto</th><th></th></tr></thead><tbody></tbody></table></div>
       </div>
-
-      <div class="protocol-card delay-2">
-        <div class="proto-icon a"><i class="ti ti-spray"></i></div>
-        <div style="flex:1;">
-          <div class="proto-name">Fumigación galpones</div>
-          <div class="proto-desc">Glutaral 20% en pasillos y techos. Cada 14 días o entre lotes.</div>
-          <div class="proto-stats">
-            <span><i class="ti ti-calendar" style="color:var(--amber-d)"></i> Próxima: 10 may</span>
-            <span><i class="ti ti-history"></i> Última: 26 abr</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="protocol-card delay-3">
-        <div class="proto-icon b"><i class="ti ti-bug-off"></i></div>
-        <div style="flex:1;">
-          <div class="proto-name">Control de roedores</div>
-          <div class="proto-desc">Estaciones cebaderas con Neosorexa en perímetro. Inspección semanal.</div>
-          <div class="proto-stats">
-            <span><i class="ti ti-circle-check" style="color:var(--primary)"></i> Activo</span>
-            <span><i class="ti ti-clock"></i> Semanal</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="protocol-card delay-4">
-        <div class="proto-icon r"><i class="ti ti-virus"></i></div>
-        <div style="flex:1;">
-          <div class="proto-name">Limpieza entre lotes</div>
-          <div class="proto-desc">Lavado a presión + desinfección + vacío sanitario 14 días.</div>
-          <div class="proto-stats">
-            <span><i class="ti ti-circle-check" style="color:var(--primary)"></i> Protocolo</span>
-            <span><i class="ti ti-history"></i> Última: 31 mar</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="protocol-card delay-5">
-        <div class="proto-icon g"><i class="ti ti-droplet"></i></div>
-        <div style="flex:1;">
-          <div class="proto-name">Calidad del agua</div>
-          <div class="proto-desc">Cloración 2-3 ppm. Análisis bacteriológico mensual.</div>
-          <div class="proto-stats">
-            <span><i class="ti ti-circle-check" style="color:var(--primary)"></i> OK</span>
-            <span><i class="ti ti-test-pipe"></i> Próximo: 15 may</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="protocol-card delay-6">
-        <div class="proto-icon a"><i class="ti ti-trash"></i></div>
-        <div style="flex:1;">
-          <div class="proto-name">Manejo de mortalidad</div>
-          <div class="proto-desc">Composta sanitaria diaria. Fosa de mortalidad cubierta.</div>
-          <div class="proto-stats">
-            <span><i class="ti ti-circle-check" style="color:var(--primary)"></i> Diario</span>
-            <span><i class="ti ti-clock"></i> 7:00 AM</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="g2" style="margin-top:24px;">
-      <div class="card">
-        <div class="card-head"><div><div class="card-ttl">Bitácora reciente</div><div class="card-sub">Últimos 7 días</div></div><a class="card-link" onclick="openModal('modal-evento')"><i class="ti ti-plus"></i> Evento</a></div>
-        <div style="overflow-x:auto;">
-          <table class="tbl">
-            <thead><tr><th>Fecha</th><th>Evento</th><th>Galpón</th><th>Responsable</th></tr></thead>
-            <tbody>
-              <tr><td class="num-mono" style="color:var(--text-3)">07 may</td><td><span class="pill pill-ok"><i class="ti ti-spray"></i> Fumigación</span></td><td style="font-weight:500">G1, G2</td><td>Carlos Pérez</td></tr>
-              <tr><td class="num-mono" style="color:var(--text-3)">06 may</td><td><span class="pill pill-br"><i class="ti ti-user-check"></i> Visita externa</span></td><td style="font-weight:500">G2</td><td>Dr. Roberto M.</td></tr>
-              <tr><td class="num-mono" style="color:var(--text-3)">05 may</td><td><span class="pill pill-po"><i class="ti ti-spray"></i> Desinfección</span></td><td style="font-weight:500">Todos</td><td>Ana García</td></tr>
-              <tr><td class="num-mono" style="color:var(--text-3)">03 may</td><td><span class="pill pill-ok"><i class="ti ti-bug-off"></i> Control plagas</span></td><td style="font-weight:500">G3, G4</td><td>Carlos Pérez</td></tr>
-              <tr><td class="num-mono" style="color:var(--text-3)">01 may</td><td><span class="pill pill-br"><i class="ti ti-truck-delivery"></i> Carga aves</span></td><td style="font-weight:500">G2</td><td>Equipo</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-head"><div><div class="card-ttl">Visitas registradas</div><div class="card-sub">Mayo 2026</div></div></div>
-        <div class="card-body">
-          <div style="display:flex;flex-direction:column;gap:14px;">
-            <div style="padding:14px;border:1px solid var(--border);border-radius:11px;background:var(--surface-2);">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
-                <div><div style="font-weight:700;font-size:13.5px;">Dr. Roberto Martínez</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;">Veterinario asesor · MVZ-12345</div></div>
-                <span class="pill pill-ok"><i class="ti ti-check"></i> Autorizado</span>
-              </div>
-              <div style="font-size:11.5px;color:var(--text-3);font-weight:500;display:flex;gap:14px;margin-top:8px;">
-                <span><i class="ti ti-calendar" style="font-size:12px;"></i> 06 may · 9:30 AM</span>
-                <span><i class="ti ti-clock" style="font-size:12px;"></i> 90 min</span>
-                <span><i class="ti ti-paw" style="font-size:12px;"></i> Galpón 2</span>
-              </div>
-            </div>
-            <div style="padding:14px;border:1px solid var(--border);border-radius:11px;background:var(--surface-2);">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
-                <div><div style="font-weight:700;font-size:13.5px;">Inspector SENASICA</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;">Inspección rutinaria · Folio 4583</div></div>
-                <span class="pill pill-ok"><i class="ti ti-check"></i> Aprobado</span>
-              </div>
-              <div style="font-size:11.5px;color:var(--text-3);font-weight:500;display:flex;gap:14px;margin-top:8px;">
-                <span><i class="ti ti-calendar" style="font-size:12px;"></i> 02 may · 11:00 AM</span>
-                <span><i class="ti ti-clock" style="font-size:12px;"></i> 2 h</span>
-                <span><i class="ti ti-paw" style="font-size:12px;"></i> Toda la granja</span>
-              </div>
-            </div>
-            <div style="padding:14px;border:1px solid var(--border);border-radius:11px;background:var(--surface-2);">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
-                <div><div style="font-weight:700;font-size:13.5px;">Proveedor Nutrimentos</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;">Entrega de alimento</div></div>
-                <span class="pill pill-ok"><i class="ti ti-check"></i> Sin contacto</span>
-              </div>
-              <div style="font-size:11.5px;color:var(--text-3);font-weight:500;display:flex;gap:14px;margin-top:8px;">
-                <span><i class="ti ti-calendar" style="font-size:12px;"></i> 06 may · 4:30 PM</span>
-                <span><i class="ti ti-clock" style="font-size:12px;"></i> 45 min</span>
-                <span><i class="ti ti-truck" style="font-size:12px;"></i> Solo bodega</span>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="card delay-6">
+        <div class="card-head"><div><div class="card-ttl">Visitas registradas</div><div class="card-sub" id="vis-sub">—</div></div></div>
+        <div class="card-body" id="vis-body"></div>
       </div>
     </div>
 
+    <div class="card mb16 delay-6">
+      <div class="card-head"><div><div class="card-ttl">Protocolos activos</div><div class="card-sub">Manual de bioseguridad</div></div></div>
+      <div class="card-body">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;">
+          <div style="padding:14px;border:1px solid var(--border);border-radius:11px;display:flex;align-items:flex-start;gap:12px;"><div style="width:36px;height:36px;border-radius:9px;background:var(--primary-l);color:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-door"></i></div><div><div style="font-weight:700;font-size:13.5px;font-family:var(--font-display);">Control acceso</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;margin-top:3px;">Pediluvio + arco sanitario · 24/7</div></div></div>
+          <div style="padding:14px;border:1px solid var(--border);border-radius:11px;display:flex;align-items:flex-start;gap:12px;"><div style="width:36px;height:36px;border-radius:9px;background:var(--amber-l);color:var(--amber-d);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-spray"></i></div><div><div style="font-weight:700;font-size:13.5px;font-family:var(--font-display);">Fumigación</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;margin-top:3px;">Glutaral 20% · cada 14 días</div></div></div>
+          <div style="padding:14px;border:1px solid var(--border);border-radius:11px;display:flex;align-items:flex-start;gap:12px;"><div style="width:36px;height:36px;border-radius:9px;background:var(--info-l);color:var(--info);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-bug-off"></i></div><div><div style="font-weight:700;font-size:13.5px;font-family:var(--font-display);">Control roedores</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;margin-top:3px;">Neosorexa · inspección semanal</div></div></div>
+          <div style="padding:14px;border:1px solid var(--border);border-radius:11px;display:flex;align-items:flex-start;gap:12px;"><div style="width:36px;height:36px;border-radius:9px;background:var(--terracotta-l);color:var(--terracotta);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-virus"></i></div><div><div style="font-weight:700;font-size:13.5px;font-family:var(--font-display);">Limpieza entre lotes</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;margin-top:3px;">Lavado + vacío sanitario 14 días</div></div></div>
+          <div style="padding:14px;border:1px solid var(--border);border-radius:11px;display:flex;align-items:flex-start;gap:12px;"><div style="width:36px;height:36px;border-radius:9px;background:var(--primary-l);color:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-droplet"></i></div><div><div style="font-weight:700;font-size:13.5px;font-family:var(--font-display);">Calidad agua</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;margin-top:3px;">Cloración 2-3 ppm · análisis mensual</div></div></div>
+          <div style="padding:14px;border:1px solid var(--border);border-radius:11px;display:flex;align-items:flex-start;gap:12px;"><div style="width:36px;height:36px;border-radius:9px;background:var(--amber-l);color:var(--amber-d);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-trash"></i></div><div><div style="font-weight:700;font-size:13.5px;font-family:var(--font-display);">Manejo mortalidad</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;margin-top:3px;">Composta diaria · 7:00 AM</div></div></div>
+        </div>
+      </div>
+    </div>
   </div>
 </main>
 
 <div class="modal-overlay" id="modal-evento">
-  <div class="modal">
-    <div class="modal-head"><div><div class="modal-ttl">Registrar evento de bioseguridad</div></div><button class="modal-close" onclick="closeModal('modal-evento')"><i class="ti ti-x"></i></button></div>
+  <div class="modal" style="max-width:560px;">
+    <div class="modal-head"><div><div class="modal-ttl">Registrar evento</div></div><button class="modal-close" onclick="closeModal('modal-evento')"><i class="ti ti-x"></i></button></div>
     <div class="modal-body">
-      <div class="form-row"><div class="form-group"><label class="form-label">Fecha</label><input type="date" class="form-input"></div><div class="form-group"><label class="form-label">Galpón(es)</label><select class="form-input"><option>Galpón 1</option><option>Galpón 2</option><option>Todos</option></select></div></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Tipo de evento</label><select class="form-input"><option>Fumigación</option><option>Desinfección</option><option>Visita externa</option><option>Control de plagas</option><option>Limpieza</option><option>Carga/descarga</option></select></div><div class="form-group"><label class="form-label">Responsable</label><input type="text" class="form-input" placeholder="Nombre"></div></div>
-      <div class="form-group"><label class="form-label">Producto usado</label><input type="text" class="form-input" placeholder="Glutaral 20%, Virkon S..."></div>
-      <div class="form-group"><label class="form-label">Observaciones</label><textarea class="form-input" rows="2" placeholder="Detalles..."></textarea></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Fecha</label><input type="date" class="form-input" id="b-fecha"></div><div class="form-group"><label class="form-label">Tipo</label><select class="form-input" id="b-tipo"><option>Fumigación</option><option>Desinfección</option><option>Visita externa</option><option>Control de plagas</option><option>Limpieza</option><option>Carga/descarga</option><option>Otro</option></select></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Galpones</label><input type="text" class="form-input" id="b-galp" placeholder="G1, G2 o Todos"></div><div class="form-group"><label class="form-label">Responsable</label><input type="text" class="form-input" id="b-resp"></div></div>
+      <div class="form-group"><label class="form-label">Producto usado</label><input type="text" class="form-input" id="b-prod" placeholder="Glutaral 20%, Virkon S..."></div>
+      <div class="form-group"><label class="form-label">Observaciones</label><textarea class="form-input" id="b-obs" rows="2"></textarea></div>
     </div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-evento')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-evento');toast('Evento registrado','success')"><i class="ti ti-check"></i> Guardar</button></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-evento')">Cancelar</button><button class="btn btn-primary" onclick="guardarEvento()"><i class="ti ti-check"></i> Guardar</button></div>
   </div>
 </div>
 
-<div class="modal-overlay" id="modal-acceso">
-  <div class="modal">
-    <div class="modal-head"><div><div class="modal-ttl">Protocolo de acceso</div></div><button class="modal-close" onclick="closeModal('modal-acceso')"><i class="ti ti-x"></i></button></div>
+<div class="modal-overlay" id="modal-visita">
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-head"><div><div class="modal-ttl">Registrar visita</div></div><button class="modal-close" onclick="closeModal('modal-visita')"><i class="ti ti-x"></i></button></div>
     <div class="modal-body">
-      <div style="font-size:13px;line-height:1.7;color:var(--text-2);">
-        <div style="display:flex;gap:10px;margin-bottom:14px;"><div style="width:24px;height:24px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;">1</div><div><strong style="color:var(--text);">Pediluvio</strong> con solución desinfectante (cambio diario). Pisar antes de entrar.</div></div>
-        <div style="display:flex;gap:10px;margin-bottom:14px;"><div style="width:24px;height:24px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;">2</div><div><strong style="color:var(--text);">Arco sanitario</strong> con aspersión automática. Activar al pasar.</div></div>
-        <div style="display:flex;gap:10px;margin-bottom:14px;"><div style="width:24px;height:24px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;">3</div><div><strong style="color:var(--text);">Cambio de ropa</strong> en vestidor: overol, botas, cofia.</div></div>
-        <div style="display:flex;gap:10px;margin-bottom:14px;"><div style="width:24px;height:24px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;">4</div><div><strong style="color:var(--text);">Lavado de manos</strong> con jabón antibacterial 30 segundos.</div></div>
-        <div style="display:flex;gap:10px;margin-bottom:14px;"><div style="width:24px;height:24px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;">5</div><div><strong style="color:var(--text);">Registro de entrada</strong> en bitácora con hora y motivo de visita.</div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Fecha</label><input type="date" class="form-input" id="vs-fecha"></div><div class="form-group"><label class="form-label">Duración (min)</label><input type="number" class="form-input" id="vs-dur" value="60"></div></div>
+      <div class="form-group"><label class="form-label">Nombre del visitante</label><input type="text" class="form-input" id="vs-nombre"></div>
+      <div class="form-group"><label class="form-label">Motivo</label><input type="text" class="form-input" id="vs-motivo" placeholder="Veterinario asesor / Inspección..."></div>
+      <div class="form-group"><label class="form-label">Galpones</label><input type="text" class="form-input" id="vs-galp" placeholder="Galpón 1 o Toda la granja"></div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-visita')">Cancelar</button><button class="btn btn-primary" onclick="guardarVisita()"><i class="ti ti-check"></i> Guardar</button></div>
+  </div>
+</div>
+
+<script src="db.js"></script><script src="standards.js"></script><script src="calc.js"></script>
+<script src="auth.js"></script><script src="seed.js"></script><script src="shared.js"></script>
+<script>
+function renderPage() {
+  const eventos = store.list('bioseguridad');
+  const visitas = store.list('visitas');
+  const ahora = new Date(), inicioMes = new Date(ahora.getFullYear(), ahora.getMonth(), 1);
+  const eventosMes = eventos.filter(e => new Date(e.fecha) >= inicioMes);
+  const fum = eventos.filter(e=>e.tipo==='Fumigación');
+  const ultIncidente = eventos.sort((a,b)=>new Date(b.fecha)-new Date(a.fecha))[0];
+  const diasSinInc = ultIncidente ? Math.floor((new Date()-new Date(ultIncidente.fecha))/(1000*60*60*24)) : 0;
+
+  document.getElementById('kpi-row').innerHTML = `
+    <div class="kpi-modern delay-1"><div class="ki-top"><div class="ki-icon-bg g"><i class="ti ti-shield-check"></i></div></div><div class="ki-label">Días sin incidencias</div><div class="ki-num num-mono">${diasSinInc}<span>días</span></div><div class="ki-context">${ultIncidente?'Última: '+fmtFecha(ultIncidente.fecha,{short:true}):'Sin registros'}</div></div>
+    <div class="kpi-modern delay-2"><div class="ki-top"><div class="ki-icon-bg b"><i class="ti ti-user-check"></i></div></div><div class="ki-label">Visitas mes</div><div class="ki-num num-mono">${visitas.filter(v=>new Date(v.fecha)>=inicioMes).length}<span></span></div><div class="ki-context">${visitas.length} totales</div></div>
+    <div class="kpi-modern delay-3"><div class="ki-top"><div class="ki-icon-bg a"><i class="ti ti-spray"></i></div></div><div class="ki-label">Fumigaciones</div><div class="ki-num num-mono">${fum.length}<span></span></div><div class="ki-context">${fum.length?'Última: '+fmtFecha(fum[0].fecha,{short:true}):'—'}</div></div>
+    <div class="kpi-modern delay-4"><div class="ki-top"><div class="ki-icon-bg p"><i class="ti ti-list-check"></i></div></div><div class="ki-label">Eventos mes</div><div class="ki-num num-mono">${eventosMes.length}<span></span></div><div class="ki-context">Bitácora completa</div></div>`;
+
+  // Bitácora
+  document.getElementById('bio-sub').textContent = `${eventos.length} eventos registrados`;
+  const tbody = document.querySelector('#tbl-bio tbody');
+  if (!eventos.length) tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-3);padding:40px;">Sin eventos</td></tr>';
+  else tbody.innerHTML = eventos.sort((a,b)=>new Date(b.fecha)-new Date(a.fecha)).slice(0,15).map(e => {
+    const tipoColor = { 'Fumigación':'pill-ok', 'Desinfección':'pill-po', 'Visita externa':'pill-br', 'Control de plagas':'pill-ok', 'Limpieza':'pill-po', 'Carga/descarga':'pill-warn' }[e.tipo] || 'pill-warn';
+    return `<tr>
+      <td class="num-mono" style="color:var(--text-3)">${fmtFecha(e.fecha,{short:true})}</td>
+      <td><span class="pill ${tipoColor}">${escapeHTML(e.tipo)}</span></td>
+      <td style="font-weight:500">${escapeHTML(e.galpones||'—')}</td>
+      <td>${escapeHTML(e.responsable||'—')}</td>
+      <td style="color:var(--text-3)">${escapeHTML(e.producto||'—')}</td>
+      <td><button class="btn btn-ghost btn-sm" onclick="eliminar('bioseguridad','${e.id}')"><i class="ti ti-trash"></i></button></td>
+    </tr>`;
+  }).join('');
+
+  // Visitas
+  document.getElementById('vis-sub').textContent = `${visitas.length} totales`;
+  document.getElementById('vis-body').innerHTML = visitas.length ? visitas.sort((a,b)=>new Date(b.fecha)-new Date(a.fecha)).slice(0,5).map(v => `
+    <div style="padding:14px;border:1px solid var(--border);border-radius:11px;background:var(--surface-2);margin-bottom:10px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+        <div><div style="font-weight:700;font-size:13.5px;">${escapeHTML(v.nombre)}</div><div style="font-size:11.5px;color:var(--text-3);font-weight:500;margin-top:2px;">${escapeHTML(v.motivo||'')}</div></div>
+        <span class="pill pill-ok"><i class="ti ti-check"></i> Autorizado</span>
       </div>
-    </div>
-    <div class="modal-footer"><button class="btn btn-primary" onclick="closeModal('modal-acceso')">Entendido</button></div>
-  </div>
-</div>
+      <div style="font-size:11.5px;color:var(--text-3);font-weight:500;display:flex;gap:14px;margin-top:6px;">
+        <span><i class="ti ti-calendar" style="font-size:12px;"></i> ${fmtFecha(v.fecha,{short:true})}</span>
+        <span><i class="ti ti-clock" style="font-size:12px;"></i> ${v.duracion} min</span>
+        <span><i class="ti ti-paw" style="font-size:12px;"></i> ${escapeHTML(v.galpones||'—')}</span>
+      </div>
+    </div>`).join('') : '<div class="empty"><div class="empty-sub">Sin visitas registradas</div></div>';
+}
 
-<script src="shared.js"></script>
+function abrirEvento() {
+  document.getElementById('b-fecha').value = new Date().toISOString().slice(0,10);
+  ['b-galp','b-resp','b-prod','b-obs'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('b-resp').value = auth.current()?.nombre || '';
+  openModal('modal-evento');
+}
+
+function abrirVisita() {
+  document.getElementById('vs-fecha').value = new Date().toISOString().slice(0,10);
+  ['vs-nombre','vs-motivo','vs-galp'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('vs-dur').value = '60';
+  openModal('modal-visita');
+}
+
+function guardarEvento() {
+  const data = {
+    fecha: document.getElementById('b-fecha').value,
+    tipo: document.getElementById('b-tipo').value,
+    galpones: document.getElementById('b-galp').value.trim(),
+    responsable: document.getElementById('b-resp').value.trim(),
+    producto: document.getElementById('b-prod').value.trim(),
+    observaciones: document.getElementById('b-obs').value.trim()
+  };
+  if (!data.galpones || !data.responsable) { toast('Galpones y responsable requeridos','danger'); return; }
+  store.create('bioseguridad', data);
+  closeModal('modal-evento'); toast('Evento registrado','success'); renderPage();
+}
+
+function guardarVisita() {
+  const data = {
+    fecha: document.getElementById('vs-fecha').value,
+    nombre: document.getElementById('vs-nombre').value.trim(),
+    motivo: document.getElementById('vs-motivo').value.trim(),
+    galpones: document.getElementById('vs-galp').value.trim(),
+    duracion: Number(document.getElementById('vs-dur').value)||60,
+    autorizado: true
+  };
+  if (!data.nombre) { toast('Nombre requerido','danger'); return; }
+  store.create('visitas', data);
+  closeModal('modal-visita'); toast('Visita registrada','success'); renderPage();
+}
+
+function eliminar(coll,id) {
+  if (!confirm('¿Eliminar?')) return;
+  store.delete(coll, id); toast('Eliminado','info'); renderPage();
+}
+
+setTimeout(renderPage, 50);
+</script>
 </body>
 </html>

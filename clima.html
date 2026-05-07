@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AviGes — Clima & Bioseguridad</title>
+<title>AviGes — Clima Galpón</title>
 <link rel="stylesheet" href="shared.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 </head>
@@ -12,116 +12,159 @@
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:12px;">
       <button class="hamburger" onclick="toggleSB()"><i class="ti ti-menu-2"></i></button>
-      <div><div class="page-ttl">Clima & Bioseguridad</div><div class="page-sub">Temperatura, humedad y control sanitario</div></div>
+      <div><div class="page-ttl">Clima galpón</div><div class="page-sub">Temperatura · humedad · alertas</div></div>
     </div>
     <div class="topbar-right">
-      <div class="icon-btn"><i class="ti ti-bell"></i><div class="notif-dot"></div></div>
-      <button class="btn btn-secondary btn-sm" onclick="openModal('modal-bio')"><i class="ti ti-shield-check"></i> Bioseguridad</button>
-      <button class="btn btn-primary" onclick="openModal('modal-clima')"><i class="ti ti-temperature"></i> Registrar clima</button>
+      <div class="icon-btn"><i class="ti ti-bell"></i></div>
+      <button class="btn btn-primary" onclick="abrirRegistro()"><i class="ti ti-plus"></i> Lectura</button>
     </div>
   </div>
   <div class="content">
+    <div class="g4" id="kpi-row"></div>
 
-    <div class="g4">
-      <div class="kpi-modern delay-1"><div class="ki-top"><div class="ki-icon-bg g"><i class="ti ti-temperature"></i></div><span class="ki-trend up"><i class="ti ti-check"></i> Óptimo</span></div><div class="ki-label">Temp. promedio</div><div class="ki-num num-mono">23.0<span>°C</span></div><div class="ki-context">Dentro del rango óptimo</div></div>
-      <div class="kpi-modern delay-2"><div class="ki-top"><div class="ki-icon-bg w"><i class="ti ti-flame"></i></div><span class="ki-trend mid"><i class="ti ti-alert-triangle"></i> Alerta</span></div><div class="ki-label">Galpón más caliente</div><div class="ki-num num-mono">29<span>°C</span></div><div class="ki-context"><strong>Galpón 2</strong> · estrés térmico</div></div>
-      <div class="kpi-modern delay-3"><div class="ki-top"><div class="ki-icon-bg b"><i class="ti ti-droplet"></i></div><span class="ki-trend up"><i class="ti ti-check"></i> Normal</span></div><div class="ki-label">Humedad promedio</div><div class="ki-num num-mono">68.3<span>%HR</span></div><div class="ki-context">Óptimo: <strong>60-75%</strong></div></div>
-      <div class="kpi-modern delay-4"><div class="ki-top"><div class="ki-icon-bg g"><i class="ti ti-shield-check"></i></div><span class="ki-trend up"><i class="ti ti-circle-check"></i> 12 días</span></div><div class="ki-label">Sin incidencias</div><div class="ki-num num-mono">12<span>días</span></div><div class="ki-context">Bioseguridad al día</div></div>
+    <div class="card mb16 delay-5">
+      <div class="card-head"><div><div class="card-ttl">Temperatura últimos 7 días</div><div class="card-sub">Por galpón</div></div></div>
+      <div class="card-body"><div class="chart-wrap" style="height:240px;"><canvas id="chartClima"></canvas></div></div>
     </div>
 
     <div class="g2">
-      <div class="card delay-5">
-        <div class="card-head"><div><div class="card-ttl">Temperatura — Últimos 7 días</div><div class="card-sub">Galpón 1 · Lote 24-A</div></div><a class="card-link">Otros galpones</a></div>
-        <div class="card-body"><div class="chart-wrap" style="height:240px;"><canvas id="chartTemp"></canvas></div></div>
-      </div>
-
       <div class="card delay-6">
-        <div class="card-head"><div><div class="card-ttl">Estado actual</div><div class="card-sub">Lectura: hace 1 h</div></div><a class="card-link" onclick="openModal('modal-clima')">Registrar</a></div>
-        <div class="card-body">
-          <div style="display:flex;flex-direction:column;gap:12px;">
-            <div style="padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--surface-2);display:flex;justify-content:space-between;align-items:center;">
-              <div><div style="font-family:var(--font-display);font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ti ti-paw" style="color:#C96A00"></i> Galpón 1 · Día 35</div><div style="font-size:12px;color:var(--text-3);font-weight:500;margin-top:2px;">Broiler Ross 308</div></div>
-              <div style="text-align:right;"><div class="num-mono" style="font-family:var(--font-display);font-weight:800;font-size:18px;color:var(--primary);letter-spacing:-.3px;">22°C</div><div style="font-size:11.5px;color:var(--text-3);font-weight:600;">68% HR · Óptimo ✓</div></div>
-            </div>
-            <div style="padding:14px;border-radius:12px;border:1px solid #FBDFA9;background:var(--warn-l);display:flex;justify-content:space-between;align-items:center;">
-              <div><div style="font-family:var(--font-display);font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ti ti-paw" style="color:#92741C"></i> Galpón 2 · Día 18</div><div style="font-size:12px;color:#92741C;font-weight:500;margin-top:2px;">Broiler Cobb 500</div></div>
-              <div style="text-align:right;"><div class="num-mono" style="font-family:var(--font-display);font-weight:800;font-size:18px;color:var(--warn);letter-spacing:-.3px;">29°C ⚠️</div><div style="font-size:11.5px;color:#92741C;font-weight:600;">74% HR · Ventilar</div></div>
-            </div>
-            <div style="padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--surface-2);display:flex;justify-content:space-between;align-items:center;">
-              <div><div style="font-family:var(--font-display);font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ti ti-egg" style="color:var(--blue)"></i> Galpón 3 · Sem 22</div><div style="font-size:12px;color:var(--text-3);font-weight:500;margin-top:2px;">Hy-Line W-36</div></div>
-              <div style="text-align:right;"><div class="num-mono" style="font-family:var(--font-display);font-weight:800;font-size:18px;color:var(--primary);letter-spacing:-.3px;">20°C</div><div style="font-size:11.5px;color:var(--text-3);font-weight:600;">65% HR · Óptimo ✓</div></div>
-            </div>
-            <div style="padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--surface-2);display:flex;justify-content:space-between;align-items:center;">
-              <div><div style="font-family:var(--font-display);font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ti ti-egg" style="color:var(--blue)"></i> Galpón 4 · Sem 13</div><div style="font-size:12px;color:var(--text-3);font-weight:500;margin-top:2px;">Bovans White</div></div>
-              <div style="text-align:right;"><div class="num-mono" style="font-family:var(--font-display);font-weight:800;font-size:18px;color:var(--primary);letter-spacing:-.3px;">21°C</div><div style="font-size:11.5px;color:var(--text-3);font-weight:600;">66% HR · Óptimo ✓</div></div>
-            </div>
-          </div>
-        </div>
+        <div class="card-head"><div><div class="card-ttl">Estado actual por galpón</div><div class="card-sub">Última lectura</div></div></div>
+        <div class="card-body" id="estado-body"></div>
+      </div>
+      <div class="card delay-6">
+        <div class="card-head"><div><div class="card-ttl">Lecturas recientes</div><div class="card-sub" id="clima-count">—</div></div></div>
+        <div style="overflow-x:auto;"><table class="tbl" id="tbl-clima"><thead><tr><th>Fecha</th><th>Galpón</th><th>T.Min</th><th>T.Max</th><th>Hum%</th><th></th></tr></thead><tbody></tbody></table></div>
       </div>
     </div>
-
-    <div class="card" style="animation-delay:.32s;">
-      <div class="card-head"><div><div class="card-ttl">Bitácora de bioseguridad</div><div class="card-sub">Registro de eventos de los últimos 7 días</div></div><a class="card-link" onclick="openModal('modal-bio')"><i class="ti ti-plus"></i> Registrar</a></div>
-      <div style="overflow-x:auto;">
-        <table class="tbl">
-          <thead><tr><th>Fecha</th><th>Tipo</th><th>Galpón</th><th>Responsable</th><th>Producto</th><th>Observaciones</th></tr></thead>
-          <tbody>
-            <tr><td style="color:var(--text-3)">07 may</td><td><span class="pill pill-ok"><span class="sdot g"></span> Fumigación</span></td><td style="font-weight:500">G1 · G2</td><td>Carlos Pérez</td><td>Glutaral 20%</td><td style="color:var(--text-2)">Sin novedades</td></tr>
-            <tr><td style="color:var(--text-3)">06 may</td><td><span class="pill pill-br"><i class="ti ti-user-check"></i> Visita externa</span></td><td style="font-weight:500">G2</td><td>Dr. Roberto M.</td><td>—</td><td style="color:var(--text-2)">Veterinario asesor · Revisión</td></tr>
-            <tr><td style="color:var(--text-3)">05 may</td><td><span class="pill pill-po"><i class="ti ti-spray"></i> Desinfección</span></td><td style="font-weight:500">Todos</td><td>Ana García</td><td>Virkon S</td><td style="color:var(--text-2)">Pediluvios · pasillos</td></tr>
-            <tr><td style="color:var(--text-3)">03 may</td><td><span class="pill pill-ok"><span class="sdot g"></span> Control plagas</span></td><td style="font-weight:500">G3 · G4</td><td>Carlos Pérez</td><td>Neosorexa</td><td style="color:var(--text-2)">Control roedores mensual</td></tr>
-            <tr><td style="color:var(--text-3)">01 may</td><td><span class="pill pill-br"><i class="ti ti-truck-delivery"></i> Carga aves</span></td><td style="font-weight:500">G2</td><td>Equipo</td><td>—</td><td style="color:var(--text-2)">Entrada Lote 24-B · Limpieza previa</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
   </div>
 </main>
 
 <div class="modal-overlay" id="modal-clima">
-  <div class="modal">
-    <div class="modal-head"><div><div class="modal-ttl">Registrar clima del día</div></div><button class="modal-close" onclick="closeModal('modal-clima')"><i class="ti ti-x"></i></button></div>
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-head"><div><div class="modal-ttl">Lectura de clima</div></div><button class="modal-close" onclick="closeModal('modal-clima')"><i class="ti ti-x"></i></button></div>
     <div class="modal-body">
-      <div class="form-row"><div class="form-group"><label class="form-label">Galpón</label><select class="form-input"><option>Galpón 1</option><option>Galpón 2</option><option>Galpón 3</option><option>Galpón 4</option></select></div><div class="form-group"><label class="form-label">Fecha y hora</label><input type="datetime-local" class="form-input"></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Fecha</label><input type="date" class="form-input" id="cl-fecha"></div><div class="form-group"><label class="form-label">Galpón</label><select class="form-input" id="cl-galpon"></select></div></div>
       <div class="form-row-3">
-        <div class="form-group"><label class="form-label">Temp. mín (°C)</label><input type="number" class="form-input" placeholder="18"></div>
-        <div class="form-group"><label class="form-label">Temp. máx (°C)</label><input type="number" class="form-input" placeholder="26"></div>
-        <div class="form-group"><label class="form-label">% HR</label><input type="number" class="form-input" placeholder="65"></div>
+        <div class="form-group"><label class="form-label">T.Min °C</label><input type="number" class="form-input" id="cl-min"></div>
+        <div class="form-group"><label class="form-label">T.Max °C</label><input type="number" class="form-input" id="cl-max"></div>
+        <div class="form-group"><label class="form-label">Humedad %</label><input type="number" class="form-input" id="cl-hum"></div>
       </div>
-      <div class="form-group"><label class="form-label">Observaciones</label><textarea class="form-input" rows="2" placeholder="Acciones tomadas..."></textarea></div>
+      <div class="form-group"><label class="form-label">Observaciones</label><textarea class="form-input" id="cl-obs" rows="2"></textarea></div>
     </div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-clima')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-clima');toast('Clima registrado','success')"><i class="ti ti-check"></i> Guardar</button></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-clima')">Cancelar</button><button class="btn btn-primary" onclick="guardarClima()"><i class="ti ti-check"></i> Guardar</button></div>
   </div>
 </div>
 
-<div class="modal-overlay" id="modal-bio">
-  <div class="modal">
-    <div class="modal-head"><div><div class="modal-ttl">Registrar evento de bioseguridad</div></div><button class="modal-close" onclick="closeModal('modal-bio')"><i class="ti ti-x"></i></button></div>
-    <div class="modal-body">
-      <div class="form-row"><div class="form-group"><label class="form-label">Fecha</label><input type="date" class="form-input"></div><div class="form-group"><label class="form-label">Galpón(es)</label><select class="form-input"><option>Galpón 1</option><option>Galpón 2</option><option>Todos</option></select></div></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Tipo de evento</label><select class="form-input"><option>Fumigación</option><option>Desinfección</option><option>Visita externa</option><option>Control de plagas</option><option>Limpieza</option><option>Carga/descarga</option></select></div><div class="form-group"><label class="form-label">Responsable</label><input type="text" class="form-input" placeholder="Nombre"></div></div>
-      <div class="form-group"><label class="form-label">Producto usado</label><input type="text" class="form-input" placeholder="Glutaral 20%, Virkon S..."></div>
-      <div class="form-group"><label class="form-label">Observaciones</label><textarea class="form-input" rows="2" placeholder="Detalles..."></textarea></div>
-    </div>
-    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-bio')">Cancelar</button><button class="btn btn-primary" onclick="closeModal('modal-bio');toast('Evento registrado','success')"><i class="ti ti-check"></i> Guardar</button></div>
-  </div>
-</div>
-
-<script src="shared.js"></script>
+<script src="db.js"></script><script src="standards.js"></script><script src="calc.js"></script>
+<script src="auth.js"></script><script src="seed.js"></script><script src="shared.js"></script>
 <script>
-new Chart(document.getElementById('chartTemp').getContext('2d'),{
-  type:'line',
-  data:{ labels:['Lun','Mar','Mié','Jue','Vie','Sáb','Hoy'], datasets:[
-    { label:'Temp. máxima', data:[24,23,25,22,26,24,22], borderColor:'#E8870E', backgroundColor:'rgba(232,135,14,.10)', borderWidth:3, pointBackgroundColor:'#E8870E', pointBorderColor:'#fff', pointBorderWidth:2, pointRadius:5, tension:.4, fill:true },
-    { label:'Temp. mínima', data:[18,17,19,17,20,18,17], borderColor:'#2D6FE8', backgroundColor:'rgba(45,111,232,.06)', borderWidth:2.5, pointBackgroundColor:'#2D6FE8', pointBorderColor:'#fff', pointBorderWidth:2, pointRadius:5, tension:.4, fill:true },
-    { label:'Límite estrés', data:[30,30,30,30,30,30,30], borderColor:'#DC2D40', backgroundColor:'transparent', borderWidth:2, borderDash:[6,4], pointRadius:0 }
-  ]},
-  options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-    plugins:{legend:{position:'top',align:'end',labels:{color:'#7B8F84',font:{family:'DM Sans',size:12,weight:'500'},boxWidth:14,boxHeight:8,usePointStyle:true,padding:14}},tooltip:{backgroundColor:'#0F1F19',padding:14,cornerRadius:10,callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y}°C`}}},
-    scales:{x:{ticks:{color:'#7B8F84',font:{size:11,weight:'600'}},grid:{color:'#E1EAE5'},border:{display:false}},y:{min:10,max:35,ticks:{color:'#7B8F84',font:{size:11},callback:v=>v+'°'},grid:{color:'#E1EAE5'},border:{display:false}}}
+function renderPage() {
+  const galpones = store.list('galpones',{activo:true});
+  const clima = store.list('clima');
+  const ult = {};
+  galpones.forEach(g => {
+    ult[g.id] = clima.filter(c=>c.galponId===g.id).sort((a,b)=>new Date(b.fecha)-new Date(a.fecha))[0];
+  });
+  const altas = Object.values(ult).filter(u => u && u.tempMax >= 28).length;
+  const promTemp = Object.values(ult).filter(Boolean).reduce((s,u)=>s+u.tempMax,0) / Math.max(1, Object.values(ult).filter(Boolean).length);
+  const promHum = Object.values(ult).filter(Boolean).reduce((s,u)=>s+u.humedad,0) / Math.max(1, Object.values(ult).filter(Boolean).length);
+
+  document.getElementById('kpi-row').innerHTML = `
+    <div class="kpi-modern delay-1"><div class="ki-top"><div class="ki-icon-bg ${promTemp>=28?'r':'g'}"><i class="ti ti-temperature"></i></div></div><div class="ki-label">Temperatura promedio</div><div class="ki-num num-mono">${promTemp.toFixed(1)}<span>°C</span></div><div class="ki-context">Última lectura</div></div>
+    <div class="kpi-modern delay-2"><div class="ki-top"><div class="ki-icon-bg b"><i class="ti ti-droplet"></i></div></div><div class="ki-label">Humedad promedio</div><div class="ki-num num-mono">${promHum.toFixed(0)}<span>%</span></div><div class="ki-context">Rango: 60-75%</div></div>
+    <div class="kpi-modern delay-3"><div class="ki-top"><div class="ki-icon-bg ${altas?'r':'g'}"><i class="ti ti-alert-triangle"></i></div></div><div class="ki-label">Alertas activas</div><div class="ki-num num-mono">${altas}<span></span></div><div class="ki-context">${altas?'Galpones con T>28°C':'Sin alertas'}</div></div>
+    <div class="kpi-modern delay-4"><div class="ki-top"><div class="ki-icon-bg p"><i class="ti ti-temperature-celsius"></i></div></div><div class="ki-label">Lecturas registradas</div><div class="ki-num num-mono">${clima.length}<span></span></div><div class="ki-context">Total histórico</div></div>`;
+
+  // Estado actual
+  document.getElementById('estado-body').innerHTML = galpones.map(g => {
+    const u = ult[g.id];
+    if (!u) return `<div style="margin-bottom:14px;padding:14px;border:1px solid var(--border);border-radius:11px;background:var(--surface-2);"><div style="font-weight:700;">${escapeHTML(g.nombre)}</div><div style="font-size:12px;color:var(--text-3);">Sin lecturas</div></div>`;
+    const isAlta = u.tempMax >= 28;
+    return `<div style="margin-bottom:14px;padding:14px 16px;border:1px solid ${isAlta?'#EAD6A8':'var(--border)'};border-radius:11px;background:${isAlta?'var(--amber-l)':'var(--surface-2)'};">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <div style="font-weight:700;font-size:14px;font-family:var(--font-display);display:flex;align-items:center;gap:6px;"><i class="ti ti-${g.tipo==='broiler'?'paw':'egg'}" style="color:${g.tipo==='broiler'?'var(--amber-d)':'var(--info)'};"></i> ${escapeHTML(g.nombre)}</div>
+        <span class="num-mono" style="font-family:var(--font-display);font-size:22px;font-weight:700;color:${isAlta?'var(--amber-d)':'var(--primary)'};">${u.tempMax}°C</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-3);font-weight:500;display:flex;gap:14px;">
+        <span><i class="ti ti-arrow-down" style="font-size:11px;"></i> ${u.tempMin}°C min</span>
+        <span><i class="ti ti-droplet" style="font-size:11px;"></i> ${u.humedad}% HR</span>
+        <span style="margin-left:auto;color:${isAlta?'var(--amber-d)':'var(--primary)'};font-weight:600;">${isAlta?'⚠ Estrés térmico':'✓ Óptimo'}</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Tabla
+  const lecturas = clima.sort((a,b)=>new Date(b.fecha)-new Date(a.fecha)).slice(0,30);
+  document.getElementById('clima-count').textContent = `${clima.length} totales · 30 más recientes`;
+  const tbody = document.querySelector('#tbl-clima tbody');
+  if (!lecturas.length) tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-3);padding:40px;">Sin lecturas</td></tr>';
+  else tbody.innerHTML = lecturas.map(c => `<tr>
+    <td class="num-mono" style="color:var(--text-3)">${fmtFecha(c.fecha,{short:true})}</td>
+    <td style="font-weight:600">${escapeHTML(store.get('galpones',c.galponId)?.nombre||'?')}</td>
+    <td class="num-mono">${c.tempMin}°C</td>
+    <td class="num-mono" style="color:${c.tempMax>=28?'var(--terracotta)':'var(--primary)'};font-weight:700">${c.tempMax}°C${c.tempMax>=28?' <i class="ti ti-alert-triangle" style="font-size:13px;"></i>':''}</td>
+    <td class="num-mono">${c.humedad}%</td>
+    <td><button class="btn btn-ghost btn-sm" onclick="eliminar('${c.id}')"><i class="ti ti-trash"></i></button></td>
+  </tr>`).join('');
+
+  // Gráfica 7 días
+  const dias = [], dataMax = {};
+  galpones.forEach(g => dataMax[g.id] = []);
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(); d.setDate(d.getDate()-i);
+    const fStr = d.toISOString().slice(0,10);
+    dias.push(d.getDate());
+    galpones.forEach(g => {
+      const lec = clima.filter(c => c.galponId===g.id && c.fecha?.slice(0,10)===fStr).sort((a,b)=>new Date(b.fecha)-new Date(a.fecha))[0];
+      dataMax[g.id].push(lec ? lec.tempMax : null);
+    });
   }
-});
+  const colors = ['#1F6B47','#C8821F','#344473','#6B3F5F','#B85738'];
+  if (window._chCl) window._chCl.destroy();
+  window._chCl = new Chart(document.getElementById('chartClima').getContext('2d'),{
+    type:'line', data:{ labels:dias, datasets: galpones.map((g,i)=>({
+      label: g.nombre, data: dataMax[g.id], borderColor: colors[i%5], backgroundColor: colors[i%5]+'18',
+      borderWidth:2.5, pointRadius:4, pointBackgroundColor: colors[i%5], pointBorderColor:'#fff', pointBorderWidth:2, tension:.4, spanGaps: true
+    })).concat([{
+      label: 'Umbral estrés (28°C)', data: dias.map(()=>28), borderColor:'#B83838', borderDash:[4,4], borderWidth:2, pointRadius:0, fill:false
+    }])},
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{position:'top',align:'end',labels:{font:{family:'Inter Tight',size:12,weight:'500'},usePointStyle:true,padding:12,boxWidth:12,boxHeight:8}}, tooltip:{backgroundColor:'#1A1612',padding:12,cornerRadius:10,callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y}°C`}}},
+      scales:{ x:{grid:{display:false},border:{display:false}}, y:{grid:{color:'#E8DFD0'},border:{display:false},ticks:{callback:v=>v+'°C'}}}}
+  });
+}
+
+function abrirRegistro() {
+  document.getElementById('cl-fecha').value = new Date().toISOString().slice(0,10);
+  document.getElementById('cl-galpon').innerHTML = store.list('galpones',{activo:true}).map(g=>`<option value="${g.id}">${g.nombre}</option>`).join('');
+  ['cl-min','cl-max','cl-hum','cl-obs'].forEach(id=>document.getElementById(id).value='');
+  openModal('modal-clima');
+}
+
+function guardarClima() {
+  const data = {
+    fecha: document.getElementById('cl-fecha').value,
+    galponId: document.getElementById('cl-galpon').value,
+    tempMin: Number(document.getElementById('cl-min').value)||0,
+    tempMax: Number(document.getElementById('cl-max').value)||0,
+    humedad: Number(document.getElementById('cl-hum').value)||0,
+    observaciones: document.getElementById('cl-obs').value.trim()
+  };
+  if (!data.tempMax) { toast('Temperatura máxima requerida','danger'); return; }
+  store.create('clima', data);
+  if (data.tempMax >= 28) {
+    logActivity({ texto:`Alerta: <strong>Temperatura ${data.tempMax}°C</strong> en ${escapeHTML(store.get('galpones',data.galponId)?.nombre||'')}`, tipo:'r', icono:'temperature' });
+  }
+  closeModal('modal-clima'); toast('Lectura guardada','success'); renderPage();
+}
+
+function eliminar(id) {
+  if (!confirm('¿Eliminar?')) return;
+  store.delete('clima', id); toast('Eliminada','info'); renderPage();
+}
+
+setTimeout(renderPage, 50);
 </script>
 </body>
 </html>
