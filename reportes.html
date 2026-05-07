@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AviGes — Reportes</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+.reporte-card {
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--r);
+  padding: 20px; box-shadow: var(--shadow-sm); cursor: pointer; transition: all .15s;
+  animation: fadeUp .4s ease forwards; opacity: 0;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.reporte-card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(11,139,94,.12); }
+.rep-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+.rep-icon.g { background: var(--primary-l); }
+.rep-icon.b { background: var(--blue-l); }
+.rep-icon.w { background: var(--warn-l); }
+.rep-icon.p { background: var(--purple-l); }
+.rep-name { font-size: 15px; font-weight: 700; color: var(--text); }
+.rep-desc { font-size: 12.5px; color: var(--text-3); line-height: 1.5; }
+.rep-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid var(--border); }
+.rep-format { font-size: 11px; font-weight: 600; color: var(--text-3); }
+.btn-gen { background: var(--primary-l); color: var(--primary); border: 1px solid var(--primary-m); border-radius: 8px; padding: 7px 14px; font-size: 12.5px; font-weight: 600; cursor: pointer; font-family: var(--font); transition: all .12s; }
+.btn-gen:hover { background: var(--primary); color: #fff; }
+</style>
+</head>
+<body>
+<div id="sidebar-mount"></div>
+<main class="main">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="hamburger" onclick="toggleSB()">☰</button>
+      <div><div class="page-ttl">Reportes & Exportación</div><div class="page-sub">Genera reportes de tu granja en un clic</div></div>
+    </div>
+    <div class="topbar-right">
+      <div class="icon-btn">🔔</div>
+    </div>
+  </div>
+  <div class="content">
+
+    <div class="section-title">📄 Reportes de producción</div>
+    <div class="g3 mb16">
+      <div class="reporte-card delay-1" onclick="generar('Reporte de Cierre de Lote')">
+        <div class="rep-icon g">📊</div>
+        <div>
+          <div class="rep-name">Reporte de cierre de lote</div>
+          <div class="rep-desc">Resumen completo al cierre: IEP, CA, mortalidad, peso final, costos totales y utilidad del lote. Con gráficas.</div>
+        </div>
+        <div class="rep-footer"><span class="rep-format">PDF · Excel</span><button class="btn-gen">Generar →</button></div>
+      </div>
+      <div class="reporte-card delay-2" onclick="generar('Reporte Semanal de Producción')">
+        <div class="rep-icon b">📅</div>
+        <div>
+          <div class="rep-name">Reporte semanal</div>
+          <div class="rep-desc">Resumen de la semana: consumos, mortalidades, pesos, postura, incidencias sanitarias y temperatura.</div>
+        </div>
+        <div class="rep-footer"><span class="rep-format">PDF · Excel</span><button class="btn-gen">Generar →</button></div>
+      </div>
+      <div class="reporte-card delay-3" onclick="generar('Comparativa de Lotes')">
+        <div class="rep-icon g">🔄</div>
+        <div>
+          <div class="rep-name">Comparativa entre lotes</div>
+          <div class="rep-desc">Compara IEP, CA, mortalidad y costos entre todos tus lotes anteriores. Identifica tendencias.</div>
+        </div>
+        <div class="rep-footer"><span class="rep-format">PDF · Excel</span><button class="btn-gen">Generar →</button></div>
+      </div>
+    </div>
+
+    <div class="section-title">🥚 Reportes de ponedoras</div>
+    <div class="g3 mb16">
+      <div class="reporte-card delay-1" onclick="generar('Reporte Mensual de Postura')">
+        <div class="rep-icon w">🥚</div>
+        <div>
+          <div class="rep-name">Reporte mensual de postura</div>
+          <div class="rep-desc">% postura vs curva estándar, clasificación de huevo, cartones producidos y vendidos, merma.</div>
+        </div>
+        <div class="rep-footer"><span class="rep-format">PDF · Excel</span><button class="btn-gen">Generar →</button></div>
+      </div>
+      <div class="reporte-card delay-2" onclick="generar('Inventario de Huevo')">
+        <div class="rep-icon g">📦</div>
+        <div>
+          <div class="rep-name">Inventario de huevo</div>
+          <div class="rep-desc">Stock actual por clasificación, entradas y salidas de la semana, ventas pendientes.</div>
+        </div>
+        <div class="rep-footer"><span class="rep-format">PDF · Excel</span><button class="btn-gen">Generar →</button></div>
+      </div>
+      <div class="reporte-card delay-3" onclick="generar('Curva de Postura vs Estándar')">
+        <div class="rep-icon b">📈</div>
+        <div>
+          <div class="rep-name">Curva postura vs Hy-Line / Bovans</div>
+          <div class="rep-desc">Gráfica de postura real contra curva oficial de la línea genética. Con análisis de desviaciones.</div>
+        </div>
+        <div class="rep-footer"><span class="rep-format">PDF</span><button class="btn-gen">Generar →</button></div>
+      </div>
+    </div>
+
+    <div class="section-title">💰 Reportes financieros</div>
+    <div class="g3 mb16">
+      <div class="reporte-card delay-1" onclick="generar('Estado de Resultados por Lote')">
+        <div class="rep-icon g">💵</div>
+        <div>
+          <div class="rep-name">Estado de resultados por lote</div>
+          <div class="rep-desc">Ingresos vs egresos, costo/kg producido, margen bruto y utilidad neta. Formato para contador.</div>
+        </div>
+        <div class="rep-footer"><span class="rep-format">PDF · Excel</span><button class="btn-gen">Generar →</button></div>
+      </div>
+      <div class="reporte-card delay-2" onclick="generar('Reporte de Gastos Mensual')">
+        <div class="rep-icon w">📋</div>
+        <div>
+          <div class="rep-name">Gastos del mes</div>
+          <div class="rep-desc">Todos los gastos categorizados: alimento, pollito, vacunas, mano de obra, servicios.</div>
+        </div>
+        <div class="rep-footer"><span class="rep-format">PDF · Excel</span><button class="btn-gen">Generar →</button></div>
+      </div>
+      <div class="reporte-card delay-3" onclick="generar('Flujo de Caja')">
+        <div class="rep-icon p">📊</div>
+        <div>
+          <div class="rep-name">Flujo de caja mensual</div>
+          <div class="rep-desc">Entradas y salidas de dinero del mes. Ideal para tramitar créditos FIRA o con el banco.</div>
+        </div>
+        <div class="rep-footer"><span class="rep-format">PDF · Excel</span><button class="btn-gen">Generar →</button></div>
+      </div>
+    </div>
+
+    <div class="section-title">🇲🇽 Reportes oficiales México (SENASICA)</div>
+    <div class="g3">
+      <div class="reporte-card delay-1" onclick="generar('Reporte SENASICA — Movimiento de Aves')">
+        <div class="rep-icon g">🛡️</div>
+        <div>
+          <div class="rep-name">Movimiento de aves (SENASICA)</div>
+          <div class="rep-desc">Formato oficial para reportar entradas y salidas de aves al SENASICA. Listo para enviar.</div>
+        </div>
+        <div class="rep-footer"><span class="rep-format">PDF oficial · XML</span><button class="btn-gen" style="background:var(--primary);color:#fff;">Generar →</button></div>
+      </div>
+      <div class="reporte-card delay-2" onclick="generar('Bitácora de Bioseguridad')">
+        <div class="rep-icon b">📝</div>
+        <div>
+          <div class="rep-name">Bitácora de bioseguridad</div>
+          <div class="rep-desc">Registro de visitas, desinfecciones y controles sanitarios. Necesario para auditorías.</div>
+        </div>
+        <div class="rep-footer"><span class="rep-format">PDF</span><button class="btn-gen">Generar →</button></div>
+      </div>
+      <div class="reporte-card delay-3" onclick="generar('Historial Sanitario del Lote')">
+        <div class="rep-icon w">💉</div>
+        <div>
+          <div class="rep-name">Historial sanitario completo</div>
+          <div class="rep-desc">Todas las vacunas, tratamientos y necropsias del lote. Para el médico veterinario.</div>
+        </div>
+        <div class="rep-footer"><span class="rep-format">PDF</span><button class="btn-gen">Generar →</button></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Modal generando -->
+<div class="modal-overlay" id="modal-gen">
+  <div class="modal" style="max-width:400px;text-align:center;">
+    <div class="modal-body" style="padding:36px 24px;">
+      <div id="gen-icon" style="font-size:48px;margin-bottom:16px;">⏳</div>
+      <div id="gen-title" style="font-size:16px;font-weight:700;margin-bottom:8px;">Generando reporte...</div>
+      <div id="gen-sub" style="font-size:13px;color:var(--text-3);">Procesando datos de tu granja</div>
+      <div id="gen-bar-wrap" style="margin-top:20px;"><div class="bar" style="height:6px;"><div class="bar-fill" id="gen-bar" style="width:0%;transition:width 1.5s ease;"></div></div></div>
+    </div>
+  </div>
+</div>
+
+<script src="shared.js"></script>
+<script>
+function generar(nombre) {
+  openModal('modal-gen');
+  document.getElementById('gen-title').textContent = 'Generando: ' + nombre;
+  document.getElementById('gen-icon').textContent = '⏳';
+  document.getElementById('gen-sub').textContent = 'Procesando datos de tu granja...';
+  document.getElementById('gen-bar').style.width = '0%';
+  setTimeout(()=>{ document.getElementById('gen-bar').style.width = '100%'; }, 50);
+  setTimeout(()=>{
+    document.getElementById('gen-icon').textContent = '✅';
+    document.getElementById('gen-title').textContent = '¡Reporte listo!';
+    document.getElementById('gen-sub').textContent = nombre + '.pdf generado correctamente.';
+    setTimeout(()=>closeModal('modal-gen'), 1800);
+  }, 1800);
+}
+</script>
+</body>
+</html>
